@@ -1,34 +1,33 @@
-import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
   ShoppingCart,
   Package,
-  Wallet,
   Boxes,
   Users,
   Truck,
-  BookOpen,
-  FileText,
+  Landmark,
   BarChart3,
   Settings,
   ChevronLeft,
   ChevronRight,
   IndianRupee,
+  RefreshCw,
+  Wrench,
 } from "lucide-react";
 
 const menuItems = [
   { title: "Dashboard", path: "/", icon: LayoutDashboard },
+  { title: "Items", path: "/items", icon: Boxes },
   { title: "Sales", path: "/sales", icon: ShoppingCart },
   { title: "Purchases", path: "/purchases", icon: Package },
-  { title: "Expenses", path: "/expenses", icon: Wallet },
-  { title: "Inventory", path: "/inventory", icon: Boxes },
+  { title: "Cash & Bank", path: "/cash-bank", icon: Landmark },
   { title: "Customers", path: "/customers", icon: Users },
   { title: "Suppliers", path: "/suppliers", icon: Truck },
-  { title: "Accounting", path: "/accounting", icon: BookOpen },
-  { title: "GST Reports", path: "/gst-reports", icon: FileText },
   { title: "Reports", path: "/reports", icon: BarChart3 },
+  { title: "Sync & Backup", path: "/sync-backup", icon: RefreshCw },
+  { title: "Utilities", path: "/utilities", icon: Wrench },
   { title: "Settings", path: "/settings", icon: Settings },
 ];
 
@@ -59,9 +58,7 @@ export default function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.15 }}
             >
-              <h1 className="text-lg font-bold text-primary-foreground tracking-wide">
-                HISABKITAB
-              </h1>
+              <h1 className="text-lg font-bold text-primary-foreground tracking-wide">HISABKITAB</h1>
               <p className="text-[10px] text-primary-foreground/50 -mt-1">Accounting Software</p>
             </motion.div>
           )}
