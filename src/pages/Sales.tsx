@@ -1,32 +1,32 @@
 import { useState, useEffect } from "react";
-import { Plus, Search, FileText, ArrowDownLeft, Truck } from "lucide-react";
+import { Plus, FileText, ArrowDownLeft, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import CreateInvoiceForm from "@/components/sales/CreateInvoiceForm";
 
 export default function Sales() {
   const { user } = useAuth();
   const [invoices, setInvoices] = useState<any[]>([]);
   const [paymentsIn, setPaymentsIn] = useState<any[]>([]);
   const [challans, setChallans] = useState<any[]>([]);
+  const [showCreateInvoice, setShowCreateInvoice] = useState(false);
 
-  useEffect(() => {
+  const fetchData = async () => {
     if (!user) return;
-    const fetchData = async () => {
-      const [invRes, payRes, chalRes] = await Promise.all([
-        supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "sales").order("created_at", { ascending: false }),
-        supabase.from("payments").select("*").eq("payment_type", "payment_in").order("created_at", { ascending: false }),
-        supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "delivery_challan").order("created_at", { ascending: false }),
-      ]);
-      if (invRes.data) setInvoices(invRes.data);
-      if (payRes.data) setPaymentsIn(payRes.data);
-      if (chalRes.data) setChallans(chalRes.data);
-    };
-    fetchData();
-  }, [user]);
+    const [invRes, payRes, chalRes] = await Promise.all([
+      supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "sales").order("created_at", { ascending: false }),
+      supabase.from("payments").select("*").eq("payment_type", "payment_in").order("created_at", { ascending: false }),
+      supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "delivery_challan").order("created_at", { ascending: false }),
+    ]);
+    if (invRes.data) setInvoices(invRes.data);
+    if (payRes.data) setPaymentsIn(payRes.data);
+    if (chalRes.data) setChallans(chalRes.data);
+  };
+
+  useEffect(() => { fetchData(); }, [user]);
 
   return (
     <div className="space-y-6">
@@ -35,7 +35,7 @@ export default function Sales() {
           <h1 className="text-xl font-bold text-foreground">Sales</h1>
           <p className="text-sm text-muted-foreground">Manage sales invoices, payments and delivery challans</p>
         </div>
-        <Button className="gap-2"><Plus className="w-4 h-4" /> New Invoice</Button>
+        <Button className="gap-2" onClick={() => setShowCreateInvoice(true)}><Plus className="w-4 h-4" /> New Invoice</Button>
       </div>
 
       <Tabs defaultValue="invoices">
@@ -72,7 +72,7 @@ export default function Sales() {
                     </td>
                   </tr>
                 ))}
-                {invoices.length === 0 && <tr><td colSpan={5} className="px-5 py-8 text-center text-muted-foreground">No sales invoices yet.</td></tr>}
+                {invoices.length === 0 && <tr><td colSpan={5} className="px-5 py-8 text-center text-muted-foreground">No sales invoices yet. Click "New Invoice" to create one.</td></tr>}
               </tbody>
             </table>
           </div>
@@ -126,6 +126,8 @@ export default function Sales() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {showCreateInvoice && <CreateInvoiceForm onClose={() => setShowCreateInvoice(false)} onSaved={() => { setShowCreateInvoice(false); fetchData(); }} />}
     </div>
   );
 }

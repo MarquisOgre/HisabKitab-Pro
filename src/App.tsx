@@ -17,6 +17,7 @@ import SyncBackup from "@/pages/SyncBackup";
 import Utilities from "@/pages/Utilities";
 import SettingsPage from "@/pages/SettingsPage";
 import Auth from "@/pages/Auth";
+import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,7 +33,7 @@ function ProtectedRoutes() {
     );
   }
 
-  if (!session) return <Navigate to="/auth" replace />;
+  if (!session) return <Navigate to="/home" replace />;
 
   return (
     <Routes>
@@ -61,6 +62,13 @@ function AuthRoute() {
   return <Auth />;
 }
 
+function HomeRoute() {
+  const { session, loading } = useAuth();
+  if (loading) return null;
+  if (session) return <Navigate to="/" replace />;
+  return <Home />;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -69,6 +77,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/home" element={<HomeRoute />} />
             <Route path="/auth" element={<AuthRoute />} />
             <Route path="/*" element={<ProtectedRoutes />} />
           </Routes>
