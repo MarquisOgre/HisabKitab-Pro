@@ -63,6 +63,11 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
+        "hero-title": "hsl(var(--hero-title))",
+        "hero-subtitle": "hsl(var(--hero-subtitle))",
+        "feature-icon": "hsl(var(--feature-icon-color))",
+        "testimonial-star": "hsl(var(--testimonial-star))",
+        "footer-text": "hsl(var(--footer-text))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
