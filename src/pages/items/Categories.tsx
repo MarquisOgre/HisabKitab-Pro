@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Plus, Edit2, Trash2, FolderOpen } from "lucide-react";

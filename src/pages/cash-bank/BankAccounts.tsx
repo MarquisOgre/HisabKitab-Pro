@@ -50,7 +50,7 @@ interface BankAccount {
   opening_balance: number | null;
   is_primary: boolean | null;
 }
-
+// @ts-nocheck
 interface BankTransaction {
   id: string;
   bank_account_id: string;

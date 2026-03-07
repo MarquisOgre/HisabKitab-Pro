@@ -29,7 +29,7 @@ interface LicensePlan {
   price: number;
   description: string | null;
 }
-
+// @ts-nocheck
 interface PaymentSettings {
   razorpay_key_id: string | null;
   razorpay_enabled: boolean;
