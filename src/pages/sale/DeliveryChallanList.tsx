@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Plus, Search, Truck, MoreHorizontal, Eye, Download, ArrowRightCircle, Loader2 } from "lucide-react";

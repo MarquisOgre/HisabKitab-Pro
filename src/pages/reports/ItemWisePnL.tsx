@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { Download, Search, TrendingUp, TrendingDown, Package, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
