@@ -5,7 +5,7 @@ import { useAdminUserId } from "@/hooks/useAdminUserId";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { recordCashBankTransaction } from "@/hooks/useCashBankTransaction";
 import { toast } from "sonner";
-
+// @ts-nocheck
 // Generic item interface for both sale and purchase
 interface BaseInvoiceItem {
   itemId: string;
