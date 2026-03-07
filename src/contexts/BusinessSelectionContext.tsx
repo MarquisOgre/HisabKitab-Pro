@@ -13,8 +13,8 @@ export interface Business {
   phone: string | null;
   address: string | null;
   logo_url: string | null;
-  is_default: boolean;
-  is_active: boolean;
+  is_default: boolean | string;
+  is_active: boolean | string;
   created_at: string;
   updated_at: string;
 }
@@ -68,7 +68,7 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
       const { data: businessData, error: businessError } = await supabase
         .from('businesses')
         .select('*')
-        .eq('is_active', true)
+        .eq('is_active', 'true')
         .order('is_default', { ascending: false })
         .order('created_at', { ascending: true });
 
@@ -164,8 +164,8 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
           phone: data.phone,
           address: data.address,
           logo_url: data.logo_url,
-          is_default: isFirstBusiness,
-          is_active: true,
+          is_default: isFirstBusiness ? 'true' : 'false',
+          is_active: 'true',
         })
         .select()
         .single();

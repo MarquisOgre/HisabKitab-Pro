@@ -83,7 +83,7 @@ export function PaymentSettings() {
         id: data.id,
         razorpay_key_id: data.razorpay_key_id || '',
         razorpay_key_secret: data.razorpay_key_secret || '',
-        razorpay_enabled: data.razorpay_enabled || false,
+        razorpay_enabled: data.razorpay_enabled === 'true' || data.razorpay_enabled === true as any,
         upi_id: data.upi_id || '',
         upi_name: data.upi_name || '',
         bank_name: data.bank_name || '',

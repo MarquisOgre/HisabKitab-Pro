@@ -97,7 +97,7 @@ export function SuperAdminSettings() {
       if (contactsRes.error) throw contactsRes.error;
       if (trialsRes.error) throw trialsRes.error;
 
-      setContacts(contactsRes.data || []);
+      setContacts((contactsRes.data || []) as any);
       setTrialRequests(trialsRes.data || []);
     } catch (error: any) {
       toast.error("Failed to fetch data: " + error.message);
@@ -110,7 +110,7 @@ export function SuperAdminSettings() {
     try {
       const { error } = await supabase
         .from("contact_submissions")
-        .update({ is_read: isRead })
+        .update({ is_read: String(isRead) })
         .eq("id", id);
 
       if (error) throw error;

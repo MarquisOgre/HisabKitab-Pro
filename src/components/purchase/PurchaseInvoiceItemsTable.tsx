@@ -37,7 +37,7 @@ interface DbItem {
   id: string;
   name: string;
   hsn_code: string | null;
-  purchase_price: number | null;
+  purchase_price: string | null;
   unit: string | null;
   category_id: string | null;
 }
@@ -75,7 +75,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
     const { data } = await supabase
       .from("items")
       .select("id, name, hsn_code, purchase_price, unit, category_id")
-      .eq("is_deleted", false)
+      .eq("is_deleted", "false")
       .eq("business_id", selectedBusiness.id)
       .order("name");
     if (data) {

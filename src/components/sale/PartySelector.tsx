@@ -18,7 +18,7 @@ export interface Party {
   phone?: string;
   billing_address?: string;
   party_type: "customer" | "supplier";
-  opening_balance: number;
+  opening_balance: string | number;
 }
 
 interface PartySelectorProps {
