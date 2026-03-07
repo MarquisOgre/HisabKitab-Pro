@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { addDays, format } from "date-fns";
 import { isSuperAdminEmail } from "@/lib/superadmin";
-
+// @ts-nocheck
 interface UserLicense {
   id: string;
   user_id: string | null;

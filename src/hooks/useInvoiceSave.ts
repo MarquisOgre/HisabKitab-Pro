@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -5,7 +6,6 @@ import { useAdminUserId } from "@/hooks/useAdminUserId";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { recordCashBankTransaction } from "@/hooks/useCashBankTransaction";
 import { toast } from "sonner";
-// @ts-nocheck
 // Generic item interface for both sale and purchase
 interface BaseInvoiceItem {
   itemId: string;

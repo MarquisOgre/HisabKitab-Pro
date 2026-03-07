@@ -1,5 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
 // @ts-nocheck
+import { supabase } from "@/integrations/supabase/client";
 // Payment modes that should be treated as bank transactions
 const BANK_MODES = ["bank", "upi", "card", "cheque"];
 

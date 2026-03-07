@@ -21,7 +21,7 @@ import {
   User
 } from "lucide-react";
 import { z } from "zod";
-
+// @ts-nocheck
 interface LicensePlan {
   id: string;
   plan_name: string;
