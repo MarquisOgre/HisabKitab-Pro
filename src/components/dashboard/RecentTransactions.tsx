@@ -1,53 +1,79 @@
-import { Badge } from "@/components/ui/badge";
+import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const transactions = [
-  { id: "INV-001", date: "04 Mar 2026", customer: "Rajesh Traders", mode: "Cash", amount: "₹12,500", status: "Paid" },
-  { id: "INV-002", date: "04 Mar 2026", customer: "Priya Stores", mode: "UPI", amount: "₹8,300", status: "Paid" },
-  { id: "INV-003", date: "03 Mar 2026", customer: "Kumar & Sons", mode: "Credit", amount: "₹24,800", status: "Pending" },
-  { id: "INV-004", date: "03 Mar 2026", customer: "Anita Enterprises", mode: "Bank", amount: "₹15,600", status: "Paid" },
-  { id: "INV-005", date: "02 Mar 2026", customer: "Sharma Brothers", mode: "Cash", amount: "₹6,200", status: "Overdue" },
-];
+interface Transaction {
+  id: string;
+  type: 'sale' | 'purchase';
+  party: string;
+  amount: number;
+  date: string;
+  invoice: string;
+}
 
-export default function RecentTransactions() {
+interface RecentTransactionsProps {
+  transactions: Transaction[];
+}
+
+function formatCurrency(value: number): string {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+export function RecentTransactions({ transactions }: RecentTransactionsProps) {
   return (
-    <div className="stat-card p-0 overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-        <h3 className="text-sm font-semibold text-foreground">Recent Transactions</h3>
-        <button className="text-xs text-primary font-medium hover:underline">View All</button>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-secondary/50">
-              <th className="text-left px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Date</th>
-              <th className="text-left px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Invoice</th>
-              <th className="text-left px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Customer</th>
-              <th className="text-left px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Mode</th>
-              <th className="text-right px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Amount</th>
-              <th className="text-center px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((tx) => (
-              <tr key={tx.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
-                <td className="px-5 py-3 text-muted-foreground">{tx.date}</td>
-                <td className="px-5 py-3 font-medium text-primary">{tx.id}</td>
-                <td className="px-5 py-3 text-foreground">{tx.customer}</td>
-                <td className="px-5 py-3 text-muted-foreground">{tx.mode}</td>
-                <td className="px-5 py-3 text-right font-semibold text-foreground">{tx.amount}</td>
-                <td className="px-5 py-3 text-center">
-                  <Badge
-                    variant={tx.status === "Paid" ? "default" : tx.status === "Pending" ? "secondary" : "destructive"}
-                    className="text-[10px] px-2"
-                  >
-                    {tx.status}
-                  </Badge>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="metric-card p-3 md:p-4">
+      <h3 className="font-semibold text-base md:text-lg mb-3 md:mb-4">Recent Transactions</h3>
+      {transactions.length === 0 ? (
+        <div className="text-center py-6 md:py-8 text-muted-foreground">
+          <p className="text-sm md:text-base">No transactions yet</p>
+          <p className="text-xs md:text-sm">Create your first invoice to see transactions here</p>
+        </div>
+      ) : (
+        <div className="space-y-2 md:space-y-4">
+          {transactions.map((txn) => (
+            <div
+              key={txn.id}
+              className="flex items-center justify-between py-2 border-b border-border last:border-0"
+            >
+              <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+                <div
+                  className={cn(
+                    "p-1.5 md:p-2 rounded-lg shrink-0",
+                    txn.type === "sale"
+                      ? "bg-success/10 text-success"
+                      : "bg-warning/10 text-warning"
+                  )}
+                >
+                  {txn.type === "sale" ? (
+                    <ArrowUpCircle className="w-4 h-4 md:w-5 md:h-5" />
+                  ) : (
+                    <ArrowDownCircle className="w-4 h-4 md:w-5 md:h-5" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-medium text-xs md:text-sm truncate">{txn.party}</p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {txn.invoice} • {txn.date}
+                  </p>
+                </div>
+              </div>
+              <p
+                className={cn(
+                  "font-semibold text-xs md:text-sm shrink-0 ml-2",
+                  txn.type === "sale" ? "text-success" : "text-foreground"
+                )}
+              >
+                {txn.type === "sale" ? "+" : "-"}
+                {formatCurrency(txn.amount)}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

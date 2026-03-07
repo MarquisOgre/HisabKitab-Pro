@@ -1,33 +1,33 @@
-# Welcome to your Lovable project
+# Welcome to your HisabKitab-Pro project
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**URL**: https://github.com/MarquisOgre/HisabKitab-Pro
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes.  
+Pushed changes will also be reflected in the GitHub repository.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Simply clone the repo https://github.com/MarquisOgre/HisabKitab-Pro and start editing.
+
+Changes made can be committed to this HisabKitab-Pro repo.
+
+The only requirement is having Node.js & npm installed –  
+[install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone https://github.com/MarquisOgre/HisabKitab-Pro
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd HisabKitab-Pro
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -60,14 +60,46 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## How can I deploy this project to Vercel?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This project can be deployed and hosted on **Vercel**.
 
-## Can I connect a custom domain to my Lovable project?
+First, ensure that your latest code is pushed to GitHub:
 
-Yes, you can!
+```sh
+git add .
+git commit -m "Prepare for Vercel deployment"
+git push origin main
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Then follow these steps:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- Open https://vercel.com
+- Sign in using your GitHub account
+- Click on **New Project**
+- Select the **HisabKitab-Pro** repository
+- Allow Vercel to import the project
+
+Vercel will automatically detect the project as a **Vite + React** application.
+
+Verify the build settings before deploying:
+
+- Framework Preset: Vite
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+Click **Deploy** to start the deployment.
+
+The first deployment usually takes **1–2 minutes**.  
+Once completed, Vercel will provide a **live production URL**.
+
+## Can I connect a custom domain to Vercel?
+
+Yes, you can connect a custom domain to your Vercel project.
+
+- Go to the Vercel Dashboard
+- Open your project
+- Navigate to **Settings → Domains**
+- Add your custom domain and follow the DNS instructions
+
+Vercel automatically enables SSL for all connected domains.
