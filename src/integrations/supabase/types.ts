@@ -10,539 +10,492 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
       active_sessions: {
         Row: {
-          created_at: string
+          created_at: string | null
           device_info: string | null
-          id: string
+          id: string | null
           ip_address: string | null
-          last_activity: string
-          session_id: string
-          user_id: string
+          last_activity: string | null
+          session_id: string | null
+          user_id: string | null
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           device_info?: string | null
-          id?: string
+          id?: string | null
           ip_address?: string | null
-          last_activity?: string
-          session_id: string
-          user_id: string
+          last_activity?: string | null
+          session_id?: string | null
+          user_id?: string | null
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           device_info?: string | null
-          id?: string
+          id?: string | null
           ip_address?: string | null
-          last_activity?: string
-          session_id?: string
-          user_id?: string
+          last_activity?: string | null
+          session_id?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
       backup_settings: {
         Row: {
-          auto_backup_enabled: boolean | null
+          auto_backup_enabled: string | null
           backup_time: string | null
-          created_at: string
+          created_at: string | null
           frequency: string | null
-          id: string
-          retention_days: number | null
-          updated_at: string
-          user_id: string
+          id: string | null
+          retention_days: string | null
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
-          auto_backup_enabled?: boolean | null
+          auto_backup_enabled?: string | null
           backup_time?: string | null
-          created_at?: string
+          created_at?: string | null
           frequency?: string | null
-          id?: string
-          retention_days?: number | null
-          updated_at?: string
-          user_id: string
+          id?: string | null
+          retention_days?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
-          auto_backup_enabled?: boolean | null
+          auto_backup_enabled?: string | null
           backup_time?: string | null
-          created_at?: string
+          created_at?: string | null
           frequency?: string | null
-          id?: string
-          retention_days?: number | null
-          updated_at?: string
-          user_id?: string
+          id?: string | null
+          retention_days?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
       backups: {
         Row: {
-          backup_date: string
-          backup_name: string
-          backup_type: string
-          created_at: string
+          backup_date: string | null
+          backup_name: string | null
+          backup_type: string | null
+          created_at: string | null
           file_size: string | null
-          id: string
+          id: string | null
           status: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          backup_date?: string
-          backup_name: string
-          backup_type?: string
-          created_at?: string
+          backup_date?: string | null
+          backup_name?: string | null
+          backup_type?: string | null
+          created_at?: string | null
           file_size?: string | null
-          id?: string
+          id?: string | null
           status?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          backup_date?: string
-          backup_name?: string
-          backup_type?: string
-          created_at?: string
+          backup_date?: string | null
+          backup_name?: string | null
+          backup_type?: string | null
+          created_at?: string | null
           file_size?: string | null
-          id?: string
+          id?: string | null
           status?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
       bank_accounts: {
         Row: {
-          account_name: string
+          account_name: string | null
           account_number: string | null
           bank_name: string | null
           business_id: string | null
-          created_at: string
-          current_balance: number | null
-          id: string
+          created_at: string | null
+          current_balance: string | null
+          id: string | null
           ifsc_code: string | null
-          is_primary: boolean | null
-          opening_balance: number | null
-          updated_at: string
-          user_id: string
+          is_primary: string | null
+          opening_balance: string | null
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
-          account_name: string
+          account_name?: string | null
           account_number?: string | null
           bank_name?: string | null
           business_id?: string | null
-          created_at?: string
-          current_balance?: number | null
-          id?: string
+          created_at?: string | null
+          current_balance?: string | null
+          id?: string | null
           ifsc_code?: string | null
-          is_primary?: boolean | null
-          opening_balance?: number | null
-          updated_at?: string
-          user_id: string
+          is_primary?: string | null
+          opening_balance?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
-          account_name?: string
+          account_name?: string | null
           account_number?: string | null
           bank_name?: string | null
           business_id?: string | null
-          created_at?: string
-          current_balance?: number | null
-          id?: string
+          created_at?: string | null
+          current_balance?: string | null
+          id?: string | null
           ifsc_code?: string | null
-          is_primary?: boolean | null
-          opening_balance?: number | null
-          updated_at?: string
-          user_id?: string
+          is_primary?: string | null
+          opening_balance?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "bank_accounts_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       bank_transactions: {
         Row: {
-          amount: number
-          bank_account_id: string
+          amount: string | null
+          bank_account_id: string | null
           business_id: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
-          id: string
+          id: string | null
           reference_id: string | null
           reference_type: string | null
-          transaction_date: string
-          transaction_type: string
-          user_id: string
+          transaction_date: string | null
+          transaction_type: string | null
+          user_id: string | null
         }
         Insert: {
-          amount?: number
-          bank_account_id: string
+          amount?: string | null
+          bank_account_id?: string | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
+          id?: string | null
           reference_id?: string | null
           reference_type?: string | null
-          transaction_date?: string
-          transaction_type: string
-          user_id: string
+          transaction_date?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
         }
         Update: {
-          amount?: number
-          bank_account_id?: string
+          amount?: string | null
+          bank_account_id?: string | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
+          id?: string | null
           reference_id?: string | null
           reference_type?: string | null
-          transaction_date?: string
-          transaction_type?: string
-          user_id?: string
+          transaction_date?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "bank_transactions_bank_account_id_fkey"
-            columns: ["bank_account_id"]
-            isOneToOne: false
-            referencedRelation: "bank_accounts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "bank_transactions_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       business_settings: {
         Row: {
-          auto_print_on_save: boolean | null
+          auto_print_on_save: string | null
           business_address: string | null
           business_id: string | null
           business_name: string | null
-          created_at: string
-          default_payment_terms: number | null
+          created_at: string | null
+          default_payment_terms: string | null
           email: string | null
           estimation_prefix: string | null
           financial_year_start: string | null
           global_logo_url: string | null
-          gst_payable: number | null
-          gst_receivable: number | null
+          gst_payable: string | null
+          gst_receivable: string | null
           gst_registration_type: string | null
           gstin: string | null
-          id: string
+          id: string | null
           invoice_prefix: string | null
           invoice_template: string | null
           invoice_terms: string | null
           logo_url: string | null
-          next_invoice_number: number | null
+          next_invoice_number: string | null
           pan: string | null
           paper_size: string | null
           phone: string | null
           purchase_prefix: string | null
-          show_bank_details: boolean | null
-          show_logo_on_invoice: boolean | null
-          show_qr_code: boolean | null
+          show_bank_details: string | null
+          show_logo_on_invoice: string | null
+          show_qr_code: string | null
           state_code: string | null
-          tcs_payable: number | null
-          tcs_receivable: number | null
-          tds_payable: number | null
-          tds_receivable: number | null
-          updated_at: string
-          use_global_logo: boolean | null
-          user_id: string
+          tcs_payable: string | null
+          tcs_receivable: string | null
+          tds_payable: string | null
+          tds_receivable: string | null
+          updated_at: string | null
+          use_global_logo: string | null
+          user_id: string | null
         }
         Insert: {
-          auto_print_on_save?: boolean | null
+          auto_print_on_save?: string | null
           business_address?: string | null
           business_id?: string | null
           business_name?: string | null
-          created_at?: string
-          default_payment_terms?: number | null
+          created_at?: string | null
+          default_payment_terms?: string | null
           email?: string | null
           estimation_prefix?: string | null
           financial_year_start?: string | null
           global_logo_url?: string | null
-          gst_payable?: number | null
-          gst_receivable?: number | null
+          gst_payable?: string | null
+          gst_receivable?: string | null
           gst_registration_type?: string | null
           gstin?: string | null
-          id?: string
+          id?: string | null
           invoice_prefix?: string | null
           invoice_template?: string | null
           invoice_terms?: string | null
           logo_url?: string | null
-          next_invoice_number?: number | null
+          next_invoice_number?: string | null
           pan?: string | null
           paper_size?: string | null
           phone?: string | null
           purchase_prefix?: string | null
-          show_bank_details?: boolean | null
-          show_logo_on_invoice?: boolean | null
-          show_qr_code?: boolean | null
+          show_bank_details?: string | null
+          show_logo_on_invoice?: string | null
+          show_qr_code?: string | null
           state_code?: string | null
-          tcs_payable?: number | null
-          tcs_receivable?: number | null
-          tds_payable?: number | null
-          tds_receivable?: number | null
-          updated_at?: string
-          use_global_logo?: boolean | null
-          user_id: string
+          tcs_payable?: string | null
+          tcs_receivable?: string | null
+          tds_payable?: string | null
+          tds_receivable?: string | null
+          updated_at?: string | null
+          use_global_logo?: string | null
+          user_id?: string | null
         }
         Update: {
-          auto_print_on_save?: boolean | null
+          auto_print_on_save?: string | null
           business_address?: string | null
           business_id?: string | null
           business_name?: string | null
-          created_at?: string
-          default_payment_terms?: number | null
+          created_at?: string | null
+          default_payment_terms?: string | null
           email?: string | null
           estimation_prefix?: string | null
           financial_year_start?: string | null
           global_logo_url?: string | null
-          gst_payable?: number | null
-          gst_receivable?: number | null
+          gst_payable?: string | null
+          gst_receivable?: string | null
           gst_registration_type?: string | null
           gstin?: string | null
-          id?: string
+          id?: string | null
           invoice_prefix?: string | null
           invoice_template?: string | null
           invoice_terms?: string | null
           logo_url?: string | null
-          next_invoice_number?: number | null
+          next_invoice_number?: string | null
           pan?: string | null
           paper_size?: string | null
           phone?: string | null
           purchase_prefix?: string | null
-          show_bank_details?: boolean | null
-          show_logo_on_invoice?: boolean | null
-          show_qr_code?: boolean | null
+          show_bank_details?: string | null
+          show_logo_on_invoice?: string | null
+          show_qr_code?: string | null
           state_code?: string | null
-          tcs_payable?: number | null
-          tcs_receivable?: number | null
-          tds_payable?: number | null
-          tds_receivable?: number | null
-          updated_at?: string
-          use_global_logo?: boolean | null
-          user_id?: string
+          tcs_payable?: string | null
+          tcs_receivable?: string | null
+          tds_payable?: string | null
+          tds_receivable?: string | null
+          updated_at?: string | null
+          use_global_logo?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "business_settings_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: true
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       businesses: {
         Row: {
           address: string | null
-          created_at: string
+          created_at: string | null
           email: string | null
           gstin: string | null
-          id: string
-          is_active: boolean | null
-          is_default: boolean | null
+          id: string | null
+          is_active: string | null
+          is_default: string | null
           logo_url: string | null
-          name: string
+          name: string | null
           pan: string | null
           phone: string | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           address?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string
-          is_active?: boolean | null
-          is_default?: boolean | null
+          id?: string | null
+          is_active?: string | null
+          is_default?: string | null
           logo_url?: string | null
-          name: string
+          name?: string | null
           pan?: string | null
           phone?: string | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           address?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string
-          is_active?: boolean | null
-          is_default?: boolean | null
+          id?: string | null
+          is_active?: string | null
+          is_default?: string | null
           logo_url?: string | null
-          name?: string
+          name?: string | null
           pan?: string | null
           phone?: string | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
       cash_transactions: {
         Row: {
-          amount: number
+          amount: string | null
           business_id: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
-          id: string
+          id: string | null
           reference_id: string | null
           reference_type: string | null
-          transaction_date: string
-          transaction_type: string
-          user_id: string
+          transaction_date: string | null
+          transaction_type: string | null
+          user_id: string | null
         }
         Insert: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
+          id?: string | null
           reference_id?: string | null
           reference_type?: string | null
-          transaction_date?: string
-          transaction_type: string
-          user_id: string
+          transaction_date?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
         }
         Update: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
+          id?: string | null
           reference_id?: string | null
           reference_type?: string | null
-          transaction_date?: string
-          transaction_type?: string
-          user_id?: string
+          transaction_date?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "cash_transactions_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       categories: {
         Row: {
           business_id: string | null
-          created_at: string
+          created_at: string | null
           description: string | null
-          id: string
-          name: string
-          user_id: string
+          id: string | null
+          name: string | null
+          user_id: string | null
         }
         Insert: {
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
-          name: string
-          user_id: string
+          id?: string | null
+          name?: string | null
+          user_id?: string | null
         }
         Update: {
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           description?: string | null
-          id?: string
-          name?: string
-          user_id?: string
+          id?: string | null
+          name?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "categories_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       contact_submissions: {
         Row: {
-          created_at: string
-          email: string
-          id: string
-          is_read: boolean | null
-          message: string
-          name: string
+          created_at: string | null
+          email: string | null
+          id: string | null
+          is_read: string | null
+          message: string | null
+          name: string | null
           phone: string | null
         }
         Insert: {
-          created_at?: string
-          email: string
-          id?: string
-          is_read?: boolean | null
-          message: string
-          name: string
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_read?: string | null
+          message?: string | null
+          name?: string | null
           phone?: string | null
         }
         Update: {
-          created_at?: string
-          email?: string
-          id?: string
-          is_read?: boolean | null
-          message?: string
-          name?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_read?: string | null
+          message?: string | null
+          name?: string | null
           phone?: string | null
         }
         Relationships: []
       }
       email_settings: {
         Row: {
-          created_at: string
-          from_email: string
-          from_name: string
-          id: string
+          created_at: string | null
+          from_email: string | null
+          from_name: string | null
+          id: string | null
           is_active: boolean | null
-          provider: string
+          provider: string | null
           resend_api_key: string | null
-          superadmin_email: string
-          updated_at: string
+          superadmin_email: string | null
+          updated_at: string | null
           zoho_email: string | null
           zoho_password: string | null
           zoho_smtp_host: string | null
           zoho_smtp_port: number | null
         }
         Insert: {
-          created_at?: string
-          from_email?: string
-          from_name?: string
-          id?: string
+          created_at?: string | null
+          from_email?: string | null
+          from_name?: string | null
+          id?: string | null
           is_active?: boolean | null
-          provider?: string
+          provider?: string | null
           resend_api_key?: string | null
-          superadmin_email?: string
-          updated_at?: string
+          superadmin_email?: string | null
+          updated_at?: string | null
           zoho_email?: string | null
           zoho_password?: string | null
           zoho_smtp_host?: string | null
           zoho_smtp_port?: number | null
         }
         Update: {
-          created_at?: string
-          from_email?: string
-          from_name?: string
-          id?: string
+          created_at?: string | null
+          from_email?: string | null
+          from_name?: string | null
+          id?: string | null
           is_active?: boolean | null
-          provider?: string
+          provider?: string | null
           resend_api_key?: string | null
-          superadmin_email?: string
-          updated_at?: string
+          superadmin_email?: string | null
+          updated_at?: string | null
           zoho_email?: string | null
           zoho_password?: string | null
           zoho_smtp_host?: string | null
@@ -552,157 +505,134 @@ export type Database = {
       }
       expenses: {
         Row: {
-          amount: number
+          amount: string | null
           business_id: string | null
-          category: string
-          created_at: string
-          expense_date: string
-          expense_number: string
-          id: string
+          category: string | null
+          created_at: string | null
+          expense_date: string | null
+          expense_number: string | null
+          id: string | null
           notes: string | null
           payment_mode: string | null
           reference_number: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          category: string
-          created_at?: string
-          expense_date?: string
-          expense_number: string
-          id?: string
+          category?: string | null
+          created_at?: string | null
+          expense_date?: string | null
+          expense_number?: string | null
+          id?: string | null
           notes?: string | null
           payment_mode?: string | null
           reference_number?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          category?: string
-          created_at?: string
-          expense_date?: string
-          expense_number?: string
-          id?: string
+          category?: string | null
+          created_at?: string | null
+          expense_date?: string | null
+          expense_number?: string | null
+          id?: string | null
           notes?: string | null
           payment_mode?: string | null
           reference_number?: string | null
-          user_id?: string
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "expenses_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       items: {
         Row: {
           business_id: string | null
           category_id: string | null
-          created_at: string
-          current_stock: number | null
+          created_at: string | null
+          current_stock: string | null
           deleted_at: string | null
           hsn_code: string | null
-          id: string
-          is_deleted: boolean | null
-          low_stock_alert: number | null
-          name: string
-          opening_stock: number | null
-          purchase_price: number | null
-          sale_price: number | null
+          id: string | null
+          is_deleted: string | null
+          low_stock_alert: string | null
+          name: string | null
+          opening_stock: string | null
+          purchase_price: string | null
+          sale_price: string | null
           unit: string | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           business_id?: string | null
           category_id?: string | null
-          created_at?: string
-          current_stock?: number | null
+          created_at?: string | null
+          current_stock?: string | null
           deleted_at?: string | null
           hsn_code?: string | null
-          id?: string
-          is_deleted?: boolean | null
-          low_stock_alert?: number | null
-          name: string
-          opening_stock?: number | null
-          purchase_price?: number | null
-          sale_price?: number | null
+          id?: string | null
+          is_deleted?: string | null
+          low_stock_alert?: string | null
+          name?: string | null
+          opening_stock?: string | null
+          purchase_price?: string | null
+          sale_price?: string | null
           unit?: string | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           business_id?: string | null
           category_id?: string | null
-          created_at?: string
-          current_stock?: number | null
+          created_at?: string | null
+          current_stock?: string | null
           deleted_at?: string | null
           hsn_code?: string | null
-          id?: string
-          is_deleted?: boolean | null
-          low_stock_alert?: number | null
-          name?: string
-          opening_stock?: number | null
-          purchase_price?: number | null
-          sale_price?: number | null
+          id?: string | null
+          is_deleted?: string | null
+          low_stock_alert?: string | null
+          name?: string | null
+          opening_stock?: string | null
+          purchase_price?: string | null
+          sale_price?: string | null
           unit?: string | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "items_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "items_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       license_plans: {
         Row: {
           created_at: string | null
           description: string | null
-          duration_days: number
-          id: string
+          duration_days: number | null
+          id: string | null
           is_active: boolean | null
-          plan_name: string
-          price: number
+          plan_name: string | null
+          price: number | null
           sort_order: number | null
           updated_at: string | null
         }
         Insert: {
           created_at?: string | null
           description?: string | null
-          duration_days: number
-          id?: string
+          duration_days?: number | null
+          id?: string | null
           is_active?: boolean | null
-          plan_name: string
-          price?: number
+          plan_name?: string | null
+          price?: number | null
           sort_order?: number | null
           updated_at?: string | null
         }
         Update: {
           created_at?: string | null
           description?: string | null
-          duration_days?: number
-          id?: string
+          duration_days?: number | null
+          id?: string | null
           is_active?: boolean | null
-          plan_name?: string
-          price?: number
+          plan_name?: string | null
+          price?: number | null
           sort_order?: number | null
           updated_at?: string | null
         }
@@ -710,10 +640,10 @@ export type Database = {
       }
       license_settings: {
         Row: {
-          created_at: string
-          expiry_date: string
-          id: string
-          license_type: string
+          created_at: string | null
+          expiry_date: string | null
+          id: string | null
+          license_type: string | null
           licensed_to: string | null
           max_businesses: number | null
           max_simultaneous_logins: number | null
@@ -721,15 +651,15 @@ export type Database = {
           support_email: string | null
           support_phone: string | null
           support_whatsapp: string | null
-          updated_at: string
+          updated_at: string | null
           user_email: string | null
           user_id: string | null
         }
         Insert: {
-          created_at?: string
-          expiry_date?: string
-          id?: string
-          license_type?: string
+          created_at?: string | null
+          expiry_date?: string | null
+          id?: string | null
+          license_type?: string | null
           licensed_to?: string | null
           max_businesses?: number | null
           max_simultaneous_logins?: number | null
@@ -737,15 +667,15 @@ export type Database = {
           support_email?: string | null
           support_phone?: string | null
           support_whatsapp?: string | null
-          updated_at?: string
+          updated_at?: string | null
           user_email?: string | null
           user_id?: string | null
         }
         Update: {
-          created_at?: string
-          expiry_date?: string
-          id?: string
-          license_type?: string
+          created_at?: string | null
+          expiry_date?: string | null
+          id?: string | null
+          license_type?: string | null
           licensed_to?: string | null
           max_businesses?: number | null
           max_simultaneous_logins?: number | null
@@ -753,7 +683,7 @@ export type Database = {
           support_email?: string | null
           support_phone?: string | null
           support_whatsapp?: string | null
-          updated_at?: string
+          updated_at?: string | null
           user_email?: string | null
           user_id?: string | null
         }
@@ -761,31 +691,31 @@ export type Database = {
       }
       notifications: {
         Row: {
-          created_at: string
-          id: string
-          is_read: boolean | null
-          message: string
-          title: string
+          created_at: string | null
+          id: string | null
+          is_read: string | null
+          message: string | null
+          title: string | null
           type: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          message: string
-          title: string
+          created_at?: string | null
+          id?: string | null
+          is_read?: string | null
+          message?: string | null
+          title?: string | null
           type?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          message?: string
-          title?: string
+          created_at?: string | null
+          id?: string | null
+          is_read?: string | null
+          message?: string | null
+          title?: string | null
           type?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -793,60 +723,52 @@ export type Database = {
         Row: {
           billing_address: string | null
           business_id: string | null
-          created_at: string
-          credit_limit: number | null
+          created_at: string | null
+          credit_limit: string | null
           email: string | null
           gstin: string | null
-          id: string
-          name: string
-          opening_balance: number | null
+          id: string | null
+          name: string | null
+          opening_balance: string | null
           party_type: string | null
           phone: string | null
           shipping_address: string | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           billing_address?: string | null
           business_id?: string | null
-          created_at?: string
-          credit_limit?: number | null
+          created_at?: string | null
+          credit_limit?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string
-          name: string
-          opening_balance?: number | null
+          id?: string | null
+          name?: string | null
+          opening_balance?: string | null
           party_type?: string | null
           phone?: string | null
           shipping_address?: string | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           billing_address?: string | null
           business_id?: string | null
-          created_at?: string
-          credit_limit?: number | null
+          created_at?: string | null
+          credit_limit?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string
-          name?: string
-          opening_balance?: number | null
+          id?: string | null
+          name?: string | null
+          opening_balance?: string | null
           party_type?: string | null
           phone?: string | null
           shipping_address?: string | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "parties_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       payment_settings: {
         Row: {
@@ -855,8 +777,8 @@ export type Database = {
           bank_ifsc: string | null
           bank_name: string | null
           created_at: string | null
-          id: string
-          razorpay_enabled: boolean | null
+          id: string | null
+          razorpay_enabled: string | null
           razorpay_key_id: string | null
           razorpay_key_secret: string | null
           updated_at: string | null
@@ -869,8 +791,8 @@ export type Database = {
           bank_ifsc?: string | null
           bank_name?: string | null
           created_at?: string | null
-          id?: string
-          razorpay_enabled?: boolean | null
+          id?: string | null
+          razorpay_enabled?: string | null
           razorpay_key_id?: string | null
           razorpay_key_secret?: string | null
           updated_at?: string | null
@@ -883,8 +805,8 @@ export type Database = {
           bank_ifsc?: string | null
           bank_name?: string | null
           created_at?: string | null
-          id?: string
-          razorpay_enabled?: boolean | null
+          id?: string | null
+          razorpay_enabled?: string | null
           razorpay_key_id?: string | null
           razorpay_key_secret?: string | null
           updated_at?: string | null
@@ -895,537 +817,426 @@ export type Database = {
       }
       payments: {
         Row: {
-          amount: number
+          amount: string | null
           business_id: string | null
-          created_at: string
-          id: string
+          created_at: string | null
+          id: string | null
           notes: string | null
           party_id: string | null
-          payment_date: string
+          payment_date: string | null
           payment_mode: string | null
-          payment_number: string
-          payment_type: string
+          payment_number: string | null
+          payment_type: string | null
           purchase_invoice_id: string | null
           reference_number: string | null
           sale_invoice_id: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          created_at?: string
-          id?: string
+          created_at?: string | null
+          id?: string | null
           notes?: string | null
           party_id?: string | null
-          payment_date?: string
+          payment_date?: string | null
           payment_mode?: string | null
-          payment_number: string
-          payment_type: string
+          payment_number?: string | null
+          payment_type?: string | null
           purchase_invoice_id?: string | null
           reference_number?: string | null
           sale_invoice_id?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          amount?: number
+          amount?: string | null
           business_id?: string | null
-          created_at?: string
-          id?: string
+          created_at?: string | null
+          id?: string | null
           notes?: string | null
           party_id?: string | null
-          payment_date?: string
+          payment_date?: string | null
           payment_mode?: string | null
-          payment_number?: string
-          payment_type?: string
+          payment_number?: string | null
+          payment_type?: string | null
           purchase_invoice_id?: string | null
           reference_number?: string | null
           sale_invoice_id?: string | null
-          user_id?: string
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "payments_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "payments_party_id_fkey"
-            columns: ["party_id"]
-            isOneToOne: false
-            referencedRelation: "parties"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "payments_purchase_invoice_id_fkey"
-            columns: ["purchase_invoice_id"]
-            isOneToOne: false
-            referencedRelation: "purchase_invoices"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "payments_sale_invoice_id_fkey"
-            columns: ["sale_invoice_id"]
-            isOneToOne: false
-            referencedRelation: "sale_invoices"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       plan_payments: {
         Row: {
-          amount: number
-          created_at: string
-          id: string
+          amount: number | null
+          created_at: string | null
+          id: string | null
           manual_reference_id: string | null
           notes: string | null
-          payment_method: string
+          payment_method: string | null
           plan_id: string | null
-          plan_name: string
+          plan_name: string | null
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
-          status: string
-          updated_at: string
-          user_email: string
+          status: string | null
+          updated_at: string | null
+          user_email: string | null
           user_id: string | null
           user_name: string | null
           verified_at: string | null
           verified_by: string | null
         }
         Insert: {
-          amount: number
-          created_at?: string
-          id?: string
+          amount?: number | null
+          created_at?: string | null
+          id?: string | null
           manual_reference_id?: string | null
           notes?: string | null
-          payment_method: string
+          payment_method?: string | null
           plan_id?: string | null
-          plan_name: string
+          plan_name?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
-          status?: string
-          updated_at?: string
-          user_email: string
+          status?: string | null
+          updated_at?: string | null
+          user_email?: string | null
           user_id?: string | null
           user_name?: string | null
           verified_at?: string | null
           verified_by?: string | null
         }
         Update: {
-          amount?: number
-          created_at?: string
-          id?: string
+          amount?: number | null
+          created_at?: string | null
+          id?: string | null
           manual_reference_id?: string | null
           notes?: string | null
-          payment_method?: string
+          payment_method?: string | null
           plan_id?: string | null
-          plan_name?: string
+          plan_name?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
-          status?: string
-          updated_at?: string
-          user_email?: string
+          status?: string | null
+          updated_at?: string | null
+          user_email?: string | null
           user_id?: string | null
           user_name?: string | null
           verified_at?: string | null
           verified_by?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "plan_payments_plan_id_fkey"
-            columns: ["plan_id"]
-            isOneToOne: false
-            referencedRelation: "license_plans"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       profiles: {
         Row: {
           avatar_url: string | null
-          created_at: string
+          created_at: string | null
           email: string | null
           full_name: string | null
-          id: string
+          id: string | null
           parent_user_id: string | null
           phone: string | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           avatar_url?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           full_name?: string | null
-          id?: string
+          id?: string | null
           parent_user_id?: string | null
           phone?: string | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           avatar_url?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           full_name?: string | null
-          id?: string
+          id?: string | null
           parent_user_id?: string | null
           phone?: string | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
       purchase_invoice_items: {
         Row: {
           business_id: string | null
-          created_at: string
-          discount_amount: number | null
-          discount_percent: number | null
+          created_at: string | null
+          discount_amount: string | null
+          discount_percent: string | null
           hsn_code: string | null
-          id: string
+          id: string | null
           item_id: string | null
-          item_name: string
-          purchase_invoice_id: string
-          quantity: number
-          rate: number
-          tax_amount: number | null
-          tax_rate: number | null
-          total: number
+          item_name: string | null
+          purchase_invoice_id: string | null
+          quantity: number | null
+          rate: number | null
+          tax_amount: string | null
+          tax_rate: string | null
+          total: number | null
           unit: string | null
         }
         Insert: {
           business_id?: string | null
-          created_at?: string
-          discount_amount?: number | null
-          discount_percent?: number | null
+          created_at?: string | null
+          discount_amount?: string | null
+          discount_percent?: string | null
           hsn_code?: string | null
-          id?: string
+          id?: string | null
           item_id?: string | null
-          item_name: string
-          purchase_invoice_id: string
-          quantity?: number
-          rate?: number
-          tax_amount?: number | null
-          tax_rate?: number | null
-          total?: number
+          item_name?: string | null
+          purchase_invoice_id?: string | null
+          quantity?: number | null
+          rate?: number | null
+          tax_amount?: string | null
+          tax_rate?: string | null
+          total?: number | null
           unit?: string | null
         }
         Update: {
           business_id?: string | null
-          created_at?: string
-          discount_amount?: number | null
-          discount_percent?: number | null
+          created_at?: string | null
+          discount_amount?: string | null
+          discount_percent?: string | null
           hsn_code?: string | null
-          id?: string
+          id?: string | null
           item_id?: string | null
-          item_name?: string
-          purchase_invoice_id?: string
-          quantity?: number
-          rate?: number
-          tax_amount?: number | null
-          tax_rate?: number | null
-          total?: number
+          item_name?: string | null
+          purchase_invoice_id?: string | null
+          quantity?: number | null
+          rate?: number | null
+          tax_amount?: string | null
+          tax_rate?: string | null
+          total?: number | null
           unit?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "purchase_invoice_items_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "purchase_invoice_items_item_id_fkey"
-            columns: ["item_id"]
-            isOneToOne: false
-            referencedRelation: "items"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "purchase_invoice_items_purchase_invoice_id_fkey"
-            columns: ["purchase_invoice_id"]
-            isOneToOne: false
-            referencedRelation: "purchase_invoices"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       purchase_invoices: {
         Row: {
           balance_due: number | null
           business_id: string | null
-          created_at: string
+          created_at: string | null
           deleted_at: string | null
-          discount_amount: number | null
+          discount_amount: string | null
           due_date: string | null
-          id: string
-          invoice_date: string
-          invoice_number: string
-          invoice_type: string
+          id: string | null
+          invoice_date: string | null
+          invoice_number: string | null
+          invoice_type: string | null
           is_deleted: boolean | null
           notes: string | null
-          paid_amount: number | null
+          paid_amount: string | null
           party_id: string | null
           status: string | null
           subtotal: number | null
-          tax_amount: number | null
+          tax_amount: string | null
           tcs_amount: number | null
-          tds_amount: number | null
+          tds_amount: string | null
           terms: string | null
           total_amount: number | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           balance_due?: number | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           deleted_at?: string | null
-          discount_amount?: number | null
+          discount_amount?: string | null
           due_date?: string | null
-          id?: string
-          invoice_date?: string
-          invoice_number: string
-          invoice_type?: string
+          id?: string | null
+          invoice_date?: string | null
+          invoice_number?: string | null
+          invoice_type?: string | null
           is_deleted?: boolean | null
           notes?: string | null
-          paid_amount?: number | null
+          paid_amount?: string | null
           party_id?: string | null
           status?: string | null
           subtotal?: number | null
-          tax_amount?: number | null
+          tax_amount?: string | null
           tcs_amount?: number | null
-          tds_amount?: number | null
+          tds_amount?: string | null
           terms?: string | null
           total_amount?: number | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           balance_due?: number | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           deleted_at?: string | null
-          discount_amount?: number | null
+          discount_amount?: string | null
           due_date?: string | null
-          id?: string
-          invoice_date?: string
-          invoice_number?: string
-          invoice_type?: string
+          id?: string | null
+          invoice_date?: string | null
+          invoice_number?: string | null
+          invoice_type?: string | null
           is_deleted?: boolean | null
           notes?: string | null
-          paid_amount?: number | null
+          paid_amount?: string | null
           party_id?: string | null
           status?: string | null
           subtotal?: number | null
-          tax_amount?: number | null
+          tax_amount?: string | null
           tcs_amount?: number | null
-          tds_amount?: number | null
+          tds_amount?: string | null
           terms?: string | null
           total_amount?: number | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "purchase_invoices_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "purchase_invoices_party_id_fkey"
-            columns: ["party_id"]
-            isOneToOne: false
-            referencedRelation: "parties"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       sale_invoice_items: {
         Row: {
           business_id: string | null
-          created_at: string
-          discount_amount: number | null
-          discount_percent: number | null
+          created_at: string | null
+          discount_amount: string | null
+          discount_percent: string | null
           hsn_code: string | null
-          id: string
+          id: string | null
           item_id: string | null
-          item_name: string
-          quantity: number
-          rate: number
-          sale_invoice_id: string
-          tax_amount: number | null
-          tax_rate: number | null
-          total: number
+          item_name: string | null
+          quantity: number | null
+          rate: number | null
+          sale_invoice_id: string | null
+          tax_amount: string | null
+          tax_rate: string | null
+          total: number | null
           unit: string | null
         }
         Insert: {
           business_id?: string | null
-          created_at?: string
-          discount_amount?: number | null
-          discount_percent?: number | null
+          created_at?: string | null
+          discount_amount?: string | null
+          discount_percent?: string | null
           hsn_code?: string | null
-          id?: string
+          id?: string | null
           item_id?: string | null
-          item_name: string
-          quantity?: number
-          rate?: number
-          sale_invoice_id: string
-          tax_amount?: number | null
-          tax_rate?: number | null
-          total?: number
+          item_name?: string | null
+          quantity?: number | null
+          rate?: number | null
+          sale_invoice_id?: string | null
+          tax_amount?: string | null
+          tax_rate?: string | null
+          total?: number | null
           unit?: string | null
         }
         Update: {
           business_id?: string | null
-          created_at?: string
-          discount_amount?: number | null
-          discount_percent?: number | null
+          created_at?: string | null
+          discount_amount?: string | null
+          discount_percent?: string | null
           hsn_code?: string | null
-          id?: string
+          id?: string | null
           item_id?: string | null
-          item_name?: string
-          quantity?: number
-          rate?: number
-          sale_invoice_id?: string
-          tax_amount?: number | null
-          tax_rate?: number | null
-          total?: number
+          item_name?: string | null
+          quantity?: number | null
+          rate?: number | null
+          sale_invoice_id?: string | null
+          tax_amount?: string | null
+          tax_rate?: string | null
+          total?: number | null
           unit?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "sale_invoice_items_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "sale_invoice_items_item_id_fkey"
-            columns: ["item_id"]
-            isOneToOne: false
-            referencedRelation: "items"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "sale_invoice_items_sale_invoice_id_fkey"
-            columns: ["sale_invoice_id"]
-            isOneToOne: false
-            referencedRelation: "sale_invoices"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       sale_invoices: {
         Row: {
           balance_due: number | null
           business_id: string | null
-          created_at: string
+          created_at: string | null
           deleted_at: string | null
-          discount_amount: number | null
+          discount_amount: string | null
           due_date: string | null
-          id: string
-          invoice_date: string
-          invoice_number: string
-          invoice_type: string
+          id: string | null
+          invoice_date: string | null
+          invoice_number: string | null
+          invoice_type: string | null
           is_deleted: boolean | null
           notes: string | null
-          paid_amount: number | null
+          paid_amount: string | null
           party_id: string | null
           status: string | null
           subtotal: number | null
-          tax_amount: number | null
-          tcs_amount: number | null
-          tds_amount: number | null
+          tax_amount: string | null
+          tcs_amount: string | null
+          tds_amount: string | null
           terms: string | null
           total_amount: number | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           balance_due?: number | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           deleted_at?: string | null
-          discount_amount?: number | null
+          discount_amount?: string | null
           due_date?: string | null
-          id?: string
-          invoice_date?: string
-          invoice_number: string
-          invoice_type?: string
+          id?: string | null
+          invoice_date?: string | null
+          invoice_number?: string | null
+          invoice_type?: string | null
           is_deleted?: boolean | null
           notes?: string | null
-          paid_amount?: number | null
+          paid_amount?: string | null
           party_id?: string | null
           status?: string | null
           subtotal?: number | null
-          tax_amount?: number | null
-          tcs_amount?: number | null
-          tds_amount?: number | null
+          tax_amount?: string | null
+          tcs_amount?: string | null
+          tds_amount?: string | null
           terms?: string | null
           total_amount?: number | null
-          updated_at?: string
-          user_id: string
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           balance_due?: number | null
           business_id?: string | null
-          created_at?: string
+          created_at?: string | null
           deleted_at?: string | null
-          discount_amount?: number | null
+          discount_amount?: string | null
           due_date?: string | null
-          id?: string
-          invoice_date?: string
-          invoice_number?: string
-          invoice_type?: string
+          id?: string | null
+          invoice_date?: string | null
+          invoice_number?: string | null
+          invoice_type?: string | null
           is_deleted?: boolean | null
           notes?: string | null
-          paid_amount?: number | null
+          paid_amount?: string | null
           party_id?: string | null
           status?: string | null
           subtotal?: number | null
-          tax_amount?: number | null
-          tcs_amount?: number | null
-          tds_amount?: number | null
+          tax_amount?: string | null
+          tcs_amount?: string | null
+          tds_amount?: string | null
           terms?: string | null
           total_amount?: number | null
-          updated_at?: string
-          user_id?: string
+          updated_at?: string | null
+          user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "sale_invoices_business_id_fkey"
-            columns: ["business_id"]
-            isOneToOne: false
-            referencedRelation: "businesses"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "sale_invoices_party_id_fkey"
-            columns: ["party_id"]
-            isOneToOne: false
-            referencedRelation: "parties"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       trial_requests: {
         Row: {
           approved_at: string | null
           approved_by: string | null
           business_name: string | null
-          created_at: string
-          email: string
-          id: string
-          name: string
+          created_at: string | null
+          email: string | null
+          id: string | null
+          name: string | null
           notes: string | null
-          phone: string
+          phone: string | null
           status: string | null
           trial_end_date: string | null
           trial_start_date: string | null
@@ -1434,12 +1245,12 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           business_name?: string | null
-          created_at?: string
-          email: string
-          id?: string
-          name: string
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          name?: string | null
           notes?: string | null
-          phone: string
+          phone?: string | null
           status?: string | null
           trial_end_date?: string | null
           trial_start_date?: string | null
@@ -1448,12 +1259,12 @@ export type Database = {
           approved_at?: string | null
           approved_by?: string | null
           business_name?: string | null
-          created_at?: string
-          email?: string
-          id?: string
-          name?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          name?: string | null
           notes?: string | null
-          phone?: string
+          phone?: string | null
           status?: string | null
           trial_end_date?: string | null
           trial_start_date?: string | null
@@ -1462,52 +1273,52 @@ export type Database = {
       }
       units: {
         Row: {
-          created_at: string
-          id: string
-          is_default: boolean | null
-          name: string
+          created_at: string | null
+          id: string | null
+          is_default: string | null
+          name: string | null
           symbol: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
-          created_at?: string
-          id?: string
-          is_default?: boolean | null
-          name: string
+          created_at?: string | null
+          id?: string | null
+          is_default?: string | null
+          name?: string | null
           symbol?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
-          created_at?: string
-          id?: string
-          is_default?: boolean | null
-          name?: string
+          created_at?: string | null
+          id?: string | null
+          is_default?: string | null
+          name?: string | null
           symbol?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
       user_roles: {
         Row: {
-          created_at: string
-          id: string
+          created_at: string | null
+          id: string | null
           parent_user_id: string | null
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
+          role: string | null
+          user_id: string | null
         }
         Insert: {
-          created_at?: string
-          id?: string
+          created_at?: string | null
+          id?: string | null
           parent_user_id?: string | null
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id: string
+          role?: string | null
+          user_id?: string | null
         }
         Update: {
-          created_at?: string
-          id?: string
+          created_at?: string | null
+          id?: string | null
           parent_user_id?: string | null
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
+          role?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -1516,69 +1327,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      can_write: { Args: { _user_id: string }; Returns: boolean }
-      get_admin_user_id: { Args: { _user_id: string }; Returns: string }
-      get_effective_license_settings: {
-        Args: { _user_id: string }
-        Returns: {
-          created_at: string
-          expiry_date: string
-          id: string
-          license_type: string
-          licensed_to: string | null
-          max_businesses: number | null
-          max_simultaneous_logins: number | null
-          max_users: number | null
-          support_email: string | null
-          support_phone: string | null
-          support_whatsapp: string | null
-          updated_at: string
-          user_email: string | null
-          user_id: string | null
-        }[]
-        SetofOptions: {
-          from: "*"
-          to: "license_settings"
-          isOneToOne: false
-          isSetofReturn: true
-        }
-      }
-      get_family_user_ids: {
-        Args: { _user_id: string }
-        Returns: {
-          family_user_id: string
-        }[]
-      }
-      get_license_display_info: {
-        Args: { _user_id: string }
-        Returns: {
-          is_inherited: boolean
-          license_type: string
-          parent_email: string
-        }[]
-      }
-      get_license_owner_user_id: { Args: { _user_id: string }; Returns: string }
-      get_user_business_ids: {
-        Args: { _user_id: string }
-        Returns: {
-          business_id: string
-        }[]
-      }
-      get_user_role: {
-        Args: { _user_id: string }
-        Returns: Database["public"]["Enums"]["app_role"]
-      }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_super_admin: { Args: { _user_id: string }; Returns: boolean }
+      [_ in never]: never
     }
     Enums: {
-      app_role: "admin" | "supervisor" | "viewer"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1705,8 +1457,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      app_role: ["admin", "supervisor", "viewer"],
-    },
+    Enums: {},
   },
 } as const
