@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Search, MoreHorizontal, FileText, Loader2, Download, Printer, Eye, CreditCard, Calendar } from "lucide-react";

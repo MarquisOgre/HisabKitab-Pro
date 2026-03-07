@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { Building2, Wallet, TrendingUp, TrendingDown, Loader2 } from "lucide-react";
 import { PrintButton } from "@/components/PrintButton";

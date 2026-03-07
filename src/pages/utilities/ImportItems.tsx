@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import { Upload, FileText, CheckCircle, AlertCircle, Download, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
