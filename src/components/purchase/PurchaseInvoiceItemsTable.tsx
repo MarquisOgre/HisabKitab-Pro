@@ -37,7 +37,7 @@ interface DbItem {
   id: string;
   name: string;
   hsn_code: string | null;
-  purchase_price: number | null;
+  purchase_price: string | null;
   unit: string | null;
   category_id: string | null;
 }
@@ -75,7 +75,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
     const { data } = await supabase
       .from("items")
       .select("id, name, hsn_code, purchase_price, unit, category_id")
-      .eq("is_deleted", false)
+      .eq("is_deleted", "false")
       .eq("business_id", selectedBusiness.id)
       .order("name");
     if (data) {
@@ -117,7 +117,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
       quantity: 0,
       unit: defaultUnit,
       rate: 0,
-      taxRate: defaultTaxRate,
+      taxRate: Number(defaultTaxRate) || 0,
       amount: 0,
     };
     onItemsChange([...items, newItem]);
@@ -145,10 +145,10 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
           const selectedItem = dbItems.find((i) => i.id === value);
           if (selectedItem) {
             updatedItem.name = selectedItem.name;
-            updatedItem.rate = selectedItem.purchase_price || 0;
+            updatedItem.rate = Number(selectedItem.purchase_price) || 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
-            updatedItem.taxRate = defaultTaxRate;
+            updatedItem.taxRate = Number(defaultTaxRate) || 0;
           }
         }
         
@@ -171,7 +171,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
           quantity: 0,
           unit: defaultUnit,
           rate: 0,
-          taxRate: defaultTaxRate,
+          taxRate: Number(defaultTaxRate) || 0,
           amount: 0,
         };
         updated.push(newItem);

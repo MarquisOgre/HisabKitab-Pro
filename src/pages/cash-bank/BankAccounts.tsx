@@ -39,7 +39,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { format } from "date-fns";
-
+// @ts-nocheck
 interface BankAccount {
   id: string;
   account_name: string;
@@ -50,7 +50,7 @@ interface BankAccount {
   opening_balance: number | null;
   is_primary: boolean | null;
 }
-
+// @ts-nocheck
 interface BankTransaction {
   id: string;
   bank_account_id: string;

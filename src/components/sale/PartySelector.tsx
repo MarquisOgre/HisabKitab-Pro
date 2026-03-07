@@ -18,7 +18,7 @@ export interface Party {
   phone?: string;
   billing_address?: string;
   party_type: "customer" | "supplier";
-  opening_balance: number;
+  opening_balance: string | number;
 }
 
 interface PartySelectorProps {
@@ -95,8 +95,8 @@ export function PartySelector({ value, onChange, partyType = "all", label = "Sel
           <p><span className="font-medium">Address:</span> {selectedParty.billing_address || "N/A"}</p>
           <p>
             <span className="font-medium">Opening Balance:</span>{" "}
-            <span className={selectedParty.opening_balance >= 0 ? "text-success" : "text-destructive"}>
-              ₹{Math.abs(selectedParty.opening_balance || 0).toLocaleString("en-IN")}
+            <span className={Number(selectedParty.opening_balance) >= 0 ? "text-success" : "text-destructive"}>
+              ₹{Math.abs(Number(selectedParty.opening_balance) || 0).toLocaleString("en-IN")}
             </span>
           </p>
         </div>

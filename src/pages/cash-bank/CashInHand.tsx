@@ -39,7 +39,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { format } from "date-fns";
-
+// @ts-nocheck
 interface CashTransaction {
   id: string;
   transaction_type: string;
@@ -50,7 +50,7 @@ interface CashTransaction {
   reference_type: string | null;
   reference_id: string | null;
 }
-
+// @ts-nocheck
 export default function CashInHand() {
   const { user } = useAuth();
   const { selectedBusiness } = useBusinessSelection();

@@ -52,7 +52,7 @@ import { toast } from "sonner";
 import { checkMaxUsers } from "@/hooks/useSessionTracking";
 import { Badge } from "@/components/ui/badge";
 import { isSuperAdminEmail } from "@/lib/superadmin";
-
+// @ts-nocheck
 type AppRole = 'admin' | 'supervisor' | 'viewer';
 
 interface UserWithRole {

@@ -16,9 +16,9 @@ export default function Purchases() {
     if (!user) return;
     const fetchData = async () => {
       const [purRes, payRes, expRes] = await Promise.all([
-        supabase.from("purchases").select("*, suppliers(name)").order("created_at", { ascending: false }),
-        supabase.from("payments").select("*").eq("payment_type", "payment_out").order("created_at", { ascending: false }),
-        supabase.from("expenses").select("*").order("created_at", { ascending: false }),
+        supabase.from("purchase_invoices").select("*, parties(name)").eq("user_id", user.id).order("created_at", { ascending: false }),
+        supabase.from("payments").select("*").eq("user_id", user.id).eq("payment_type", "payment_out").order("created_at", { ascending: false }),
+        supabase.from("expenses").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
       ]);
       if (purRes.data) setPurchases(purRes.data);
       if (payRes.data) setPaymentsOut(payRes.data);
@@ -47,7 +47,7 @@ export default function Purchases() {
         <TabsContent value="invoices" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Purchases</p><p className="text-xl font-bold text-foreground mt-1">{purchases.length}</p></div>
-            <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Amount</p><p className="text-xl font-bold text-foreground mt-1">₹{purchases.reduce((s, p) => s + Number(p.total), 0).toLocaleString()}</p></div>
+            <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Amount</p><p className="text-xl font-bold text-foreground mt-1">₹{purchases.reduce((s, p) => s + Number(p.total_amount || 0), 0).toLocaleString()}</p></div>
             <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Unpaid</p><p className="text-xl font-bold text-destructive mt-1">{purchases.filter(p => p.status === "unpaid").length}</p></div>
           </div>
           <div className="stat-card p-0 overflow-hidden">
@@ -62,10 +62,10 @@ export default function Purchases() {
               <tbody>
                 {purchases.map(p => (
                   <tr key={p.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
-                    <td className="px-5 py-3 font-medium text-foreground">{p.purchase_number}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{p.suppliers?.name || "-"}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{p.purchase_date}</td>
-                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(p.total).toLocaleString()}</td>
+                    <td className="px-5 py-3 font-medium text-foreground">{p.invoice_number}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{p.parties?.name || "-"}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{p.invoice_date}</td>
+                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(p.total_amount || 0).toLocaleString()}</td>
                     <td className="px-5 py-3 text-center">
                       <Badge variant={p.status === "paid" ? "default" : "destructive"} className="text-[10px] px-2">{p.status}</Badge>
                     </td>
@@ -106,7 +106,7 @@ export default function Purchases() {
             <table className="w-full text-sm">
               <thead><tr className="bg-secondary/50">
                 <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Category</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Description</th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Notes</th>
                 <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Date</th>
                 <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Mode</th>
                 <th className="text-right px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Amount</th>
@@ -115,7 +115,7 @@ export default function Purchases() {
                 {expenses.map(e => (
                   <tr key={e.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
                     <td className="px-5 py-3 font-medium text-foreground">{e.category}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{e.description || "-"}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{e.notes || "-"}</td>
                     <td className="px-5 py-3 text-muted-foreground">{e.expense_date}</td>
                     <td className="px-5 py-3 text-muted-foreground capitalize">{e.payment_mode}</td>
                     <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(e.amount).toLocaleString()}</td>

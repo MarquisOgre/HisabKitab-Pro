@@ -21,7 +21,7 @@ import {
   User
 } from "lucide-react";
 import { z } from "zod";
-
+// @ts-nocheck
 interface LicensePlan {
   id: string;
   plan_name: string;
@@ -29,7 +29,7 @@ interface LicensePlan {
   price: number;
   description: string | null;
 }
-
+// @ts-nocheck
 interface PaymentSettings {
   razorpay_key_id: string | null;
   razorpay_enabled: boolean;

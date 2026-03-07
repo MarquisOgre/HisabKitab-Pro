@@ -86,7 +86,7 @@ export function InvoicePreview({
   }, 0);
 
   // Calculate TCS (only for sale invoices)
-  const tcsRate = businessSettings?.tcs_receivable ?? 0;
+  const tcsRate = Number(businessSettings?.tcs_receivable ?? 0);
   const tcsAmount = invoiceType === "sale" && tcsRate > 0 
     ? ((taxableAmount + totalTax) * tcsRate) / 100 
     : 0;

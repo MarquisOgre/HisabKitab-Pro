@@ -13,18 +13,18 @@ interface BusinessSettings {
   invoice_terms: string | null;
   logo_url: string | null;
   financial_year_start: string | null;
-  next_invoice_number: number | null;
+  next_invoice_number: string | number | null;
   estimation_prefix: string | null;
   purchase_prefix: string | null;
-  default_payment_terms: number | null;
+  default_payment_terms: string | number | null;
   gst_registration_type: string | null;
   state_code: string | null;
-  gst_receivable: number | null;
-  gst_payable: number | null;
-  tcs_receivable: number | null;
-  tcs_payable: number | null;
-  tds_receivable: number | null;
-  tds_payable: number | null;
+  gst_receivable: string | number | null;
+  gst_payable: string | number | null;
+  tcs_receivable: string | number | null;
+  tcs_payable: string | number | null;
+  tds_receivable: string | number | null;
+  tds_payable: string | number | null;
 }
 
 interface BusinessContextType {
