@@ -145,10 +145,10 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
           const selectedItem = dbItems.find((i) => i.id === value);
           if (selectedItem) {
             updatedItem.name = selectedItem.name;
-            updatedItem.rate = selectedItem.purchase_price || 0;
+            updatedItem.rate = Number(selectedItem.purchase_price) || 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
-            updatedItem.taxRate = defaultTaxRate;
+            updatedItem.taxRate = Number(defaultTaxRate) || 0;
           }
         }
         
@@ -171,7 +171,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
           quantity: 0,
           unit: defaultUnit,
           rate: 0,
-          taxRate: defaultTaxRate,
+          taxRate: Number(defaultTaxRate) || 0,
           amount: 0,
         };
         updated.push(newItem);

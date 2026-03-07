@@ -34,15 +34,15 @@ export function TaxSummary({
   const { businessSettings } = useBusinessSettings();
   
   // Get tax rates from settings based on invoice type
-  const gstRate = invoiceType === "sale" 
+  const gstRate = Number(invoiceType === "sale" 
     ? (businessSettings?.gst_receivable ?? 0) 
-    : (businessSettings?.gst_payable ?? 0);
-  const tcsRate = invoiceType === "sale" 
+    : (businessSettings?.gst_payable ?? 0));
+  const tcsRate = Number(invoiceType === "sale" 
     ? (businessSettings?.tcs_receivable ?? 0) 
-    : (businessSettings?.tcs_payable ?? 0);
-  const tdsRate = invoiceType === "sale" 
+    : (businessSettings?.tcs_payable ?? 0));
+  const tdsRate = Number(invoiceType === "sale" 
     ? (businessSettings?.tds_receivable ?? 0) 
-    : (businessSettings?.tds_payable ?? 0);
+    : (businessSettings?.tds_payable ?? 0));
   
   // Calculate subtotal (before discount)
   const grossSubtotal = items.reduce((acc, item) => {
