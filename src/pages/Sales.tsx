@@ -17,9 +17,9 @@ export default function Sales() {
   const fetchData = async () => {
     if (!user) return;
     const [invRes, payRes, chalRes] = await Promise.all([
-      supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "sales").order("created_at", { ascending: false }),
-      supabase.from("payments").select("*").eq("payment_type", "payment_in").order("created_at", { ascending: false }),
-      supabase.from("invoices").select("*, customers(name)").eq("invoice_type", "delivery_challan").order("created_at", { ascending: false }),
+      supabase.from("sale_invoices").select("*, parties(name)").eq("user_id", user.id).eq("invoice_type", "sale").order("created_at", { ascending: false }),
+      supabase.from("payments").select("*").eq("user_id", user.id).eq("payment_type", "payment_in").order("created_at", { ascending: false }),
+      supabase.from("sale_invoices").select("*, parties(name)").eq("user_id", user.id).eq("invoice_type", "delivery_challan").order("created_at", { ascending: false }),
     ]);
     if (invRes.data) setInvoices(invRes.data);
     if (payRes.data) setPaymentsIn(payRes.data);
@@ -48,7 +48,7 @@ export default function Sales() {
         <TabsContent value="invoices" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Invoices</p><p className="text-xl font-bold text-foreground mt-1">{invoices.length}</p></div>
-            <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Amount</p><p className="text-xl font-bold text-foreground mt-1">₹{invoices.reduce((s, i) => s + Number(i.total), 0).toLocaleString()}</p></div>
+            <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Amount</p><p className="text-xl font-bold text-foreground mt-1">₹{invoices.reduce((s, i) => s + Number(i.total_amount || 0), 0).toLocaleString()}</p></div>
             <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Unpaid</p><p className="text-xl font-bold text-destructive mt-1">{invoices.filter(i => i.status === "unpaid").length}</p></div>
           </div>
           <div className="stat-card p-0 overflow-hidden">
@@ -64,9 +64,9 @@ export default function Sales() {
                 {invoices.map(inv => (
                   <tr key={inv.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
                     <td className="px-5 py-3 font-medium text-foreground">{inv.invoice_number}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{inv.customers?.name || "-"}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{inv.parties?.name || "-"}</td>
                     <td className="px-5 py-3 text-muted-foreground">{inv.invoice_date}</td>
-                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(inv.total).toLocaleString()}</td>
+                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(inv.total_amount || 0).toLocaleString()}</td>
                     <td className="px-5 py-3 text-center">
                       <Badge variant={inv.status === "paid" ? "default" : inv.status === "partial" ? "secondary" : "destructive"} className="text-[10px] px-2">{inv.status}</Badge>
                     </td>
@@ -115,9 +115,9 @@ export default function Sales() {
                 {challans.map(c => (
                   <tr key={c.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
                     <td className="px-5 py-3 font-medium text-foreground">{c.invoice_number}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{c.customers?.name || "-"}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{c.parties?.name || "-"}</td>
                     <td className="px-5 py-3 text-muted-foreground">{c.invoice_date}</td>
-                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(c.total).toLocaleString()}</td>
+                    <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(c.total_amount || 0).toLocaleString()}</td>
                   </tr>
                 ))}
                 {challans.length === 0 && <tr><td colSpan={4} className="px-5 py-8 text-center text-muted-foreground">No delivery challans yet.</td></tr>}

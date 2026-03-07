@@ -15,7 +15,7 @@ export default function Customers() {
 
   const fetchCustomers = useCallback(async () => {
     if (!user) return;
-    const { data } = await supabase.from("customers").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
+    const { data } = await supabase.from("parties").select("*").eq("user_id", user.id).eq("party_type", "customer").order("created_at", { ascending: false });
     if (data) setCustomers(data);
   }, [user]);
 
@@ -23,18 +23,18 @@ export default function Customers() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this customer?")) return;
-    const { error } = await supabase.from("customers").delete().eq("id", id);
+    const { error } = await supabase.from("parties").delete().eq("id", id);
     if (error) toast.error(error.message);
     else { toast.success("Customer deleted"); fetchCustomers(); }
   };
 
   const filtered = customers.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase()) ||
-    (c.mobile || "").includes(search) ||
-    (c.gst_number || "").toLowerCase().includes(search.toLowerCase())
+    (c.name || "").toLowerCase().includes(search.toLowerCase()) ||
+    (c.phone || "").includes(search) ||
+    (c.gstin || "").toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalOutstanding = customers.reduce((s, c) => s + Number(c.balance || 0), 0);
+  const totalOutstanding = customers.reduce((s, c) => s + Number(c.opening_balance || 0), 0);
 
   return (
     <div className="space-y-6">
@@ -49,7 +49,7 @@ export default function Customers() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Customers</p><p className="text-xl font-bold text-foreground mt-1">{customers.length}</p></div>
         <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Outstanding Balance</p><p className="text-xl font-bold text-warning mt-1">₹{totalOutstanding.toLocaleString()}</p></div>
-        <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">With Balance</p><p className="text-xl font-bold text-foreground mt-1">{customers.filter(c => Number(c.balance) > 0).length}</p></div>
+        <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">With Balance</p><p className="text-xl font-bold text-foreground mt-1">{customers.filter(c => Number(c.opening_balance) > 0).length}</p></div>
       </div>
 
       <div className="stat-card p-4">
@@ -65,7 +65,7 @@ export default function Customers() {
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="font-semibold text-foreground">{c.name}</h3>
-                {c.gst_number && <p className="text-xs text-muted-foreground font-mono">{c.gst_number}</p>}
+                {c.gstin && <p className="text-xs text-muted-foreground font-mono">{c.gstin}</p>}
               </div>
               <div className="flex items-center gap-1">
                 <button onClick={() => { setEditCustomer(c); setShowForm(true); }} className="p-1.5 hover:bg-secondary rounded-lg text-muted-foreground hover:text-foreground"><Pencil className="w-3.5 h-3.5" /></button>
@@ -73,12 +73,12 @@ export default function Customers() {
               </div>
             </div>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              {c.mobile && <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{c.mobile}</span>}
+              {c.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{c.phone}</span>}
               {c.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{c.email}</span>}
             </div>
             <div className="pt-2 border-t border-border/50 flex items-center justify-between">
               <span className="text-xs text-muted-foreground">Balance</span>
-              <span className={`text-sm font-bold ${Number(c.balance) === 0 ? "text-success" : "text-warning"}`}>₹{Number(c.balance).toLocaleString()}</span>
+              <span className={`text-sm font-bold ${Number(c.opening_balance) === 0 ? "text-success" : "text-warning"}`}>₹{Number(c.opening_balance || 0).toLocaleString()}</span>
             </div>
           </div>
         ))}

@@ -17,13 +17,11 @@ export default function SupplierForm({ supplier, onClose, onSaved }: Props) {
   const { user } = useAuth();
   const [form, setForm] = useState({
     name: supplier?.name || "",
-    mobile: supplier?.mobile || "",
+    phone: supplier?.phone || "",
     email: supplier?.email || "",
-    gst_number: supplier?.gst_number || "",
-    address: supplier?.address || "",
-    city: supplier?.city || "",
-    state: supplier?.state || "",
-    balance: supplier?.balance || 0,
+    gstin: supplier?.gstin || "",
+    billing_address: supplier?.billing_address || "",
+    opening_balance: supplier?.opening_balance || "0",
   });
   const [saving, setSaving] = useState(false);
 
@@ -35,11 +33,11 @@ export default function SupplierForm({ supplier, onClose, onSaved }: Props) {
     setSaving(true);
     try {
       if (supplier) {
-        const { error } = await supabase.from("suppliers").update(form).eq("id", supplier.id);
+        const { error } = await supabase.from("parties").update(form).eq("id", supplier.id);
         if (error) throw error;
         toast.success("Supplier updated!");
       } else {
-        const { error } = await supabase.from("suppliers").insert({ ...form, user_id: user.id });
+        const { error } = await supabase.from("parties").insert({ ...form, user_id: user.id, party_type: "supplier" });
         if (error) throw error;
         toast.success("Supplier added!");
       }
@@ -57,13 +55,11 @@ export default function SupplierForm({ supplier, onClose, onSaved }: Props) {
         <div className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2 col-span-2"><Label>Name *</Label><Input value={form.name} onChange={e => set("name", e.target.value)} placeholder="Supplier name" /></div>
-            <div className="space-y-2"><Label>Mobile</Label><Input value={form.mobile} onChange={e => set("mobile", e.target.value)} placeholder="9876543210" /></div>
+            <div className="space-y-2"><Label>Phone</Label><Input value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="9876543210" /></div>
             <div className="space-y-2"><Label>Email</Label><Input value={form.email} onChange={e => set("email", e.target.value)} placeholder="email@example.com" /></div>
-            <div className="space-y-2"><Label>GST Number</Label><Input value={form.gst_number} onChange={e => set("gst_number", e.target.value)} placeholder="27AABCU9703R1ZM" /></div>
-            <div className="space-y-2"><Label>Opening Balance</Label><Input type="number" value={form.balance} onChange={e => set("balance", Number(e.target.value))} /></div>
-            <div className="space-y-2 col-span-2"><Label>Address</Label><Input value={form.address} onChange={e => set("address", e.target.value)} placeholder="Address" /></div>
-            <div className="space-y-2"><Label>City</Label><Input value={form.city} onChange={e => set("city", e.target.value)} /></div>
-            <div className="space-y-2"><Label>State</Label><Input value={form.state} onChange={e => set("state", e.target.value)} /></div>
+            <div className="space-y-2"><Label>GSTIN</Label><Input value={form.gstin} onChange={e => set("gstin", e.target.value)} placeholder="27AABCU9703R1ZM" /></div>
+            <div className="space-y-2"><Label>Opening Balance</Label><Input type="number" value={form.opening_balance} onChange={e => set("opening_balance", e.target.value)} /></div>
+            <div className="space-y-2 col-span-2"><Label>Address</Label><Input value={form.billing_address} onChange={e => set("billing_address", e.target.value)} placeholder="Address" /></div>
           </div>
         </div>
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-border">

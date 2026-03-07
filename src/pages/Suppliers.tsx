@@ -15,7 +15,7 @@ export default function Suppliers() {
 
   const fetchSuppliers = useCallback(async () => {
     if (!user) return;
-    const { data } = await supabase.from("suppliers").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
+    const { data } = await supabase.from("parties").select("*").eq("user_id", user.id).eq("party_type", "supplier").order("created_at", { ascending: false });
     if (data) setSuppliers(data);
   }, [user]);
 
@@ -23,18 +23,18 @@ export default function Suppliers() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this supplier?")) return;
-    const { error } = await supabase.from("suppliers").delete().eq("id", id);
+    const { error } = await supabase.from("parties").delete().eq("id", id);
     if (error) toast.error(error.message);
     else { toast.success("Supplier deleted"); fetchSuppliers(); }
   };
 
   const filtered = suppliers.filter(s =>
-    s.name.toLowerCase().includes(search.toLowerCase()) ||
-    (s.mobile || "").includes(search) ||
-    (s.gst_number || "").toLowerCase().includes(search.toLowerCase())
+    (s.name || "").toLowerCase().includes(search.toLowerCase()) ||
+    (s.phone || "").includes(search) ||
+    (s.gstin || "").toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalPayable = suppliers.reduce((s, sup) => s + Number(sup.balance || 0), 0);
+  const totalPayable = suppliers.reduce((s, sup) => s + Number(sup.opening_balance || 0), 0);
 
   return (
     <div className="space-y-6">
@@ -49,7 +49,7 @@ export default function Suppliers() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Total Suppliers</p><p className="text-xl font-bold text-foreground mt-1">{suppliers.length}</p></div>
         <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">Pending Payments</p><p className="text-xl font-bold text-destructive mt-1">₹{totalPayable.toLocaleString()}</p></div>
-        <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">With Balance</p><p className="text-xl font-bold text-foreground mt-1">{suppliers.filter(s => Number(s.balance) > 0).length}</p></div>
+        <div className="stat-card"><p className="text-xs text-muted-foreground uppercase">With Balance</p><p className="text-xl font-bold text-foreground mt-1">{suppliers.filter(s => Number(s.opening_balance) > 0).length}</p></div>
       </div>
 
       <div className="stat-card p-4">
@@ -65,7 +65,7 @@ export default function Suppliers() {
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="font-semibold text-foreground">{s.name}</h3>
-                {s.gst_number && <p className="text-xs text-muted-foreground font-mono">{s.gst_number}</p>}
+                {s.gstin && <p className="text-xs text-muted-foreground font-mono">{s.gstin}</p>}
               </div>
               <div className="flex items-center gap-1">
                 <button onClick={() => { setEditSupplier(s); setShowForm(true); }} className="p-1.5 hover:bg-secondary rounded-lg text-muted-foreground hover:text-foreground"><Pencil className="w-3.5 h-3.5" /></button>
@@ -73,12 +73,12 @@ export default function Suppliers() {
               </div>
             </div>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              {s.mobile && <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{s.mobile}</span>}
+              {s.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{s.phone}</span>}
               {s.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{s.email}</span>}
             </div>
             <div className="pt-2 border-t border-border/50 flex items-center justify-between">
               <span className="text-xs text-muted-foreground">Payable</span>
-              <span className={`text-sm font-bold ${Number(s.balance) === 0 ? "text-success" : "text-destructive"}`}>₹{Number(s.balance).toLocaleString()}</span>
+              <span className={`text-sm font-bold ${Number(s.opening_balance) === 0 ? "text-success" : "text-destructive"}`}>₹{Number(s.opening_balance || 0).toLocaleString()}</span>
             </div>
           </div>
         ))}
