@@ -117,7 +117,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
       quantity: 0,
       unit: defaultUnit,
       rate: 0,
-      taxRate: defaultTaxRate,
+      taxRate: Number(defaultTaxRate) || 0,
       amount: 0,
     };
     onItemsChange([...items, newItem]);

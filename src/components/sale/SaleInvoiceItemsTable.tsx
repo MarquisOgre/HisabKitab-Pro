@@ -122,7 +122,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
       closingStock: 0,
       unit: defaultUnit,
       rate: 0,
-      taxRate: defaultTaxRate,
+      taxRate: Number(defaultTaxRate) || 0,
       amount: 0,
     };
     onItemsChange([...items, newItem]);
@@ -152,13 +152,13 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           const selectedItem = dbItems.find((i) => i.id === value);
           if (selectedItem) {
             updatedItem.name = selectedItem.name;
-            updatedItem.rate = selectedItem.sale_price || 0;
-            updatedItem.availableStock = selectedItem.current_stock || 0;
-            updatedItem.closingStock = selectedItem.current_stock || 0;
+            updatedItem.rate = Number(selectedItem.sale_price) || 0;
+            updatedItem.availableStock = Number(selectedItem.current_stock) || 0;
+            updatedItem.closingStock = Number(selectedItem.current_stock) || 0;
             updatedItem.quantity = 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
-            updatedItem.taxRate = defaultTaxRate;
+            updatedItem.taxRate = Number(defaultTaxRate) || 0;
           }
         }
         
@@ -189,7 +189,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           closingStock: 0,
           unit: defaultUnit,
           rate: 0,
-          taxRate: defaultTaxRate,
+          taxRate: Number(defaultTaxRate) || 0,
           amount: 0,
         };
         updated.push(newItem);
