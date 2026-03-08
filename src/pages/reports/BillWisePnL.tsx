@@ -82,8 +82,8 @@ export default function BillWisePnL() {
           }
         }
 
-        const sale = inv.total_amount || 0;
-        const tcsTds = inv.tcs_amount || 0;
+        const sale = Number(inv.total_amount || 0);
+        const tcsTds = Number(inv.tcs_amount || 0);
         const profit = sale - totalCost - tcsTds;
         const margin = sale > 0 ? (profit / sale) * 100 : 0;
 
