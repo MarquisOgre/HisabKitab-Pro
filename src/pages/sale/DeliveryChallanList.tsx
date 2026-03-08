@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Search, Truck, MoreHorizontal, Eye, Download, ArrowRightCircle, Loader2 } from "lucide-react";
+import { Plus, Search, Truck, MoreHorizontal, Eye, Download, CreditCard, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
