@@ -466,27 +466,35 @@ export function PlanPaymentsManagement() {
           )}
 
           <DialogFooter className="gap-2">
-            <Button
-              variant="outline"
-              onClick={() => handleVerification("failed")}
-              disabled={processing}
-              className="text-destructive"
-            >
-              <X className="w-4 h-4 mr-2" />
-              Reject
-            </Button>
-            <Button
-              onClick={() => handleVerification("verified")}
-              disabled={processing}
-              className="bg-success hover:bg-success/90"
-            >
-              {processing ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Check className="w-4 h-4 mr-2" />
-              )}
-              Activate User & License
-            </Button>
+            {selectedPayment?.status === "pending" ? (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={() => handleVerification("failed")}
+                  disabled={processing}
+                  className="text-destructive"
+                >
+                  <X className="w-4 h-4 mr-2" />
+                  Reject
+                </Button>
+                <Button
+                  onClick={() => handleVerification("verified")}
+                  disabled={processing}
+                  className="bg-success hover:bg-success/90"
+                >
+                  {processing ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Check className="w-4 h-4 mr-2" />
+                  )}
+                  Activate User & License
+                </Button>
+              </>
+            ) : (
+              <Button variant="outline" onClick={() => setSelectedPayment(null)}>
+                Close
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
