@@ -104,7 +104,7 @@ export default function ItemWisePnL() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Cost</p>
             <TrendingDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
