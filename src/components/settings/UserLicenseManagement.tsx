@@ -538,35 +538,50 @@ export function UserLicenseManagement() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Expiry Date</Label>
-                  <Popover modal={true}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !formData.expiry_date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.expiry_date
-                          ? format(parse(formData.expiry_date, "yyyy-MM-dd", new Date()), "dd MMM yyyy")
-                          : "Pick a date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 z-[9999]" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={formData.expiry_date ? parse(formData.expiry_date, "yyyy-MM-dd", new Date()) : undefined}
-                        onSelect={(date) => {
-                          if (date) {
-                            setFormData({ ...formData, expiry_date: format(date, "yyyy-MM-dd") });
-                          }
-                        }}
-                        initialFocus
-                        className={cn("p-3 pointer-events-auto")}
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      min="1"
+                      max="31"
+                      placeholder="DD"
+                      className="w-16 text-center"
+                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[2]) : ""}
+                      onChange={(e) => {
+                        const parts = formData.expiry_date.split("-");
+                        const day = String(Math.min(31, Math.max(1, parseInt(e.target.value) || 1))).padStart(2, "0");
+                        setFormData({ ...formData, expiry_date: `${parts[0]}-${parts[1]}-${day}` });
+                      }}
+                    />
+                    <span className="text-muted-foreground">/</span>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="12"
+                      placeholder="MM"
+                      className="w-16 text-center"
+                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[1]) : ""}
+                      onChange={(e) => {
+                        const parts = formData.expiry_date.split("-");
+                        const month = String(Math.min(12, Math.max(1, parseInt(e.target.value) || 1))).padStart(2, "0");
+                        setFormData({ ...formData, expiry_date: `${parts[0]}-${month}-${parts[2]}` });
+                      }}
+                    />
+                    <span className="text-muted-foreground">/</span>
+                    <Input
+                      type="number"
+                      min="2024"
+                      max="2999"
+                      placeholder="YYYY"
+                      className="w-24 text-center"
+                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[0]) : ""}
+                      onChange={(e) => {
+                        const parts = formData.expiry_date.split("-");
+                        const year = e.target.value;
+                        setFormData({ ...formData, expiry_date: `${year}-${parts[1]}-${parts[2]}` });
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">DD / MM / YYYY</p>
                 </div>
                 <div className="space-y-2">
                   <Label>License Type</Label>
