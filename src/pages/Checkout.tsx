@@ -536,6 +536,30 @@ export default function Checkout() {
                           className="text-sm"
                         />
                       </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">Payment Screenshot (optional)</Label>
+                        {screenshotPreview ? (
+                          <div className="relative w-full">
+                            <img src={screenshotPreview} alt="Screenshot" className="w-full rounded-lg border max-h-48 object-contain bg-white" />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-1 right-1 h-6 w-6 bg-background/80 hover:bg-background"
+                              onClick={() => { setScreenshotFile(null); setScreenshotPreview(null); }}
+                            >
+                              <X className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                            <Upload className="w-5 h-5 text-muted-foreground mb-1" />
+                            <span className="text-xs text-muted-foreground">Click to upload screenshot</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handleScreenshotChange} />
+                          </label>
+                        )}
+                      </div>
                       
                       <Button
                         onClick={handleManualPayment}
