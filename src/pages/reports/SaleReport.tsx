@@ -201,7 +201,7 @@ export default function SaleReport() {
             <TrendingUp className="w-4 h-4 text-success hidden sm:block" />
           </div>
           <p className={`text-lg md:text-2xl font-bold mt-1 ${totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
-            ₹{totalProfit.toLocaleString()}
+            ₹{totalProfit.toLocaleString("en-IN")}
           </p>
           <p className="text-xs text-muted-foreground hidden sm:block">
             Margin: {totalSales > 0 ? ((totalProfit / totalSales) * 100).toFixed(1) : 0}%
