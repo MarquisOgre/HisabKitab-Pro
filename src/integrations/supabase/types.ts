@@ -1352,6 +1352,7 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      get_effective_user_id: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
