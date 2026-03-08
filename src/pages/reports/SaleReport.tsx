@@ -85,8 +85,8 @@ export default function SaleReport() {
             invoice_date: inv.invoice_date,
             party_name: inv.parties?.name || 'Walk-in Customer',
             items_count: saleItems?.length || 0,
-            total_amount: inv.total_amount || 0,
-            tcs_amount: inv.tcs_amount || 0,
+            total_amount: Number(inv.total_amount || 0),
+            tcs_amount: Number(inv.tcs_amount || 0),
             cost_price: totalCostPrice,
             sold_qty: totalSoldQty,
           };
