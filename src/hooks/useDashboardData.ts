@@ -241,6 +241,8 @@ export function useDashboardData() {
       purchaseChange,
       salesThisMonth,
       purchaseThisMonth,
+      salesCountThisMonth,
+      purchaseCountThisMonth,
     });
   };
 
