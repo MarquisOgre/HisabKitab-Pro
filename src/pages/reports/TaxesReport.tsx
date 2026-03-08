@@ -250,13 +250,13 @@ export default function TaxesReport() {
                     gstData.map((gst, idx) => (
                       <tr key={idx}>
                         <td className="font-medium">{gst.period}</td>
-                        <td className="text-right">₹{gst.taxableValue.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.cgst.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.sgst.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.igst.toLocaleString()}</td>
-                        <td className="text-right text-warning">₹{gst.tcs.toLocaleString()}</td>
-                        <td className="text-right text-primary">₹{gst.tds.toLocaleString()}</td>
-                        <td className="text-right font-medium text-success">₹{gst.total.toLocaleString()}</td>
+                        <td className="text-right">₹{gst.taxableValue.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.cgst.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.sgst.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.igst.toLocaleString("en-IN")}</td>
+                        <td className="text-right text-warning">₹{gst.tcs.toLocaleString("en-IN")}</td>
+                        <td className="text-right text-primary">₹{gst.tds.toLocaleString("en-IN")}</td>
+                        <td className="text-right font-medium text-success">₹{gst.total.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
