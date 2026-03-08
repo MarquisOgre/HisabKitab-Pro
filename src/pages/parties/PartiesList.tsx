@@ -118,7 +118,7 @@ export default function PartiesList() {
       const purchaseTotals: Record<string, number> = {};
       purchaseData?.forEach((inv) => {
         if (inv.party_id) {
-          purchaseTotals[inv.party_id] = (purchaseTotals[inv.party_id] || 0) + (inv.total_amount || 0);
+          purchaseTotals[inv.party_id] = (purchaseTotals[inv.party_id] || 0) + Number(inv.total_amount || 0);
         }
       });
 
@@ -126,7 +126,7 @@ export default function PartiesList() {
       const saleTotals: Record<string, number> = {};
       saleData?.forEach((inv) => {
         if (inv.party_id) {
-          saleTotals[inv.party_id] = (saleTotals[inv.party_id] || 0) + (inv.total_amount || 0);
+          saleTotals[inv.party_id] = (saleTotals[inv.party_id] || 0) + Number(inv.total_amount || 0);
         }
       });
 
@@ -134,7 +134,7 @@ export default function PartiesList() {
       const paymentOutTotals: Record<string, number> = {};
       paymentsOutData?.forEach((pay) => {
         if (pay.party_id) {
-          paymentOutTotals[pay.party_id] = (paymentOutTotals[pay.party_id] || 0) + (pay.amount || 0);
+          paymentOutTotals[pay.party_id] = (paymentOutTotals[pay.party_id] || 0) + Number(pay.amount || 0);
         }
       });
 
@@ -142,13 +142,13 @@ export default function PartiesList() {
       const paymentInTotals: Record<string, number> = {};
       paymentsInData?.forEach((pay) => {
         if (pay.party_id) {
-          paymentInTotals[pay.party_id] = (paymentInTotals[pay.party_id] || 0) + (pay.amount || 0);
+          paymentInTotals[pay.party_id] = (paymentInTotals[pay.party_id] || 0) + Number(pay.amount || 0);
         }
       });
 
       // Combine data
       const partiesWithTotals: PartyWithTotals[] = (partiesData || []).map((party) => {
-        const openingBalance = party.opening_balance || 0;
+        const openingBalance = Number(party.opening_balance || 0);
         const isCustomer = party.party_type === "customer";
         
         // For customers: use sale invoices and payment in
