@@ -282,8 +282,8 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <div>
                 <label className="text-xs text-muted-foreground mb-1 block">Sale</label>
                 <NumberInput
-                  value={item.closingStock}
-                  onChange={(val) => updateItem(item.id, "closingStock", val)}
+                  value={item.saleQty}
+                  onChange={(val) => updateItem(item.id, "saleQty", val)}
                   className="h-9 text-xs"
                 />
               </div>
