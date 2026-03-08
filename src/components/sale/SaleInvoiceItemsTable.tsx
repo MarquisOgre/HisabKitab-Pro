@@ -280,7 +280,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 </div>
               </div>
               <div>
-                <label className="text-xs text-muted-foreground mb-1 block">Cls</label>
+                <label className="text-xs text-muted-foreground mb-1 block">Sale</label>
                 <NumberInput
                   value={item.closingStock}
                   onChange={(val) => updateItem(item.id, "closingStock", val)}
@@ -321,7 +321,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 <p className="font-bold">{items.reduce((sum, item) => sum + item.availableStock, 0)}</p>
               </div>
               <div className="text-center">
-                <p className="text-muted-foreground">Cls</p>
+                <p className="text-muted-foreground">Sale</p>
                 <p className="font-bold">{items.reduce((sum, item) => sum + item.closingStock, 0)}</p>
               </div>
               <div className="text-center">
@@ -355,7 +355,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Category</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground min-w-[180px]">Item</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-14">Avl.</th>
-              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16">Cls.</th>
+              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16">Sale</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-12">Qty</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Unit</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Rate</th>
@@ -460,7 +460,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <tr className="bg-muted/50 font-semibold border-t text-xs">
                 <td colSpan={3} className="py-2 px-1 text-right">Totals:</td>
                 <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.availableStock, 0)}</td>
-                <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.closingStock, 0)}</td>
+                <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.closingStock, 0)}</td> {/* Sale total */}
                 <td className="py-2 px-1 text-center text-primary">{items.reduce((sum, item) => sum + item.quantity, 0)}</td>
                 <td colSpan={2}></td>
                 <td className="py-2 px-1 text-right">₹{items.reduce((sum, item) => sum + item.amount, 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
