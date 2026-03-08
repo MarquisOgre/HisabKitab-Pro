@@ -56,11 +56,11 @@ export default function RecycleBin() {
       const deletedItems: DeletedItem[] = [];
       const now = new Date();
 
-      // Fetch deleted items
+      // Fetch deleted items (is_deleted is text type for items table)
       const { data: deletedProducts } = await supabase
         .from('items')
         .select('id, name, deleted_at')
-        .eq('is_deleted', true)
+        .eq('is_deleted', 'true')
         .not('deleted_at', 'is', null);
 
       deletedProducts?.forEach(item => {
@@ -161,9 +161,11 @@ export default function RecycleBin() {
   const restoreItem = async (item: DeletedItem) => {
     setActionLoading(item.id);
     try {
+      // items table uses text type for is_deleted, invoices use boolean
+      const isDeletedValue = item.table === 'items' ? 'false' : false;
       const { error } = await supabase
         .from(item.table as 'items' | 'sale_invoices' | 'purchase_invoices')
-        .update({ is_deleted: false, deleted_at: null })
+        .update({ is_deleted: isDeletedValue, deleted_at: null })
         .eq('id', item.id);
 
       if (error) throw error;

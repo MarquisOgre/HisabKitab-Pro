@@ -137,7 +137,7 @@ export default function ImportItems() {
         .select('name')
         .eq('user_id', adminUserId)
         .eq('business_id', selectedBusiness.id)
-        .eq('is_deleted', false);
+        .neq('is_deleted', 'true');
 
       const existingNames = new Set(existingItems?.map(i => i.name.toLowerCase()) || []);
 
