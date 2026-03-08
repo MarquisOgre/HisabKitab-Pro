@@ -254,7 +254,7 @@ export function useDashboardData() {
       .select('balance_due, party_id')
       .in('invoice_type', ['purchase', 'purchase_bill', 'purchase_invoice'])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const payablesPartyIds = new Set(purchaseInvoicesPayables?.map(i => i.party_id).filter(Boolean));
