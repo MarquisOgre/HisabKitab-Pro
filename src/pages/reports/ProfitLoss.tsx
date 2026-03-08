@@ -168,11 +168,11 @@ export default function ProfitLoss() {
         .eq('business_id', selectedBusiness.id);
 
       const closingStockValue = (items || []).reduce((sum, item) => {
-        return sum + ((item.current_stock || 0) * (item.purchase_price || 0));
+        return sum + (Number(item.current_stock || 0) * Number(item.purchase_price || 0));
       }, 0);
 
       const openingStockValue = (items || []).reduce((sum, item) => {
-        return sum + ((item.opening_stock || 0) * (item.purchase_price || 0));
+        return sum + (Number(item.opening_stock || 0) * Number(item.purchase_price || 0));
       }, 0);
 
       setPlData({

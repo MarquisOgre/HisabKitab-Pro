@@ -88,7 +88,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id);
 
       const inventoryValue = (items || []).reduce((sum, item) => 
-        sum + ((item.current_stock || 0) * (item.purchase_price || 0)), 0);
+        sum + (Number(item.current_stock || 0) * Number(item.purchase_price || 0)), 0);
       setInventory(inventoryValue);
 
     } catch (error) {

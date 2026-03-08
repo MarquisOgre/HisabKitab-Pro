@@ -474,7 +474,7 @@ export default function BankAccounts() {
     return account?.account_name || "Unknown Account";
   };
 
-  const totalBalance = accounts.reduce((sum, acc) => sum + (acc.current_balance || 0), 0);
+  const totalBalance = accounts.reduce((sum, acc) => sum + Number(acc.current_balance || 0), 0);
 
   return (
     <div className="space-y-6">

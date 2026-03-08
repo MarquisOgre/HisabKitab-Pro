@@ -137,8 +137,8 @@ export default function PurchaseBills() {
     return styles[status || "unpaid"] || "";
   };
 
-  const totalAmount = monthFilteredBills.reduce((sum, b) => sum + (b.total_amount || 0), 0);
-  const paidAmount = monthFilteredBills.reduce((sum, b) => sum + (b.paid_amount || 0), 0);
+  const totalAmount = monthFilteredBills.reduce((sum, b) => sum + Number(b.total_amount || 0), 0);
+  const paidAmount = monthFilteredBills.reduce((sum, b) => sum + Number(b.paid_amount || 0), 0);
   const unpaidAmount = totalAmount - paidAmount;
 
   if (loading) {
