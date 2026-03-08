@@ -23,7 +23,7 @@ export interface InvoiceItem {
   name: string;
   quantity: number;
   availableStock: number;
-  closingStock: number;
+  saleQty: number;
   unit: string;
   rate: number;
   taxRate: number;
@@ -119,7 +119,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
       name: "",
       quantity: 0,
       availableStock: 0,
-      closingStock: 0,
+      saleQty: 0,
       unit: defaultUnit,
       rate: 0,
       taxRate: Number(defaultTaxRate) || 0,
@@ -143,7 +143,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           updatedItem.name = "";
           updatedItem.rate = 0;
           updatedItem.availableStock = 0;
-          updatedItem.closingStock = 0;
+          updatedItem.saleQty = 0;
           updatedItem.quantity = 0;
           updatedItem.amount = 0;
         }
@@ -154,7 +154,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
             updatedItem.name = selectedItem.name;
             updatedItem.rate = Number(selectedItem.sale_price) || 0;
             updatedItem.availableStock = Number(selectedItem.current_stock) || 0;
-            updatedItem.closingStock = 0;
+            updatedItem.saleQty = 0;
             updatedItem.quantity = Number(selectedItem.current_stock) || 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
@@ -162,13 +162,13 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           }
         }
         
-        if (field === "closingStock") {
+        if (field === "saleQty") {
           const saleVal = Math.max(0, Math.min(value as number, updatedItem.availableStock));
-          updatedItem.closingStock = saleVal;
+          updatedItem.saleQty = saleVal;
           updatedItem.quantity = Math.max(0, updatedItem.availableStock - saleVal);
         }
         
-        updatedItem.amount = updatedItem.closingStock * updatedItem.rate;
+        updatedItem.amount = updatedItem.saleQty * updatedItem.rate;
         
         return updatedItem;
       }
@@ -186,7 +186,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           name: "",
           quantity: 0,
           availableStock: 0,
-          closingStock: 0,
+          saleQty: 0,
           unit: defaultUnit,
           rate: 0,
           taxRate: Number(defaultTaxRate) || 0,
@@ -282,8 +282,8 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <div>
                 <label className="text-xs text-muted-foreground mb-1 block">Sale</label>
                 <NumberInput
-                  value={item.closingStock}
-                  onChange={(val) => updateItem(item.id, "closingStock", val)}
+                  value={item.saleQty}
+                  onChange={(val) => updateItem(item.id, "saleQty", val)}
                   className="h-9 text-xs"
                 />
               </div>
@@ -322,7 +322,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               </div>
               <div className="text-center">
                 <p className="text-muted-foreground">Sale</p>
-                <p className="font-bold">{items.reduce((sum, item) => sum + item.closingStock, 0)}</p>
+                <p className="font-bold">{items.reduce((sum, item) => sum + item.saleQty, 0)}</p>
               </div>
               <div className="text-center">
                 <p className="text-muted-foreground">Qty</p>
@@ -405,8 +405,8 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 </td>
                 <td className="py-2 px-1">
                   <NumberInput
-                    value={item.closingStock}
-                    onChange={(val) => updateItem(item.id, "closingStock", val)}
+                    value={item.saleQty}
+                    onChange={(val) => updateItem(item.id, "saleQty", val)}
                     className="h-8 w-14 text-xs"
                   />
                 </td>
@@ -460,7 +460,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <tr className="bg-muted/50 font-semibold border-t text-xs">
                 <td colSpan={3} className="py-2 px-1 text-right">Totals:</td>
                 <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.availableStock, 0)}</td>
-                <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.closingStock, 0)}</td> {/* Sale total */}
+                <td className="py-2 px-1 text-center">{items.reduce((sum, item) => sum + item.saleQty, 0)}</td>
                 <td className="py-2 px-1 text-center text-primary">{items.reduce((sum, item) => sum + item.quantity, 0)}</td>
                 <td colSpan={2}></td>
                 <td className="py-2 px-1 text-right">₹{items.reduce((sum, item) => sum + item.amount, 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>

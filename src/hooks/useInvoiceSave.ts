@@ -66,9 +66,10 @@ export function useInvoiceSave() {
       return null;
     }
 
-    // Validate that all items have quantity > 0
+    // Validate that all items have sale quantity > 0
     for (const item of validItems) {
-      if (item.quantity <= 0) {
+      const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+      if (qty <= 0) {
         toast.error(`Quantity must be greater than 0 for "${item.name || 'selected item'}"`);
         return null;
       }
@@ -83,9 +84,9 @@ export function useInvoiceSave() {
           .eq("id", item.itemId)
           .single();
         
-        if (itemData && item.quantity > (itemData.current_stock || 0)) {
-          toast.error(`Insufficient stock for "${itemData.name}". Available: ${itemData.current_stock || 0}, Requested: ${item.quantity}`);
-          return null;
+        const reqQty = item.saleQty ?? item.quantity;
+        if (itemData && reqQty > (itemData.current_stock || 0)) {
+          toast.error(`Insufficient stock for "${itemData.name}". Available: ${itemData.current_stock || 0}, Requested: ${reqQty}`);
         }
       }
     }
@@ -119,7 +120,8 @@ export function useInvoiceSave() {
       let itemLevelTax = 0;
 
       validItems.forEach((item) => {
-        const itemSubtotal = item.quantity * item.rate;
+        const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+        const itemSubtotal = qty * item.rate;
         // Use item's tax rate for item-level GST
         const itemTax = item.taxRate > 0 ? (itemSubtotal * item.taxRate) / 100 : 0;
         
@@ -185,7 +187,8 @@ export function useInvoiceSave() {
 
       // Insert items into appropriate items table
       const invoiceItemsData = validItems.map((item) => {
-        const itemSubtotal = item.quantity * item.rate;
+        const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+        const itemSubtotal = qty * item.rate;
         const itemTax = (itemSubtotal * item.taxRate) / 100;
         const total = itemSubtotal + itemTax;
 
@@ -193,7 +196,7 @@ export function useInvoiceSave() {
           item_id: item.itemId,
           item_name: item.name,
           hsn_code: null,
-          quantity: item.quantity,
+          quantity: qty,
           unit: item.unit,
           rate: item.rate,
           discount_percent: 0,
@@ -241,7 +244,8 @@ export function useInvoiceSave() {
           .single();
 
         if (currentItem) {
-          const stockChange = isSaleType ? -item.quantity : item.quantity;
+          const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+          const stockChange = isSaleType ? -qty : qty;
           const newStock = (currentItem.current_stock || 0) + stockChange;
 
           await supabase

@@ -76,19 +76,19 @@ export default function EditSaleInvoice() {
         // Available stock = current stock + quantity sold (since the sale already deducted it)
         const currentStock = item.item_id ? (stockMap[item.item_id] || 0) : 0;
         const availableStock = currentStock + item.quantity;
-        const closingStock = availableStock - item.quantity;
+        const saleQty = item.quantity;
         
         return {
           id: Date.now() + index,
           itemId: item.item_id || "",
           categoryId: "",
           name: item.item_name,
-          quantity: item.quantity,
+          quantity: availableStock - saleQty,
           rate: item.rate,
           taxRate: item.tax_rate || 0,
           amount: item.total,
           availableStock: availableStock,
-          closingStock: closingStock,
+          saleQty: saleQty,
           unit: item.unit || "Bottles",
         };
       }));

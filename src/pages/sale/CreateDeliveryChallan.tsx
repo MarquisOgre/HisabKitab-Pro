@@ -33,7 +33,7 @@ export default function CreateDeliveryChallan() {
   const [showPreview, setShowPreview] = useState(false);
   
   const [items, setItems] = useState<InvoiceItem[]>([
-    { id: 1, itemId: "", categoryId: "", name: "", quantity: 1, availableStock: 0, closingStock: 0, unit: "pcs", rate: 0, taxRate: 0, amount: 0 },
+    { id: 1, itemId: "", categoryId: "", name: "", quantity: 0, availableStock: 0, saleQty: 0, unit: "pcs", rate: 0, taxRate: 0, amount: 0 },
   ]);
 
   const handleSave = async () => {
