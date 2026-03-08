@@ -195,6 +195,9 @@ export default function ItemsList() {
           <Button variant="outline" size="sm" asChild>
             <Link to="/items/categories">Categories</Link>
           </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/items/units">UOM</Link>
+          </Button>
           <RoleGuard requireWrite>
             <Button variant="outline" size="sm" asChild className="hidden sm:flex">
               <Link to="/utilities/import">Bulk Import</Link>

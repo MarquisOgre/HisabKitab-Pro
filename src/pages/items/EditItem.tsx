@@ -33,7 +33,7 @@ export default function EditItem() {
   const [formData, setFormData] = useState({
     categoryId: "",
     name: "",
-    unit: "Bottles",
+    unit: "",
     hsnCode: "",
     purchasePrice: "",
     salePrice: "",
@@ -66,8 +66,6 @@ export default function EditItem() {
       .order("name");
     if (data && data.length > 0) {
       setUnitOptions(data);
-    } else {
-      setUnitOptions([{ id: 'default', name: 'Bottles' }]);
     }
   };
 
@@ -84,7 +82,7 @@ export default function EditItem() {
         setFormData({
           categoryId: data.category_id || "",
           name: data.name || "",
-          unit: data.unit || "Bottles",
+          unit: data.unit || "",
           hsnCode: data.hsn_code || "",
           purchasePrice: data.purchase_price?.toString() || "",
           salePrice: data.sale_price?.toString() || "",

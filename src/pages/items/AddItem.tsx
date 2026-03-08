@@ -35,7 +35,7 @@ export default function AddItem() {
   const [formData, setFormData] = useState({
     categoryId: "",
     name: "",
-    unit: "Bottles",
+    unit: "",
     hsnCode: "",
     purchasePrice: "",
     salePrice: "",
@@ -69,9 +69,9 @@ export default function AddItem() {
       .order("name");
     if (data && data.length > 0) {
       setUnitOptions(data);
-      setFormData(prev => ({ ...prev, unit: data[0].name }));
-    } else {
-      setUnitOptions([{ id: 'default', name: 'Bottles' }]);
+      if (!formData.unit) {
+        setFormData(prev => ({ ...prev, unit: data[0].name }));
+      }
     }
   };
 
@@ -102,7 +102,7 @@ export default function AddItem() {
         business_id: selectedBusiness.id,
         name: formData.name.trim(),
         category_id: formData.categoryId || null,
-        unit: formData.unit || "Bottles",
+        unit: formData.unit || "pcs",
         hsn_code: formData.hsnCode.trim() || null,
         purchase_price: formData.purchasePrice ? parseFloat(formData.purchasePrice) : 0,
         sale_price: formData.salePrice ? parseFloat(formData.salePrice) : 0,
