@@ -395,7 +395,7 @@ export default function CashInHand() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm opacity-80">Cash in Hand</p>
-            <p className="text-4xl font-bold mt-2">₹{currentBalance.toLocaleString()}</p>
+            <p className="text-4xl font-bold mt-2">₹{currentBalance.toLocaleString("en-IN")}</p>
             <p className="text-sm opacity-80 mt-2">As of today</p>
           </div>
           <Banknote className="w-20 h-20 opacity-30" />
