@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +28,7 @@ export default function Items() {
     name: "", hsn_code: "", category_id: "", purchase_price: "", sale_price: "",
     opening_stock: "", unit: "pcs", low_stock_alert: "10",
   });
+  const isMobile = useIsMobile();
 
   const fetchData = async () => {
     if (!user) return;
@@ -74,27 +76,36 @@ export default function Items() {
   const filtered = products.filter(p => (p.name || "").toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-foreground">Items</h1>
-          <p className="text-sm text-muted-foreground">Manage your products, categories and stock</p>
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <h1 className="text-lg md:text-xl font-bold text-foreground">Items</h1>
+          {!isMobile && <p className="text-sm text-muted-foreground">Manage your products, categories and stock</p>}
         </div>
       </div>
 
-      <Tabs defaultValue="all-items">
-        <TabsList className="grid w-full grid-cols-3 max-w-md">
-          <TabsTrigger value="categories" className="gap-2"><Tag className="w-3.5 h-3.5" /> Categories</TabsTrigger>
-          <TabsTrigger value="add-item" className="gap-2"><Plus className="w-3.5 h-3.5" /> Add Item</TabsTrigger>
-          <TabsTrigger value="all-items" className="gap-2"><List className="w-3.5 h-3.5" /> All Items</TabsTrigger>
+      <Tabs defaultValue="all-items" className="mobile-tabs">
+        <TabsList className={isMobile ? "w-full grid grid-cols-3" : "grid w-full grid-cols-3 max-w-md"}>
+          <TabsTrigger value="categories" className="gap-1 md:gap-2 text-xs md:text-sm px-1.5 md:px-3">
+            <Tag className="w-3.5 h-3.5 hidden md:block" />
+            Categories
+          </TabsTrigger>
+          <TabsTrigger value="add-item" className="gap-1 md:gap-2 text-xs md:text-sm px-1.5 md:px-3">
+            <Plus className="w-3.5 h-3.5 hidden md:block" />
+            Add Item
+          </TabsTrigger>
+          <TabsTrigger value="all-items" className="gap-1 md:gap-2 text-xs md:text-sm px-1.5 md:px-3">
+            <List className="w-3.5 h-3.5 hidden md:block" />
+            All Items
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="categories" className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-foreground">Categories ({categories.length})</h2>
+            <h2 className="font-semibold text-foreground text-sm md:text-base">Categories ({categories.length})</h2>
             <Dialog open={showAddCategory} onOpenChange={setShowAddCategory}>
               <DialogTrigger asChild>
-                <Button size="sm" className="gap-2"><Plus className="w-4 h-4" /> Add Category</Button>
+                <Button size="sm" className="gap-1.5 h-8 text-xs md:text-sm"><Plus className="w-4 h-4" /> Add</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader><DialogTitle>Add Category</DialogTitle></DialogHeader>
@@ -112,16 +123,16 @@ export default function Items() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {categories.map(cat => (
               <div key={cat.id} className="stat-card">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Tag className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Tag className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                   </div>
-                  <div>
-                    <p className="font-medium text-foreground">{cat.name}</p>
-                    <p className="text-xs text-muted-foreground">{cat.description || "No description"}</p>
+                  <div className="min-w-0">
+                    <p className="font-medium text-foreground text-sm md:text-base truncate">{cat.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{cat.description || "No description"}</p>
                   </div>
                 </div>
               </div>
@@ -131,9 +142,9 @@ export default function Items() {
         </TabsContent>
 
         <TabsContent value="add-item" className="space-y-4">
-          <div className="stat-card p-6 max-w-2xl">
-            <h2 className="font-semibold text-foreground mb-4">Add New Item</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="stat-card p-4 md:p-6 max-w-2xl">
+            <h2 className="font-semibold text-foreground mb-4 text-sm md:text-base">Add New Item</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               <div className="space-y-2 sm:col-span-2">
                 <Label>Item Name *</Label>
                 <Input value={newItem.name} onChange={e => setNewItem({ ...newItem, name: e.target.value })} placeholder="Product name" />
@@ -172,57 +183,85 @@ export default function Items() {
                 <Input type="number" value={newItem.low_stock_alert} onChange={e => setNewItem({ ...newItem, low_stock_alert: e.target.value })} placeholder="10" />
               </div>
             </div>
-            <Button onClick={addItem} className="mt-6 w-full sm:w-auto">Save Item</Button>
+            <Button onClick={addItem} className="mt-4 md:mt-6 w-full sm:w-auto">Save Item</Button>
           </div>
         </TabsContent>
 
         <TabsContent value="all-items" className="space-y-4">
-          <div className="stat-card p-4 flex items-center gap-3">
+          <div className="stat-card p-3 md:p-4 flex items-center gap-3">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input placeholder="Search items..." className="pl-10" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
-            <Badge variant="secondary">{filtered.length} items</Badge>
+            <Badge variant="secondary" className="shrink-0">{filtered.length} items</Badge>
           </div>
 
-          <div className="stat-card p-0 overflow-hidden">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-secondary/50">
-                  <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Item</th>
-                  <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">HSN</th>
-                  <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Category</th>
-                  <th className="text-right px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Purchase</th>
-                  <th className="text-right px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Sale</th>
-                  <th className="text-center px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Stock</th>
-                  <th className="text-center px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map(p => {
-                  const stock = Number(p.current_stock || 0);
-                  const alert = Number(p.low_stock_alert || 10);
-                  const status = stock === 0 ? "Out of Stock" : stock <= alert ? "Low Stock" : "In Stock";
-                  return (
-                    <tr key={p.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
-                      <td className="px-5 py-3 font-medium text-foreground">{p.name}</td>
-                      <td className="px-5 py-3 text-muted-foreground font-mono text-xs">{p.hsn_code || "-"}</td>
-                      <td className="px-5 py-3 text-muted-foreground">{p.categories?.name || "-"}</td>
-                      <td className="px-5 py-3 text-right text-foreground">₹{Number(p.purchase_price || 0).toLocaleString()}</td>
-                      <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(p.sale_price || 0).toLocaleString()}</td>
-                      <td className="px-5 py-3 text-center text-foreground">{stock} {p.unit}</td>
-                      <td className="px-5 py-3 text-center">
-                        <Badge variant={status === "In Stock" ? "default" : status === "Low Stock" ? "secondary" : "destructive"} className="text-[10px] px-2">{status}</Badge>
-                      </td>
-                    </tr>
-                  );
-                })}
-                {filtered.length === 0 && (
-                  <tr><td colSpan={7} className="px-5 py-8 text-center text-muted-foreground">No items found. Add your first item from the "Add Item" tab.</td></tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          {isMobile ? (
+            <div className="space-y-2">
+              {filtered.map(p => {
+                const stock = Number(p.current_stock || 0);
+                const alert = Number(p.low_stock_alert || 10);
+                const status = stock === 0 ? "Out of Stock" : stock <= alert ? "Low Stock" : "In Stock";
+                return (
+                  <div key={p.id} className="stat-card p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-sm text-foreground truncate">{p.name}</span>
+                      <Badge variant={status === "In Stock" ? "default" : status === "Low Stock" ? "secondary" : "destructive"} className="text-[10px] px-2 shrink-0 ml-2">{status}</Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>{p.categories?.name || "No category"}</span>
+                      <span>{p.hsn_code || "-"}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs pt-2 border-t border-border/50">
+                      <div><span className="text-muted-foreground">Buy: </span><span className="text-foreground">₹{Number(p.purchase_price || 0).toLocaleString()}</span></div>
+                      <div><span className="text-muted-foreground">Sell: </span><span className="font-semibold text-foreground">₹{Number(p.sale_price || 0).toLocaleString()}</span></div>
+                      <div><span className="text-muted-foreground">Stock: </span><span className="text-foreground">{stock} {p.unit}</span></div>
+                    </div>
+                  </div>
+                );
+              })}
+              {filtered.length === 0 && <p className="text-center py-8 text-sm text-muted-foreground">No items found.</p>}
+            </div>
+          ) : (
+            <div className="stat-card p-0 overflow-hidden">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-secondary/50">
+                    <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Item</th>
+                    <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">HSN</th>
+                    <th className="text-left px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Category</th>
+                    <th className="text-right px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Purchase</th>
+                    <th className="text-right px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Sale</th>
+                    <th className="text-center px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Stock</th>
+                    <th className="text-center px-5 py-3 text-xs font-medium text-muted-foreground uppercase">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map(p => {
+                    const stock = Number(p.current_stock || 0);
+                    const alert = Number(p.low_stock_alert || 10);
+                    const status = stock === 0 ? "Out of Stock" : stock <= alert ? "Low Stock" : "In Stock";
+                    return (
+                      <tr key={p.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
+                        <td className="px-5 py-3 font-medium text-foreground">{p.name}</td>
+                        <td className="px-5 py-3 text-muted-foreground font-mono text-xs">{p.hsn_code || "-"}</td>
+                        <td className="px-5 py-3 text-muted-foreground">{p.categories?.name || "-"}</td>
+                        <td className="px-5 py-3 text-right text-foreground">₹{Number(p.purchase_price || 0).toLocaleString()}</td>
+                        <td className="px-5 py-3 text-right font-semibold text-foreground">₹{Number(p.sale_price || 0).toLocaleString()}</td>
+                        <td className="px-5 py-3 text-center text-foreground">{stock} {p.unit}</td>
+                        <td className="px-5 py-3 text-center">
+                          <Badge variant={status === "In Stock" ? "default" : status === "Low Stock" ? "secondary" : "destructive"} className="text-[10px] px-2">{status}</Badge>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {filtered.length === 0 && (
+                    <tr><td colSpan={7} className="px-5 py-8 text-center text-muted-foreground">No items found. Add your first item from the "Add Item" tab.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </TabsContent>
       </Tabs>
     </div>

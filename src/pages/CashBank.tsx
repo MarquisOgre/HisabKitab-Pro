@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function CashBank() {
@@ -15,6 +16,7 @@ export default function CashBank() {
   const [profile, setProfile] = useState<any>(null);
   const [showAdd, setShowAdd] = useState(false);
   const [newAccount, setNewAccount] = useState({ account_name: "", bank_name: "", account_number: "", ifsc_code: "", account_type: "savings", balance: "" });
+  const isMobile = useIsMobile();
 
   const fetchData = async () => {
     if (!user) return;
@@ -41,25 +43,29 @@ export default function CashBank() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-foreground">Cash & Bank</h1>
-          <p className="text-sm text-muted-foreground">Manage your bank accounts and cash balance</p>
-        </div>
+    <div className="space-y-4 md:space-y-6">
+      <div>
+        <h1 className="text-lg md:text-xl font-bold text-foreground">Cash & Bank</h1>
+        {!isMobile && <p className="text-sm text-muted-foreground">Manage your bank accounts and cash balance</p>}
       </div>
 
-      <Tabs defaultValue="bank">
-        <TabsList className="grid w-full grid-cols-2 max-w-sm">
-          <TabsTrigger value="bank" className="gap-2"><Building2 className="w-3.5 h-3.5" /> Bank Accounts</TabsTrigger>
-          <TabsTrigger value="cash" className="gap-2"><Banknote className="w-3.5 h-3.5" /> Cash in Hand</TabsTrigger>
+      <Tabs defaultValue="bank" className="mobile-tabs">
+        <TabsList className={isMobile ? "w-full grid grid-cols-2" : "grid w-full grid-cols-2 max-w-sm"}>
+          <TabsTrigger value="bank" className="gap-1 md:gap-2 text-xs md:text-sm">
+            <Building2 className="w-3.5 h-3.5 hidden md:block" />
+            Bank Accounts
+          </TabsTrigger>
+          <TabsTrigger value="cash" className="gap-1 md:gap-2 text-xs md:text-sm">
+            <Banknote className="w-3.5 h-3.5 hidden md:block" />
+            Cash in Hand
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="bank" className="space-y-4">
           <div className="flex justify-end">
             <Dialog open={showAdd} onOpenChange={setShowAdd}>
               <DialogTrigger asChild>
-                <Button size="sm" className="gap-2"><Plus className="w-4 h-4" /> Add Bank Account</Button>
+                <Button size="sm" className="gap-1.5 h-8 text-xs md:text-sm"><Plus className="w-4 h-4" /> Add Account</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader><DialogTitle>Add Bank Account</DialogTitle></DialogHeader>
@@ -74,18 +80,18 @@ export default function CashBank() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {bankAccounts.map(acc => (
               <div key={acc.id} className="stat-card">
                 <div className="flex items-start justify-between">
-                  <div>
-                    <p className="font-semibold text-foreground">{acc.account_name}</p>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-foreground text-sm md:text-base truncate">{acc.account_name}</p>
                     <p className="text-xs text-muted-foreground">{acc.bank_name || "Bank"} • {acc.account_type}</p>
                     {acc.account_number && <p className="text-xs text-muted-foreground mt-1">A/C: ****{acc.account_number.slice(-4)}</p>}
                   </div>
-                  <Building2 className="w-5 h-5 text-primary" />
+                  <Building2 className="w-5 h-5 text-primary shrink-0" />
                 </div>
-                <p className="text-2xl font-bold text-foreground mt-3">₹{Number(acc.balance).toLocaleString()}</p>
+                <p className="text-xl md:text-2xl font-bold text-foreground mt-3">₹{Number(acc.balance).toLocaleString()}</p>
               </div>
             ))}
             {bankAccounts.length === 0 && <p className="text-muted-foreground text-sm col-span-3">No bank accounts added yet.</p>}
@@ -97,7 +103,7 @@ export default function CashBank() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs text-muted-foreground uppercase">Cash in Hand</p>
-                <p className="text-3xl font-bold text-foreground mt-2">₹{Number(profile?.cash_in_hand || 0).toLocaleString()}</p>
+                <p className="text-2xl md:text-3xl font-bold text-foreground mt-2">₹{Number(profile?.cash_in_hand || 0).toLocaleString()}</p>
               </div>
               <Wallet className="w-6 h-6 text-accent" />
             </div>
