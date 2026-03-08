@@ -197,7 +197,7 @@ export default function PaymentOutList() {
                   </td>
                   <td className="text-muted-foreground capitalize">{payment.payment_mode || "Cash"}</td>
                   <td className="text-right font-semibold text-warning">
-                    ₹{payment.amount.toLocaleString()}
+                    ₹{Number(payment.amount || 0).toLocaleString("en-IN")}
                   </td>
                   <td>
                     <DropdownMenu>

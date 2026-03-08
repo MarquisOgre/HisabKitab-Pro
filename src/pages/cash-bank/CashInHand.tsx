@@ -524,7 +524,7 @@ export default function CashInHand() {
                 <div>
                   <p className="text-sm text-muted-foreground">Amount</p>
                   <p className={cn("font-bold text-lg", selectedTransaction.transaction_type === "in" ? "text-success" : "text-destructive")}>
-                    ₹{selectedTransaction.amount.toLocaleString()}
+                    ₹{Number(selectedTransaction.amount || 0).toLocaleString("en-IN")}
                   </p>
                 </div>
                 <div>

@@ -185,7 +185,7 @@ export default function PaymentInList() {
                       <span className="text-muted-foreground">-</span>
                     )}
                   </td>
-                  <td className="text-right font-medium text-success">+₹{pay.amount.toLocaleString()}</td>
+                  <td className="text-right font-medium text-success">+₹{Number(pay.amount || 0).toLocaleString("en-IN")}</td>
                   <td><span className={cn("px-2 py-1 text-xs font-medium rounded-full capitalize", getModeColor(pay.payment_mode))}>{pay.payment_mode || "Cash"}</span></td>
                   <td>
                     <DropdownMenu>
