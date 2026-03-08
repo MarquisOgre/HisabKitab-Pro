@@ -30,6 +30,7 @@ export default function CreateDeliveryChallan() {
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [selectedParty, setSelectedParty] = useState("");
   const [notes, setNotes] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   
   const [items, setItems] = useState<InvoiceItem[]>([
