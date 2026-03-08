@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useSessionTracking } from "@/hooks/useSessionTracking";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 type AppRole = "admin" | "supervisor" | "viewer";
 
@@ -152,8 +153,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setSessionError(null);
   };
 
-  const canWrite = role === "admin" || role === "supervisor";
-  const isAdmin = role === "admin";
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const canWrite = role === "admin" || role === "supervisor" || isSuperAdmin;
+  const isAdmin = role === "admin" || isSuperAdmin;
 
   return (
     <AuthContext.Provider
