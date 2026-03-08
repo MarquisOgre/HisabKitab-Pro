@@ -75,7 +75,7 @@ export function PlanPaymentsManagement() {
   const [selectedPayment, setSelectedPayment] = useState<PlanPayment | null>(null);
   const [verificationNotes, setVerificationNotes] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPayments();
