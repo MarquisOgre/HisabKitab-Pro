@@ -258,12 +258,12 @@ export default function ViewPurchaseInvoice() {
                   {item.unit && <p className="text-xs text-muted-foreground">{item.unit}</p>}
                 </td>
                 <td className="py-3 px-2 text-right">{item.quantity}</td>
-                <td className="py-3 px-2 text-right">₹{item.rate.toLocaleString()}</td>
+                <td className="py-3 px-2 text-right">₹{Number(item.rate || 0).toLocaleString("en-IN")}</td>
                 <td className="py-3 px-2 text-right">
                   {item.tax_rate ? `${item.tax_rate}%` : "-"}
-                  {item.tax_amount ? <span className="block text-xs text-muted-foreground">₹{item.tax_amount.toLocaleString()}</span> : null}
+                  {item.tax_amount ? <span className="block text-xs text-muted-foreground">₹{Number(item.tax_amount || 0).toLocaleString("en-IN")}</span> : null}
                 </td>
-                <td className="py-3 px-2 text-right font-medium">₹{item.total.toLocaleString()}</td>
+                <td className="py-3 px-2 text-right font-medium">₹{Number(item.total || 0).toLocaleString("en-IN")}</td>
               </tr>
             ))}
           </tbody>
