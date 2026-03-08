@@ -104,8 +104,7 @@ export function useInvoiceSave() {
         .eq("business_id", selectedBusiness.id)
         .maybeSingle();
 
-      // Determine if it's a sale or purchase type
-      const isSaleType = ["sale", "sale_invoice", "sale_return", "sale_order", "estimation", "proforma", "delivery_challan"].includes(invoiceType);
+      // isSaleType already determined above
 
       // Get tax rates based on invoice type
       const gstRate = isSaleType 

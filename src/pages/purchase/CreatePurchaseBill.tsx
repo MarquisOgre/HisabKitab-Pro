@@ -140,10 +140,10 @@ export default function CreatePurchaseBill() {
         <div className="lg:col-span-3 space-y-6">
           {/* Bill Details */}
           <div className="metric-card">
-            <h3 className="font-semibold mb-4">Invocie Details</h3>
+            <h3 className="font-semibold mb-4">Invoice Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="billNo">Invocie Number</Label>
+                <Label htmlFor="billNo">Invoice Number</Label>
                 <Input id="billNo" value={billNumber} onChange={(e) => setBillNumber(e.target.value)} />
               </div>
               <div className="space-y-2">
