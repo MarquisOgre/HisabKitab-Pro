@@ -219,7 +219,7 @@ export default function SaleReport() {
             <p className="text-xs sm:text-sm text-muted-foreground">Avg Order</p>
             <IndianRupee className="w-4 h-4 text-muted-foreground hidden sm:block" />
           </div>
-          <p className="text-lg md:text-2xl font-bold mt-1">₹{Math.round(avgOrderValue).toLocaleString()}</p>
+          <p className="text-lg md:text-2xl font-bold mt-1">₹{Math.round(avgOrderValue).toLocaleString("en-IN")}</p>
         </div>
       </div>
 
