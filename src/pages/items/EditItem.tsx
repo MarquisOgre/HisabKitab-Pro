@@ -33,7 +33,7 @@ export default function EditItem() {
   const [formData, setFormData] = useState({
     categoryId: "",
     name: "",
-    unit: "Bottles",
+    unit: "",
     hsnCode: "",
     purchasePrice: "",
     salePrice: "",
