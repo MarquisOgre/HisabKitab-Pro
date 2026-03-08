@@ -236,11 +236,11 @@ export default function PurchaseReport() {
                     </td>
                     <td>{purchase.party_name}</td>
                     <td className="text-center">{purchase.items_count}</td>
-                    <td className="text-right font-medium">₹{purchase.total_amount.toLocaleString()}</td>
-                    <td className="text-right">₹{purchase.tcs_amount.toLocaleString()}</td>
-                    <td className="text-right text-success">₹{purchase.paid_amount.toLocaleString()}</td>
+                    <td className="text-right font-medium">₹{purchase.total_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right">₹{purchase.tcs_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-success">₹{purchase.paid_amount.toLocaleString("en-IN")}</td>
                     <td className="text-right text-warning">
-                      ₹{(purchase.total_amount - purchase.paid_amount).toLocaleString()}
+                      ₹{(purchase.total_amount - purchase.paid_amount).toLocaleString("en-IN")}
                     </td>
                   </tr>
                 ))
