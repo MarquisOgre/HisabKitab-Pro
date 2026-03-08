@@ -151,7 +151,7 @@ export default function ExpenseReport() {
                         <td className="text-muted-foreground">{format(new Date(expense.date), 'dd MMM yyyy')}</td>
                         <td><span className="px-2 py-1 text-xs font-medium rounded-full bg-muted">{expense.category}</span></td>
                         <td className="font-medium">{expense.description}</td>
-                        <td className="text-right font-medium">₹{expense.amount.toLocaleString()}</td>
+                        <td className="text-right font-medium">₹{expense.amount.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
