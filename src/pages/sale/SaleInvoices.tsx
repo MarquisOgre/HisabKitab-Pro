@@ -72,7 +72,7 @@ export default function SaleInvoices() {
       const { data, error } = await supabase
         .from("sale_invoices")
         .select("*, parties(name)")
-        .in("invoice_type", ["sale", "sale_invoice"])
+        .in("invoice_type", ["sale", "sale_invoice", "invoice"])
         .eq("is_deleted", false)
         .eq("business_id", selectedBusiness.id)
         .order("created_at", { ascending: false });
