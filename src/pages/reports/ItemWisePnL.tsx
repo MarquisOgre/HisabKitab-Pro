@@ -164,9 +164,9 @@ export default function ItemWisePnL() {
                   <tr key={item.id}>
                     <td className="font-medium">{item.name}</td>
                     <td className="text-center">{item.sold}</td>
-                    <td className="text-right">₹{item.revenue.toLocaleString()}</td>
-                    <td className="text-right text-muted-foreground">₹{item.cost.toLocaleString()}</td>
-                    <td className="text-right text-success font-medium">₹{item.profit.toLocaleString()}</td>
+                    <td className="text-right">₹{item.revenue.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-muted-foreground">₹{item.cost.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-success font-medium">₹{item.profit.toLocaleString("en-IN")}</td>
                     <td className={cn("text-right", item.margin >= 20 ? "text-success" : item.margin >= 15 ? "text-warning" : "text-destructive")}>
                       {item.margin.toFixed(1)}%
                     </td>
