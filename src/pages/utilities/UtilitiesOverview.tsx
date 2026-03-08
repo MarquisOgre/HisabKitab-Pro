@@ -57,6 +57,14 @@ const recycleBinStats = [
 ];
 
 export default function UtilitiesOverview() {
+  const { user, isAdmin } = useAuth();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const showResetDatabase = isSuperAdmin || isAdmin;
+
+  const filteredUtilities = utilities.filter(
+    (u) => u.title !== "Reset Database" || showResetDatabase
+  );
+
   return (
     <div className="space-y-6">
       {/* Header */}
