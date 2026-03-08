@@ -158,7 +158,7 @@ export default function ProfitLoss() {
         .gte('expense_date', startDate)
         .lte('expense_date', endDate);
 
-      const expenseTotal = (expenses || []).reduce((sum, e) => sum + (e.amount || 0), 0);
+      const expenseTotal = (expenses || []).reduce((sum, e) => sum + Number(e.amount || 0), 0);
 
       // Get stock values - Opening stock is current_stock at start, Closing stock is current value
       const { data: items } = await supabase
