@@ -147,7 +147,7 @@ export function useInvoiceSave() {
         ? (subtotal * tdsRate) / 100 
         : 0;
 
-      const totalAmount = Math.round(subtotal + taxAmount + tcsAmount - tdsAmount);
+      const totalAmount = Math.round(subtotal + taxAmount + tcsAmount - tdsAmount + additionalCharges);
 
       // Calculate payment details
       const actualPayment = (paymentMode && paymentMode !== "none" && paymentAmount && paymentAmount > 0) 
