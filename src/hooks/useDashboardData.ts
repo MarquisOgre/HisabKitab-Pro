@@ -229,6 +229,8 @@ export function useDashboardData() {
       partiesThisMonth: partiesThisMonth || 0,
       salesChange,
       purchaseChange,
+      salesThisMonth,
+      purchaseThisMonth,
     });
   };
 
