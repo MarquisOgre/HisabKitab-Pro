@@ -70,10 +70,10 @@ export default function PurchaseReport() {
             invoice_date: inv.invoice_date,
             party_name: inv.parties?.name || 'Unknown Supplier',
             items_count: count || 0,
-            total_amount: inv.total_amount || 0,
-            paid_amount: inv.paid_amount || 0,
-            tcs_amount: inv.tcs_amount || 0,
-            tds_amount: inv.tds_amount || 0,
+            total_amount: Number(inv.total_amount || 0),
+            paid_amount: Number(inv.paid_amount || 0),
+            tcs_amount: Number(inv.tcs_amount || 0),
+            tds_amount: Number(inv.tds_amount || 0),
           };
         })
       );
