@@ -395,7 +395,7 @@ export default function PartiesList() {
                     {party.phone || "-"}
                   </TableCell>
                   <TableCell className="text-right">
-                    ₹{(party.opening_balance || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                    ₹{Number(party.opening_balance || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                   </TableCell>
                   <TableCell className="text-right">
                     ₹{(party.invoiceAmount || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
