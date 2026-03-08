@@ -29,8 +29,19 @@ import {
   Eye,
   Search,
   CreditCard,
-  QrCode
+  QrCode,
+  Trash2
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 // @ts-nocheck
 interface PlanPayment {
