@@ -118,7 +118,7 @@ export default function CreateDeliveryChallan() {
               <Truck className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-semibold">Transport Details</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label>Transport Mode</Label>
                 <Select value={transportMode} onValueChange={setTransportMode}>
@@ -134,6 +134,10 @@ export default function CreateDeliveryChallan() {
               <div className="space-y-2">
                 <Label>Vehicle Number</Label>
                 <Input value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} placeholder="MH 12 AB 1234" />
+              </div>
+              <div className="space-y-2">
+                <Label>Delivery Charge (₹)</Label>
+                <Input type="number" min="0" value={deliveryCharge || ""} onChange={(e) => setDeliveryCharge(Number(e.target.value) || 0)} placeholder="0" />
               </div>
             </div>
           </div>
