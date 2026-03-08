@@ -161,7 +161,7 @@ export default function CreateDeliveryChallan() {
 
         <div className="metric-card sticky top-6 h-fit">
           <h2 className="text-lg font-semibold mb-4">Summary</h2>
-          <TaxSummary items={items} />
+          <TaxSummary items={items} additionalCharges={deliveryCharge} />
         </div>
       </div>
 
