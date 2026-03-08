@@ -9,6 +9,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 const utilities = [
   {
