@@ -1353,6 +1353,7 @@ export type Database = {
         }
       }
       get_effective_user_id: { Args: { _user_id: string }; Returns: string }
+      is_superadmin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
