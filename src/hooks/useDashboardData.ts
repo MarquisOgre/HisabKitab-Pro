@@ -114,14 +114,14 @@ export function useDashboardData() {
     const { data: saleInvoicesData } = await supabase
       .from('sale_invoices')
       .select('invoice_type, total_amount, created_at')
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     // Fetch purchase invoices
     const { data: purchaseInvoicesData } = await supabase
       .from('purchase_invoices')
       .select('invoice_type, total_amount, created_at')
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     // Calculate totals
@@ -184,15 +184,13 @@ export function useDashboardData() {
     // Fetch all purchase invoice items - only from non-deleted invoices
     const { data: purchaseItems } = await supabase
       .from('purchase_invoice_items')
-      .select('item_id, quantity, purchase_invoices!inner(is_deleted)')
-      .eq('purchase_invoices.is_deleted', false)
+      .select('item_id, quantity')
       .eq('business_id', selectedBusiness.id);
 
-    // Fetch all sale invoice items - only from non-deleted invoices
+    // Fetch all sale invoice items
     const { data: saleItems } = await supabase
       .from('sale_invoice_items')
-      .select('item_id, quantity, sale_invoices!inner(is_deleted)')
-      .eq('sale_invoices.is_deleted', false)
+      .select('item_id, quantity')
       .eq('business_id', selectedBusiness.id);
 
     // Create lookup maps for purchased and sold quantities
@@ -244,7 +242,7 @@ export function useDashboardData() {
       .select('balance_due, party_id')
       .in('invoice_type', ['sale', 'sale_invoice'])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const receivablesPartyIds = new Set(saleInvoicesReceivables?.map(i => i.party_id).filter(Boolean));
@@ -256,7 +254,7 @@ export function useDashboardData() {
       .select('balance_due, party_id')
       .in('invoice_type', ['purchase', 'purchase_bill', 'purchase_invoice'])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const payablesPartyIds = new Set(purchaseInvoicesPayables?.map(i => i.party_id).filter(Boolean));
@@ -268,7 +266,7 @@ export function useDashboardData() {
       .select('balance_due')
       .lt('due_date', now.toISOString().split('T')[0])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const { data: overduePurchaseInvoices } = await supabase
@@ -276,7 +274,7 @@ export function useDashboardData() {
       .select('balance_due')
       .lt('due_date', now.toISOString().split('T')[0])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const overdueAmount = 
@@ -318,7 +316,7 @@ export function useDashboardData() {
         party_id,
         parties(name)
       `)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id)
       .order('created_at', { ascending: false })
       .limit(5);
@@ -334,7 +332,7 @@ export function useDashboardData() {
         party_id,
         parties(name)
       `)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id)
       .order('created_at', { ascending: false })
       .limit(5);
@@ -395,7 +393,7 @@ export function useDashboardData() {
         .select('invoice_type, total_amount')
         .gte('created_at', monthStart.toISOString())
         .lte('created_at', monthEnd.toISOString())
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness!.id);
 
       const { data: purchaseInvoicesMonth } = await supabase
@@ -403,7 +401,7 @@ export function useDashboardData() {
         .select('invoice_type, total_amount')
         .gte('created_at', monthStart.toISOString())
         .lte('created_at', monthEnd.toISOString())
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness!.id);
 
       let sales = 0;
