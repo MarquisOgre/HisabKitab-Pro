@@ -149,6 +149,7 @@ const navItems: NavItem[] = [
     icon: <Package className="w-5 h-5" />,
     children: [
       { title: "Categories", href: "/items/categories" },
+      { title: "UOM", href: "/items/units" },
       { title: "Add Item", href: "/items/add", requireWrite: true },
       { title: "All Items", href: "/items" },
     ],
