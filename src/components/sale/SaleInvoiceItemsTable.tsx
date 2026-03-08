@@ -168,7 +168,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           updatedItem.quantity = Math.max(0, updatedItem.availableStock - saleVal);
         }
         
-        updatedItem.amount = updatedItem.quantity * updatedItem.rate;
+        updatedItem.amount = updatedItem.closingStock * updatedItem.rate;
         
         return updatedItem;
       }
