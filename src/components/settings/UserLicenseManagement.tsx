@@ -538,7 +538,7 @@ export function UserLicenseManagement() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Expiry Date</Label>
-                  <Popover>
+                  <Popover modal={true}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
@@ -553,7 +553,7 @@ export function UserLicenseManagement() {
                           : "Pick a date"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 z-[9999]" align="start">
                       <Calendar
                         mode="single"
                         selected={formData.expiry_date ? parse(formData.expiry_date, "yyyy-MM-dd", new Date()) : undefined}
