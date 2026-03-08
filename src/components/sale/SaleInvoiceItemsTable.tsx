@@ -405,8 +405,8 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 </td>
                 <td className="py-2 px-1">
                   <NumberInput
-                    value={item.closingStock}
-                    onChange={(val) => updateItem(item.id, "closingStock", val)}
+                    value={item.saleQty}
+                    onChange={(val) => updateItem(item.id, "saleQty", val)}
                     className="h-8 w-14 text-xs"
                   />
                 </td>
