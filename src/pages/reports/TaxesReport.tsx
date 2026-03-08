@@ -188,35 +188,35 @@ export default function TaxesReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Taxable</p>
             <IndianRupee className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalTaxable.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalTaxable.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">GST Collected</p>
             <Calculator className="w-4 h-4 text-success flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalGST.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalGST.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">TCS Collected</p>
             <FileText className="w-4 h-4 text-warning flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalTCS.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalTCS.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">TDS Deducted</p>
             <FileText className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-primary truncate">₹{totalTDS.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-primary truncate">₹{totalTDS.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Tax Liability</p>
             <IndianRupee className="w-4 h-4 text-destructive flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{(totalGST + totalTCS).toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{(totalGST + totalTCS).toLocaleString("en-IN")}</p>
         </div>
       </div>
 
