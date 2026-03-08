@@ -579,7 +579,7 @@ export default function Landing() {
                         variant={plan.popular ? "default" : "outline"} 
                         asChild
                       >
-                        <Link to={plan.id ? `/checkout?plan=${plan.id}` : "/signup"}>
+                        <Link to={plan.id ? `/checkout?plan=${encodeURIComponent(plan.name)}` : "/signup"}>
                           {plan.cta}
                         </Link>
                       </Button>

@@ -49,7 +49,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { user, loading: authLoading, signUp, signIn } = useAuth();
   
-  const planId = searchParams.get("plan");
+  const planParam = searchParams.get("plan");
   
   const [loading, setLoading] = useState(true);
   const [plan, setPlan] = useState<LicensePlan | null>(null);
@@ -74,20 +74,34 @@ export default function Checkout() {
 
   useEffect(() => {
     fetchPlanAndSettings();
-  }, [planId]);
+  }, [planParam]);
 
   const fetchPlanAndSettings = async () => {
     setLoading(true);
     try {
-      // Fetch plan details
-      if (planId) {
-        const { data: planData, error: planError } = await supabase
+      // Fetch plan details - support both plan name and plan ID
+      if (planParam) {
+        // Try by plan_name first (new URL format), then fallback to ID
+        let planData = null;
+        const { data: byName } = await supabase
           .from("license_plans")
           .select("*")
-          .eq("id", planId)
-          .single();
-        
-        if (planError) throw planError;
+          .ilike("plan_name", planParam)
+          .eq("is_active", true)
+          .maybeSingle();
+
+        if (byName) {
+          planData = byName;
+        } else {
+          const { data: byId } = await supabase
+            .from("license_plans")
+            .select("*")
+            .eq("id", planParam)
+            .single();
+          planData = byId;
+        }
+
+        if (!planData) throw new Error("Plan not found");
         setPlan(planData);
       }
       
@@ -98,9 +112,10 @@ export default function Checkout() {
         .maybeSingle();
       
       if (settingsData) {
-        setPaymentSettings(settingsData);
+        const isRazorpayEnabled = settingsData.razorpay_enabled === true || settingsData.razorpay_enabled === "true";
+        setPaymentSettings({ ...settingsData, razorpay_enabled: isRazorpayEnabled });
         // Default to QR if Razorpay is not enabled
-        if (!settingsData.razorpay_enabled) {
+        if (!isRazorpayEnabled) {
           setPaymentMethod("qr_manual");
         }
       }
