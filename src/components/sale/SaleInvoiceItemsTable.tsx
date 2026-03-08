@@ -162,13 +162,13 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           }
         }
         
-        if (field === "closingStock") {
+        if (field === "saleQty") {
           const saleVal = Math.max(0, Math.min(value as number, updatedItem.availableStock));
-          updatedItem.closingStock = saleVal;
+          updatedItem.saleQty = saleVal;
           updatedItem.quantity = Math.max(0, updatedItem.availableStock - saleVal);
         }
         
-        updatedItem.amount = updatedItem.closingStock * updatedItem.rate;
+        updatedItem.amount = updatedItem.saleQty * updatedItem.rate;
         
         return updatedItem;
       }
