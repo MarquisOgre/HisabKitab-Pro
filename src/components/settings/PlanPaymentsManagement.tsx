@@ -293,6 +293,23 @@ export function PlanPaymentsManagement() {
     }
   };
 
+  const handleDeletePayment = async (paymentId: string) => {
+    try {
+      const { error } = await supabase
+        .from("plan_payments")
+        .delete()
+        .eq("id", paymentId);
+
+      if (error) throw error;
+
+      setPayments(payments.filter(p => p.id !== paymentId));
+      toast.success("Payment record deleted");
+      setDeleteConfirmId(null);
+    } catch (error: any) {
+      toast.error("Failed to delete payment: " + error.message);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "completed":
