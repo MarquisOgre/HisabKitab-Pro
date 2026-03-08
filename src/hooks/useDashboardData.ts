@@ -393,7 +393,7 @@ export function useDashboardData() {
         .select('invoice_type, total_amount')
         .gte('created_at', monthStart.toISOString())
         .lte('created_at', monthEnd.toISOString())
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness!.id);
 
       const { data: purchaseInvoicesMonth } = await supabase
