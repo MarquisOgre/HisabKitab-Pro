@@ -154,8 +154,8 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
             updatedItem.name = selectedItem.name;
             updatedItem.rate = Number(selectedItem.sale_price) || 0;
             updatedItem.availableStock = Number(selectedItem.current_stock) || 0;
-            updatedItem.closingStock = Number(selectedItem.current_stock) || 0;
-            updatedItem.quantity = 0;
+            updatedItem.closingStock = 0;
+            updatedItem.quantity = Number(selectedItem.current_stock) || 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
             updatedItem.taxRate = Number(defaultTaxRate) || 0;
@@ -163,12 +163,12 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
         }
         
         if (field === "closingStock") {
-          const closingVal = Math.max(0, Math.min(value as number, updatedItem.availableStock));
-          updatedItem.closingStock = closingVal;
-          updatedItem.quantity = Math.max(0, updatedItem.availableStock - closingVal);
+          const saleVal = Math.max(0, Math.min(value as number, updatedItem.availableStock));
+          updatedItem.closingStock = saleVal;
+          updatedItem.quantity = Math.max(0, updatedItem.availableStock - saleVal);
         }
         
-        updatedItem.amount = updatedItem.quantity * updatedItem.rate;
+        updatedItem.amount = updatedItem.closingStock * updatedItem.rate;
         
         return updatedItem;
       }
