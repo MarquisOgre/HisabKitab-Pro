@@ -408,7 +408,7 @@ export default function CashInHand() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Today's Cash In</p>
-              <p className="text-2xl font-bold text-success mt-1">₹{todayIn.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-success mt-1">₹{todayIn.toLocaleString("en-IN")}</p>
             </div>
             <div className="p-3 rounded-xl bg-success/10">
               <ArrowUpRight className="w-6 h-6 text-success" />
