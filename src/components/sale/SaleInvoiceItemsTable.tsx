@@ -23,7 +23,7 @@ export interface InvoiceItem {
   name: string;
   quantity: number;
   availableStock: number;
-  closingStock: number;
+  saleQty: number;
   unit: string;
   rate: number;
   taxRate: number;
