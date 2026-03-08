@@ -262,6 +262,7 @@ const AppRoutes = () => {
       <Route path="/items/add" element={<ProtectedRoute><AddItem /></ProtectedRoute>} />
       <Route path="/items/edit/:id" element={<ProtectedRoute><EditItem /></ProtectedRoute>} />
       <Route path="/items/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+      <Route path="/items/units" element={<ProtectedRoute><Units /></ProtectedRoute>} />
       {/* Sale */}
       <Route path="/sale/invoices" element={<ProtectedRoute><SaleInvoices /></ProtectedRoute>} />
       <Route path="/sale/invoices/new" element={<ProtectedRoute><CreateSaleInvoice /></ProtectedRoute>} />
