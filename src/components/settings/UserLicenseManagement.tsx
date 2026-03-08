@@ -8,15 +8,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { Shield, Mail, Calendar as CalendarIcon, Users, Edit, Plus, Loader2, CheckCircle, XCircle, AlertTriangle, Trash2, Ban, RotateCcw } from "lucide-react";
+import { Shield, Mail, Calendar, Users, Edit, Plus, Loader2, CheckCircle, XCircle, AlertTriangle, Trash2, Ban, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { addDays, format, parse } from "date-fns";
+import { addDays, format } from "date-fns";
 import { isSuperAdminEmail } from "@/lib/superadmin";
-import { cn } from "@/lib/utils";
 // @ts-nocheck
 interface UserLicense {
   id: string;
@@ -538,50 +535,11 @@ export function UserLicenseManagement() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Expiry Date</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      min="1"
-                      max="31"
-                      placeholder="DD"
-                      className="w-16 text-center"
-                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[2]) : ""}
-                      onChange={(e) => {
-                        const parts = formData.expiry_date.split("-");
-                        const day = String(Math.min(31, Math.max(1, parseInt(e.target.value) || 1))).padStart(2, "0");
-                        setFormData({ ...formData, expiry_date: `${parts[0]}-${parts[1]}-${day}` });
-                      }}
-                    />
-                    <span className="text-muted-foreground">/</span>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="12"
-                      placeholder="MM"
-                      className="w-16 text-center"
-                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[1]) : ""}
-                      onChange={(e) => {
-                        const parts = formData.expiry_date.split("-");
-                        const month = String(Math.min(12, Math.max(1, parseInt(e.target.value) || 1))).padStart(2, "0");
-                        setFormData({ ...formData, expiry_date: `${parts[0]}-${month}-${parts[2]}` });
-                      }}
-                    />
-                    <span className="text-muted-foreground">/</span>
-                    <Input
-                      type="number"
-                      min="2024"
-                      max="2999"
-                      placeholder="YYYY"
-                      className="w-24 text-center"
-                      value={formData.expiry_date ? parseInt(formData.expiry_date.split("-")[0]) : ""}
-                      onChange={(e) => {
-                        const parts = formData.expiry_date.split("-");
-                        const year = e.target.value;
-                        setFormData({ ...formData, expiry_date: `${year}-${parts[1]}-${parts[2]}` });
-                      }}
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground">DD / MM / YYYY</p>
+                  <Input
+                    type="date"
+                    value={formData.expiry_date}
+                    onChange={(e) => setFormData({ ...formData, expiry_date: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>License Type</Label>
