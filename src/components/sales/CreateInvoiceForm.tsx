@@ -37,7 +37,7 @@ export default function CreateInvoiceForm({ onClose, onSaved }: Props) {
     if (!user) return;
     Promise.all([
       supabase.from("parties").select("id, name").eq("user_id", user.id).eq("party_type", "customer"),
-      supabase.from("items").select("*").eq("user_id", user.id).eq("is_deleted", "false"),
+      supabase.from("items").select("*").eq("user_id", user.id).or("is_deleted.is.null,is_deleted.eq.false"),
     ]).then(([c, p]) => {
       if (c.data) setParties(c.data);
       if (p.data) setProducts(p.data);
