@@ -132,8 +132,8 @@ export default function SaleReport() {
         ];
       }),
       summary: [
-        { label: "Total Sales", value: `₹${totalSales.toLocaleString()}` },
-        { label: "Total Profit", value: `₹${totalProfit.toLocaleString()}` },
+        { label: "Total Sales", value: `₹${totalSales.toLocaleString("en-IN")}` },
+        { label: "Total Profit", value: `₹${totalProfit.toLocaleString("en-IN")}` },
         { label: "Total Invoices", value: filteredData.length.toString() },
       ]
     });
