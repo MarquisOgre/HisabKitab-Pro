@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+
 interface LicenseDisplayInfo {
   licenseType: string | null;
   isInherited: boolean;
@@ -26,18 +27,20 @@ export function useLicenseDisplay(): LicenseDisplayInfo {
       }
 
       try {
-        // Use a SECURITY DEFINER database function to avoid RLS blocking child accounts
-        const { data, error } = await supabase.rpc("get_license_display_info", {
+        // Use get_effective_license_settings which handles parent/child resolution
+        const { data, error } = await supabase.rpc("get_effective_license_settings", {
           _user_id: user.id,
         });
 
         if (error) throw error;
 
         const row = Array.isArray(data) ? data[0] : data;
+        // Check if the license belongs to a different user (inherited from parent)
+        const isInherited = row?.user_id ? row.user_id !== user.id : false;
         setLicenseInfo({
           licenseType: row?.license_type ?? null,
-          isInherited: !!row?.is_inherited,
-          parentEmail: row?.parent_email ?? null,
+          isInherited,
+          parentEmail: isInherited ? (row?.user_email ?? null) : null,
           isLoading: false,
         });
       } catch (error) {
