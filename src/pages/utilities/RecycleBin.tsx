@@ -56,11 +56,11 @@ export default function RecycleBin() {
       const deletedItems: DeletedItem[] = [];
       const now = new Date();
 
-      // Fetch deleted items
+      // Fetch deleted items (is_deleted is text type for items table)
       const { data: deletedProducts } = await supabase
         .from('items')
         .select('id, name, deleted_at')
-        .eq('is_deleted', true)
+        .eq('is_deleted', 'true')
         .not('deleted_at', 'is', null);
 
       deletedProducts?.forEach(item => {
