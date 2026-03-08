@@ -229,6 +229,35 @@ export default function Checkout() {
     }
   };
 
+  const handleScreenshotChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Screenshot must be less than 5MB");
+        return;
+      }
+      setScreenshotFile(file);
+      setScreenshotPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadScreenshot = async (): Promise<string | null> => {
+    if (!screenshotFile || !user) return null;
+    const ext = screenshotFile.name.split(".").pop();
+    const path = `${user.id}/${Date.now()}.${ext}`;
+    const { error } = await supabase.storage
+      .from("payment-screenshots")
+      .upload(path, screenshotFile);
+    if (error) {
+      console.error("Screenshot upload failed:", error);
+      return null;
+    }
+    const { data: urlData } = supabase.storage
+      .from("payment-screenshots")
+      .getPublicUrl(path);
+    return urlData.publicUrl;
+  };
+
   const handleManualPayment = async () => {
     if (!user || !plan) {
       toast.error("Please sign in first");
@@ -242,6 +271,9 @@ export default function Checkout() {
     
     setProcessing(true);
     try {
+      // Upload screenshot if provided
+      const screenshotUrl = await uploadScreenshot();
+
       const { error } = await supabase.from("plan_payments").insert({
         user_id: user.id,
         user_email: user.email || "",
@@ -251,6 +283,7 @@ export default function Checkout() {
         amount: plan.price,
         payment_method: "qr_manual",
         manual_reference_id: manualReferenceId.trim(),
+        screenshot_url: screenshotUrl,
         status: "pending"
       });
       
