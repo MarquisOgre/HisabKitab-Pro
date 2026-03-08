@@ -51,7 +51,7 @@ export default function TaxesReport() {
       const { data: saleInvoices } = await supabase
         .from('sale_invoices')
         .select(`id, invoice_number, invoice_date, subtotal, tax_amount, total_amount, tcs_amount, party_id, parties (name)`)
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id)
         .gte('invoice_date', format(dateRange.from, 'yyyy-MM-dd'))
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'))
