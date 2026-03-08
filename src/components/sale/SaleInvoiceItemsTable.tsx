@@ -119,7 +119,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
       name: "",
       quantity: 0,
       availableStock: 0,
-      closingStock: 0,
+      saleQty: 0,
       unit: defaultUnit,
       rate: 0,
       taxRate: Number(defaultTaxRate) || 0,
