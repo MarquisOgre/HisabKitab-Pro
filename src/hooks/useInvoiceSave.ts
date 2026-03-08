@@ -120,7 +120,8 @@ export function useInvoiceSave() {
       let itemLevelTax = 0;
 
       validItems.forEach((item) => {
-        const itemSubtotal = item.quantity * item.rate;
+        const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+        const itemSubtotal = qty * item.rate;
         // Use item's tax rate for item-level GST
         const itemTax = item.taxRate > 0 ? (itemSubtotal * item.taxRate) / 100 : 0;
         
