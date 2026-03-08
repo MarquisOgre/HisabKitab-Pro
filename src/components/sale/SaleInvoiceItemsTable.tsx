@@ -280,7 +280,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 </div>
               </div>
               <div>
-                <label className="text-xs text-muted-foreground mb-1 block">Cls</label>
+                <label className="text-xs text-muted-foreground mb-1 block">Sale</label>
                 <NumberInput
                   value={item.closingStock}
                   onChange={(val) => updateItem(item.id, "closingStock", val)}
