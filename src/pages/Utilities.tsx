@@ -37,7 +37,7 @@ const utilities = [
 
 export default function Utilities() {
   const { user, isAdmin } = useAuth();
-  const showResetDatabase = isSuperAdminEmail(user?.email) || isAdmin;
+  const showResetDatabase = isSuperAdminEmail(user?.email);
 
   const filteredUtilities = utilities.filter(
     (u) => u.title !== "Reset Database" || showResetDatabase
