@@ -45,27 +45,26 @@ export default function CreateSaleInvoice() {
     const generateInvoiceNumber = async () => {
       if (!user || !selectedBusiness) return;
       
+      const prefix = businessSettings?.invoice_prefix || "INV-";
+      
       const { data } = await supabase
         .from("sale_invoices")
         .select("invoice_number")
         .eq("business_id", selectedBusiness.id)
-        .eq("invoice_type", "sale_invoice")
-        .order("created_at", { ascending: false })
-        .limit(1);
+        .in("invoice_type", ["sale", "sale_invoice", "invoice"])
+        .ilike("invoice_number", `${prefix}%`);
       
+      let maxNum = 0;
       if (data && data.length > 0) {
-        const lastNumber = data[0].invoice_number;
-        const match = lastNumber.match(/(\d+)$/);
-        if (match) {
-          const nextNum = parseInt(match[1]) + 1;
-          const prefix = lastNumber.replace(/\d+$/, "");
-          setInvoiceNumber(`${prefix}${String(nextNum).padStart(3, "0")}`);
-        } else {
-          setInvoiceNumber("INV-001");
+        for (const inv of data) {
+          const match = inv.invoice_number?.match(/(\d+)$/);
+          if (match) {
+            const num = parseInt(match[1]);
+            if (num > maxNum) maxNum = num;
+          }
         }
-      } else {
-        setInvoiceNumber("INV-001");
       }
+      setInvoiceNumber(`${prefix}${String(maxNum + 1).padStart(3, "0")}`);
     };
     
     generateInvoiceNumber();
