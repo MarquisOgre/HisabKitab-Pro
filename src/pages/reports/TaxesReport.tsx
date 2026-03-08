@@ -265,13 +265,13 @@ export default function TaxesReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td>Total</td>
-                      <td className="text-right">₹{totalTaxable.toLocaleString()}</td>
-                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.cgst, 0).toLocaleString()}</td>
-                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.sgst, 0).toLocaleString()}</td>
+                      <td className="text-right">₹{totalTaxable.toLocaleString("en-IN")}</td>
+                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.cgst, 0).toLocaleString("en-IN")}</td>
+                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.sgst, 0).toLocaleString("en-IN")}</td>
                       <td className="text-right">₹0</td>
-                      <td className="text-right text-warning">₹{totalTCS.toLocaleString()}</td>
-                      <td className="text-right text-primary">₹{totalTDS.toLocaleString()}</td>
-                      <td className="text-right text-success">₹{totalGST.toLocaleString()}</td>
+                      <td className="text-right text-warning">₹{totalTCS.toLocaleString("en-IN")}</td>
+                      <td className="text-right text-primary">₹{totalTDS.toLocaleString("en-IN")}</td>
+                      <td className="text-right text-success">₹{totalGST.toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}
