@@ -44,7 +44,7 @@ export default function ItemWisePnL() {
         .select('name, purchase_price')
         .eq('business_id', selectedBusiness.id);
       const itemPrices: { [key: string]: number } = {};
-      (items || []).forEach(item => { itemPrices[item.name] = item.purchase_price || 0; });
+      (items || []).forEach(item => { itemPrices[item.name] = Number(item.purchase_price || 0); });
       const itemAggregates: { [key: string]: { sold: number; revenue: number; cost: number } } = {};
       salesItems.forEach((item: any) => {
         const name = item.item_name;
