@@ -111,10 +111,10 @@ export default function PurchaseReport() {
         `₹${(p.total_amount - p.paid_amount).toLocaleString("en-IN")}`
       ]),
       summary: [
-        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString()}` },
-        { label: "Total TCS", value: `₹${totalTcs.toLocaleString()}` },
-        { label: "Total Paid", value: `₹${totalPaid.toLocaleString()}` },
-        { label: "Pending Payment", value: `₹${totalPending.toLocaleString()}` },
+        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString("en-IN")}` },
+        { label: "Total TCS", value: `₹${totalTcs.toLocaleString("en-IN")}` },
+        { label: "Total Paid", value: `₹${totalPaid.toLocaleString("en-IN")}` },
+        { label: "Pending Payment", value: `₹${totalPending.toLocaleString("en-IN")}` },
       ]
     });
   };
