@@ -75,6 +75,7 @@ export default function SaleInvoices() {
         .in("invoice_type", ["sale", "sale_invoice", "invoice"])
         .eq("is_deleted", false)
         .eq("business_id", selectedBusiness.id)
+        .order("invoice_date", { ascending: false })
         .order("created_at", { ascending: false });
 
       if (error) throw error;

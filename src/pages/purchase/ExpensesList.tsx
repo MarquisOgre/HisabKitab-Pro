@@ -59,6 +59,7 @@ export default function ExpensesList() {
         .from("expenses")
         .select("*")
         .eq("business_id", selectedBusiness.id)
+        .order("expense_date", { ascending: false })
         .order("created_at", { ascending: false });
 
       if (error) throw error;
