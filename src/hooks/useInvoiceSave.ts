@@ -26,6 +26,7 @@ interface SaveInvoiceParams {
   notes?: string;
   paymentMode?: string;
   paymentAmount?: number;
+  additionalCharges?: number;
 }
 
 export function useInvoiceSave() {

@@ -158,7 +158,7 @@ export default function DeliveryChallanList() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem asChild><Link to={`/sale/invoices/${dc.id}`}><Eye className="w-4 h-4 mr-2" />View</Link></DropdownMenuItem>
                           <DropdownMenuItem><Download className="w-4 h-4 mr-2" />Download PDF</DropdownMenuItem>
-                          <DropdownMenuItem asChild><Link to={`/sale/invoice/new?from_dc=${dc.id}`}><ArrowRightCircle className="w-4 h-4 mr-2" />Convert to Invoice</Link></DropdownMenuItem>
+                          <DropdownMenuItem asChild><Link to={`/sale/invoices/new?from_dc=${dc.id}`}><ArrowRightCircle className="w-4 h-4 mr-2" />Convert to Invoice</Link></DropdownMenuItem>
                           <DropdownMenuItem asChild><Link to={`/sale/payment-in?party=${dc.parties?.name || ""}`}><CreditCard className="w-4 h-4 mr-2" />Record Payment</Link></DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(dc.id)}>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
