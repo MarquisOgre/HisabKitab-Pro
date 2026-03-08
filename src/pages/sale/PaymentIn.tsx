@@ -194,8 +194,8 @@ export default function PaymentIn() {
           .single();
 
         if (currentInvoice) {
-          const newPaidAmount = (currentInvoice.paid_amount || 0) + parseFloat(amount);
-          const newBalance = Math.max(0, (currentInvoice.total_amount || 0) - newPaidAmount);
+          const newPaidAmount = (Number(currentInvoice.paid_amount) || 0) + parseFloat(amount);
+          const newBalance = Math.max(0, (Number(currentInvoice.total_amount) || 0) - newPaidAmount);
           
           await supabase
             .from("sale_invoices")
@@ -223,10 +223,10 @@ export default function PaymentIn() {
           for (const inv of unpaidInvoices) {
             if (remainingPayment <= 0) break;
             
-            const currentBalance = (inv.total_amount || 0) - (inv.paid_amount || 0);
+            const currentBalance = (Number(inv.total_amount) || 0) - (Number(inv.paid_amount) || 0);
             const paymentForThisInvoice = Math.min(remainingPayment, currentBalance);
-            const newPaidAmount = (inv.paid_amount || 0) + paymentForThisInvoice;
-            const newBalance = Math.max(0, (inv.total_amount || 0) - newPaidAmount);
+            const newPaidAmount = (Number(inv.paid_amount) || 0) + paymentForThisInvoice;
+            const newBalance = Math.max(0, (Number(inv.total_amount) || 0) - newPaidAmount);
             
             await supabase
               .from("sale_invoices")
