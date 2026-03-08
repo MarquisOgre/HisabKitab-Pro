@@ -288,7 +288,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 />
               </div>
               <div>
-                <label className="text-xs text-muted-foreground mb-1 block">Qty</label>
+                <label className="text-xs text-muted-foreground mb-1 block leading-tight">Remaining Qty</label>
                 <div className={`h-9 flex items-center justify-center rounded text-xs font-medium ${item.quantity > 0 ? "bg-primary/10 text-primary" : "bg-muted/50 text-muted-foreground"}`}>
                   {item.quantity}
                 </div>
@@ -325,7 +325,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 <p className="font-bold">{items.reduce((sum, item) => sum + item.saleQty, 0)}</p>
               </div>
               <div className="text-center">
-                <p className="text-muted-foreground">Qty</p>
+                <p className="text-muted-foreground leading-tight">Rem. Qty</p>
                 <p className="font-bold text-primary">{items.reduce((sum, item) => sum + item.quantity, 0)}</p>
               </div>
               <div className="text-center">
@@ -356,7 +356,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <th className="text-center py-2 px-1 font-medium text-muted-foreground min-w-[180px]">Item</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-14">Avl.</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16">Sale</th>
-              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-12">Qty</th>
+              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16 leading-tight">Rem. Qty</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Unit</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Rate</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-24">Amount</th>
