@@ -88,19 +88,19 @@ export default function StockReport() {
       const { data: items } = await supabase
         .from("items")
         .select("id, name, unit, opening_stock, purchase_price, sale_price, hsn_code, low_stock_alert, category_id, categories (name)")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id);
 
       const { data: purchaseInvoices } = await supabase
         .from("purchase_invoices")
         .select("id, invoice_date, invoice_number")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id);
 
       const { data: saleInvoices } = await supabase
         .from("sale_invoices")
         .select("id, invoice_date, invoice_number")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id);
 
       const purchaseInvoiceIds = purchaseInvoices?.map(i => i.id) || [];

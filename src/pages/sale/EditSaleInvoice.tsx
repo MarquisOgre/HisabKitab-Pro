@@ -65,7 +65,7 @@ export default function EditSaleInvoice() {
       const { data: allDbItems } = await supabase
         .from("items")
         .select("id, current_stock")
-        .eq("is_deleted", false);
+        .or("is_deleted.is.null,is_deleted.eq.false");
       
       const stockMap: Record<string, number> = {};
       allDbItems?.forEach(item => {

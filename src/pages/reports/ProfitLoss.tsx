@@ -76,7 +76,7 @@ export default function ProfitLoss() {
       const { data: salesInvoices } = await supabase
         .from('sale_invoices')
         .select('total_amount, tax_amount, tcs_amount')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id)
         .gte('invoice_date', startDate)
         .lte('invoice_date', endDate);
@@ -105,7 +105,7 @@ export default function ProfitLoss() {
       const { data: purchaseInvoices } = await supabase
         .from('purchase_invoices')
         .select('total_amount, tax_amount, tcs_amount')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id)
         .gte('invoice_date', startDate)
         .lte('invoice_date', endDate);

@@ -62,7 +62,7 @@ export default function PurchaseBills() {
         .from("purchase_invoices")
         .select("*, parties(name)")
         .in("invoice_type", ["purchase", "purchase_bill", "purchase_invoice"])
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id)
         .order("invoice_date", { ascending: false })
         .order("created_at", { ascending: false });
