@@ -212,8 +212,8 @@ export default function PaymentIn() {
           .from("sale_invoices")
           .select("id, total_amount, paid_amount, invoice_date")
           .eq("party_id", selectedParty)
-          .eq("is_deleted", false)
-          .in("invoice_type", ["sale", "sale_invoice"])
+          .or("is_deleted.is.null,is_deleted.eq.false")
+          .in("invoice_type", ["sale", "sale_invoice", "invoice"])
           .gt("balance_due", 0)
           .order("invoice_date", { ascending: true });
 
