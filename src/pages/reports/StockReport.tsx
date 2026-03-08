@@ -94,7 +94,7 @@ export default function StockReport() {
       const { data: purchaseInvoices } = await supabase
         .from("purchase_invoices")
         .select("id, invoice_date, invoice_number")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id);
 
       const { data: saleInvoices } = await supabase
