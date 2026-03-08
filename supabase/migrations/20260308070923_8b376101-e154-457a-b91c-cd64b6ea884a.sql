@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS business_settings_business_id_unique ON public.business_settings (business_id);
