@@ -74,13 +74,18 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
   }, [user, selectedBusiness]);
 
   const fetchItems = async () => {
-    if (!selectedBusiness) return;
-    const { data } = await supabase
+    if (!selectedBusiness) {
+      console.log("[SaleItems] No selectedBusiness, skipping fetch");
+      return;
+    }
+    console.log("[SaleItems] Fetching items for business:", selectedBusiness.id, selectedBusiness.name);
+    const { data, error } = await supabase
       .from("items")
       .select("id, name, hsn_code, sale_price, current_stock, unit, category_id")
       .or("is_deleted.is.null,is_deleted.eq.false")
       .eq("business_id", selectedBusiness.id)
       .order("name");
+    console.log("[SaleItems] Fetched items:", data?.length || 0, "Error:", error?.message || "none");
     if (data) {
       setDbItems(data);
     }
