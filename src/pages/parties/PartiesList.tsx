@@ -89,7 +89,7 @@ export default function PartiesList() {
       const { data: saleData, error: saleError } = await supabase
         .from("sale_invoices")
         .select("party_id, total_amount")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id);
 
       if (saleError) throw saleError;

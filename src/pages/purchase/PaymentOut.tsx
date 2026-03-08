@@ -205,7 +205,7 @@ export default function PaymentOut() {
           .from("purchase_invoices")
           .select("id, total_amount, paid_amount, invoice_date")
           .eq("party_id", selectedParty)
-          .eq("is_deleted", false)
+          .or("is_deleted.is.null,is_deleted.eq.false")
           .gt("balance_due", 0)
           .order("invoice_date", { ascending: true });
 

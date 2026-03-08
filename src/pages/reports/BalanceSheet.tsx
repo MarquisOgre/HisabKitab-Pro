@@ -73,7 +73,7 @@ export default function BalanceSheet() {
       const { data: purchaseInvoices } = await supabase
         .from('purchase_invoices')
         .select('balance_due, invoice_date')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id)
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'));
 

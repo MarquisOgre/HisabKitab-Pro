@@ -38,7 +38,7 @@ export default function DeliveryChallanList() {
         .from("sale_invoices")
         .select("*, parties(name)")
         .eq("invoice_type", "delivery_challan")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .order("created_at", { ascending: false });
 
       if (error) throw error;

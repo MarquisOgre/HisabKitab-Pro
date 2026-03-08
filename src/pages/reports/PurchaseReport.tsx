@@ -51,7 +51,7 @@ export default function PurchaseReport() {
           party_id,
           parties (name)
         `)
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id)
         .order('invoice_date', { ascending: false });
 
