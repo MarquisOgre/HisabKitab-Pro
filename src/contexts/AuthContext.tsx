@@ -146,11 +146,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     await removeSession();
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut({ scope: 'local' });
+    } catch {
+      // Ignore errors - session may already be invalid
+    }
     setUser(null);
     setSession(null);
     setRole(null);
     setSessionError(null);
+    localStorage.removeItem('selectedBusinessId');
   };
 
   const isSuperAdmin = isSuperAdminEmail(user?.email);
