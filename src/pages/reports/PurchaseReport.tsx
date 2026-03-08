@@ -178,7 +178,7 @@ export default function PurchaseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Amount Paid</p>
             <TrendingDown className="w-4 h-4 text-success flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalPaid.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalPaid.toLocaleString("en-IN")}</p>
           <p className="text-xs text-muted-foreground mt-1 hidden sm:block">
             {totalPurchase > 0 ? ((totalPaid / totalPurchase) * 100).toFixed(1) : 0}% of total
           </p>
