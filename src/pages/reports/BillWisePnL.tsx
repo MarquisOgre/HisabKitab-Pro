@@ -147,7 +147,7 @@ export default function BillWisePnL() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Sales</p>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalSale.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalSale.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Cost</p>
