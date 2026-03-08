@@ -49,9 +49,9 @@ export default function ItemWisePnL() {
       salesItems.forEach((item: any) => {
         const name = item.item_name;
         if (!itemAggregates[name]) { itemAggregates[name] = { sold: 0, revenue: 0, cost: 0 }; }
-        itemAggregates[name].sold += item.quantity;
-        itemAggregates[name].revenue += item.total;
-        itemAggregates[name].cost += item.quantity * (itemPrices[name] || item.rate * 0.7);
+        itemAggregates[name].sold += Number(item.quantity || 0);
+        itemAggregates[name].revenue += Number(item.total || 0);
+        itemAggregates[name].cost += Number(item.quantity || 0) * (Number(itemPrices[name]) || Number(item.rate || 0) * 0.7);
       });
       const pnlData = Object.entries(itemAggregates).map(([name, data], idx) => {
         const profit = data.revenue - data.cost;
