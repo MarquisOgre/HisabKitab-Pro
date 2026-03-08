@@ -85,8 +85,8 @@ export default function SaleReport() {
             invoice_date: inv.invoice_date,
             party_name: inv.parties?.name || 'Walk-in Customer',
             items_count: saleItems?.length || 0,
-            total_amount: inv.total_amount || 0,
-            tcs_amount: inv.tcs_amount || 0,
+            total_amount: Number(inv.total_amount || 0),
+            tcs_amount: Number(inv.tcs_amount || 0),
             cost_price: totalCostPrice,
             sold_qty: totalSoldQty,
           };
@@ -125,15 +125,15 @@ export default function SaleReport() {
           format(new Date(sale.invoice_date), 'dd MMM yyyy'),
           sale.party_name,
           sale.items_count,
-          `₹${sale.total_amount.toLocaleString()}`,
-          `₹${sale.tcs_amount.toLocaleString()}`,
-          `₹${sale.cost_price.toLocaleString()}`,
-          `₹${profit.toLocaleString()}`,
+          `₹${sale.total_amount.toLocaleString("en-IN")}`,
+          `₹${sale.tcs_amount.toLocaleString("en-IN")}`,
+          `₹${sale.cost_price.toLocaleString("en-IN")}`,
+          `₹${profit.toLocaleString("en-IN")}`,
         ];
       }),
       summary: [
-        { label: "Total Sales", value: `₹${totalSales.toLocaleString()}` },
-        { label: "Total Profit", value: `₹${totalProfit.toLocaleString()}` },
+        { label: "Total Sales", value: `₹${totalSales.toLocaleString("en-IN")}` },
+        { label: "Total Profit", value: `₹${totalProfit.toLocaleString("en-IN")}` },
         { label: "Total Invoices", value: filteredData.length.toString() },
       ]
     });
@@ -152,15 +152,15 @@ export default function SaleReport() {
           format(new Date(sale.invoice_date), 'dd MMM yyyy'),
           sale.party_name,
           sale.items_count,
-          `₹${sale.total_amount.toLocaleString()}`,
-          `₹${sale.tcs_amount.toLocaleString()}`,
-          `₹${sale.cost_price.toLocaleString()}`,
-          `₹${profit.toLocaleString()}`,
+          `₹${sale.total_amount.toLocaleString("en-IN")}`,
+          `₹${sale.tcs_amount.toLocaleString("en-IN")}`,
+          `₹${sale.cost_price.toLocaleString("en-IN")}`,
+          `₹${profit.toLocaleString("en-IN")}`,
         ];
       }),
       summary: [
-        { label: "Total Sales", value: `₹${totalSales.toLocaleString()}` },
-        { label: "Total Profit", value: `₹${totalProfit.toLocaleString()}` },
+        { label: "Total Sales", value: `₹${totalSales.toLocaleString("en-IN")}` },
+        { label: "Total Profit", value: `₹${totalProfit.toLocaleString("en-IN")}` },
         { label: "Total Invoices", value: filteredData.length.toString() },
       ],
       logoUrl: businessSettings?.logo_url || undefined
@@ -193,7 +193,7 @@ export default function SaleReport() {
             <p className="text-xs sm:text-sm text-muted-foreground">Total Sales</p>
             <IndianRupee className="w-4 h-4 text-primary hidden sm:block" />
           </div>
-          <p className="text-lg md:text-2xl font-bold mt-1">₹{totalSales.toLocaleString()}</p>
+          <p className="text-lg md:text-2xl font-bold mt-1">₹{totalSales.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card p-4">
           <div className="flex items-center justify-between">
@@ -201,7 +201,7 @@ export default function SaleReport() {
             <TrendingUp className="w-4 h-4 text-success hidden sm:block" />
           </div>
           <p className={`text-lg md:text-2xl font-bold mt-1 ${totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
-            ₹{totalProfit.toLocaleString()}
+            ₹{totalProfit.toLocaleString("en-IN")}
           </p>
           <p className="text-xs text-muted-foreground hidden sm:block">
             Margin: {totalSales > 0 ? ((totalProfit / totalSales) * 100).toFixed(1) : 0}%
@@ -219,7 +219,7 @@ export default function SaleReport() {
             <p className="text-xs sm:text-sm text-muted-foreground">Avg Order</p>
             <IndianRupee className="w-4 h-4 text-muted-foreground hidden sm:block" />
           </div>
-          <p className="text-lg md:text-2xl font-bold mt-1">₹{Math.round(avgOrderValue).toLocaleString()}</p>
+          <p className="text-lg md:text-2xl font-bold mt-1">₹{Math.round(avgOrderValue).toLocaleString("en-IN")}</p>
         </div>
       </div>
 
@@ -262,11 +262,11 @@ export default function SaleReport() {
                     </td>
                     <td>{sale.party_name}</td>
                     <td className="text-center">{sale.items_count}</td>
-                    <td className="text-right font-medium">₹{sale.total_amount.toLocaleString()}</td>
-                    <td className="text-right text-muted-foreground">₹{sale.tcs_amount.toLocaleString()}</td>
-                    <td className="text-right text-muted-foreground">₹{sale.cost_price.toLocaleString()}</td>
+                    <td className="text-right font-medium">₹{sale.total_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-muted-foreground">₹{sale.tcs_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-muted-foreground">₹{sale.cost_price.toLocaleString("en-IN")}</td>
                     <td className={`text-right font-medium ${profit >= 0 ? 'text-success' : 'text-destructive'}`}>
-                      ₹{profit.toLocaleString()}
+                      ₹{profit.toLocaleString("en-IN")}
                     </td>
                   </tr>
                 );
@@ -277,11 +277,11 @@ export default function SaleReport() {
             <tfoot>
               <tr className="bg-muted/50 font-semibold">
                 <td colSpan={4}>Total</td>
-                <td className="text-right">₹{totalSales.toLocaleString()}</td>
-                <td className="text-right">₹{totalTcs.toLocaleString()}</td>
-                <td className="text-right">₹{totalCost.toLocaleString()}</td>
+                <td className="text-right">₹{totalSales.toLocaleString("en-IN")}</td>
+                <td className="text-right">₹{totalTcs.toLocaleString("en-IN")}</td>
+                <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
                 <td className={`text-right ${totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
-                  ₹{totalProfit.toLocaleString()}
+                  ₹{totalProfit.toLocaleString("en-IN")}
                 </td>
               </tr>
             </tfoot>

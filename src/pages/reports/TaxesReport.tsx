@@ -83,9 +83,9 @@ export default function TaxesReport() {
             total: 0 
           }; 
         }
-        const taxAmount = inv.tax_amount || 0;
-        const tcsAmount = inv.tcs_amount || 0;
-        monthlyTotals[monthKey].taxableValue += inv.subtotal || 0;
+        const taxAmount = Number(inv.tax_amount || 0);
+        const tcsAmount = Number(inv.tcs_amount || 0);
+        monthlyTotals[monthKey].taxableValue += Number(inv.subtotal || 0);
         monthlyTotals[monthKey].cgst += taxAmount / 2;
         monthlyTotals[monthKey].sgst += taxAmount / 2;
         monthlyTotals[monthKey].tcs += tcsAmount;
@@ -107,9 +107,9 @@ export default function TaxesReport() {
             total: 0 
           }; 
         }
-        const tcsAmount = inv.tcs_amount || 0;
+        const tcsAmount = Number(inv.tcs_amount || 0);
         // Add purchase invoice subtotal to taxable value
-        monthlyTotals[monthKey].taxableValue += inv.subtotal || 0;
+        monthlyTotals[monthKey].taxableValue += Number(inv.subtotal || 0);
         // For purchase invoices, TCS is TDS (tax deducted at source)
         monthlyTotals[monthKey].tds += tcsAmount;
       });
@@ -125,8 +125,8 @@ export default function TaxesReport() {
           date: inv.invoice_date, 
           party: inv.parties?.name || 'Unknown', 
           invoice: inv.invoice_number, 
-          amount: inv.total_amount || 0, 
-          tcsAmount: inv.tcs_amount || 0, 
+          amount: Number(inv.total_amount || 0), 
+          tcsAmount: Number(inv.tcs_amount || 0), 
           type: 'sale'
         });
       });
@@ -137,8 +137,8 @@ export default function TaxesReport() {
           date: inv.invoice_date, 
           party: inv.parties?.name || 'Unknown',
           invoice: inv.invoice_number, 
-          amount: inv.total_amount || 0,
-          tcsAmount: inv.tcs_amount || 0, 
+          amount: Number(inv.total_amount || 0),
+          tcsAmount: Number(inv.tcs_amount || 0), 
           type: 'purchase'
         });
       });
@@ -188,35 +188,35 @@ export default function TaxesReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Taxable</p>
             <IndianRupee className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalTaxable.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalTaxable.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">GST Collected</p>
             <Calculator className="w-4 h-4 text-success flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalGST.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalGST.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">TCS Collected</p>
             <FileText className="w-4 h-4 text-warning flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalTCS.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalTCS.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">TDS Deducted</p>
             <FileText className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-primary truncate">₹{totalTDS.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-primary truncate">₹{totalTDS.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Tax Liability</p>
             <IndianRupee className="w-4 h-4 text-destructive flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{(totalGST + totalTCS).toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{(totalGST + totalTCS).toLocaleString("en-IN")}</p>
         </div>
       </div>
 
@@ -250,13 +250,13 @@ export default function TaxesReport() {
                     gstData.map((gst, idx) => (
                       <tr key={idx}>
                         <td className="font-medium">{gst.period}</td>
-                        <td className="text-right">₹{gst.taxableValue.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.cgst.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.sgst.toLocaleString()}</td>
-                        <td className="text-right">₹{gst.igst.toLocaleString()}</td>
-                        <td className="text-right text-warning">₹{gst.tcs.toLocaleString()}</td>
-                        <td className="text-right text-primary">₹{gst.tds.toLocaleString()}</td>
-                        <td className="text-right font-medium text-success">₹{gst.total.toLocaleString()}</td>
+                        <td className="text-right">₹{gst.taxableValue.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.cgst.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.sgst.toLocaleString("en-IN")}</td>
+                        <td className="text-right">₹{gst.igst.toLocaleString("en-IN")}</td>
+                        <td className="text-right text-warning">₹{gst.tcs.toLocaleString("en-IN")}</td>
+                        <td className="text-right text-primary">₹{gst.tds.toLocaleString("en-IN")}</td>
+                        <td className="text-right font-medium text-success">₹{gst.total.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
@@ -265,13 +265,13 @@ export default function TaxesReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td>Total</td>
-                      <td className="text-right">₹{totalTaxable.toLocaleString()}</td>
-                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.cgst, 0).toLocaleString()}</td>
-                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.sgst, 0).toLocaleString()}</td>
+                      <td className="text-right">₹{totalTaxable.toLocaleString("en-IN")}</td>
+                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.cgst, 0).toLocaleString("en-IN")}</td>
+                      <td className="text-right">₹{gstData.reduce((s, g) => s + g.sgst, 0).toLocaleString("en-IN")}</td>
                       <td className="text-right">₹0</td>
-                      <td className="text-right text-warning">₹{totalTCS.toLocaleString()}</td>
-                      <td className="text-right text-primary">₹{totalTDS.toLocaleString()}</td>
-                      <td className="text-right text-success">₹{totalGST.toLocaleString()}</td>
+                      <td className="text-right text-warning">₹{totalTCS.toLocaleString("en-IN")}</td>
+                      <td className="text-right text-primary">₹{totalTDS.toLocaleString("en-IN")}</td>
+                      <td className="text-right text-success">₹{totalGST.toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}
@@ -309,8 +309,8 @@ export default function TaxesReport() {
                         </td>
                         <td className="font-medium">{tcs.party}</td>
                         <td>{tcs.invoice}</td>
-                        <td className="text-right">₹{tcs.amount.toLocaleString()}</td>
-                        <td className="text-right font-medium text-warning">₹{tcs.tcsAmount.toLocaleString()}</td>
+                        <td className="text-right">₹{tcs.amount.toLocaleString("en-IN")}</td>
+                        <td className="text-right font-medium text-warning">₹{tcs.tcsAmount.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
@@ -319,7 +319,7 @@ export default function TaxesReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td colSpan={5}>Total TCS/TDS</td>
-                      <td className="text-right text-warning">₹{tcsData.reduce((sum, t) => sum + t.tcsAmount, 0).toLocaleString()}</td>
+                      <td className="text-right text-warning">₹{tcsData.reduce((sum, t) => sum + t.tcsAmount, 0).toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}

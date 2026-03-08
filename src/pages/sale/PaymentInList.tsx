@@ -98,7 +98,7 @@ export default function PaymentInList() {
     return colors[mode || "cash"] || "bg-muted text-muted-foreground";
   };
 
-  const totalReceived = payments.reduce((sum, p) => sum + p.amount, 0);
+  const totalReceived = payments.reduce((sum, p) => sum + Number(p.amount || 0), 0);
 
   if (loading) {
     return (
@@ -121,10 +121,10 @@ export default function PaymentInList() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="metric-card"><p className="text-sm text-muted-foreground">Total Received</p><p className="text-2xl font-bold text-success mt-1">₹{totalReceived.toLocaleString()}</p><p className="text-xs text-muted-foreground mt-1">{payments.length} payments</p></div>
-        <div className="metric-card"><p className="text-sm text-muted-foreground">Cash</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cash").reduce((s, p) => s + p.amount, 0).toLocaleString()}</p></div>
-        <div className="metric-card"><p className="text-sm text-muted-foreground">Bank/UPI</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "bank" || p.payment_mode === "upi").reduce((s, p) => s + p.amount, 0).toLocaleString()}</p></div>
-        <div className="metric-card"><p className="text-sm text-muted-foreground">Cheque</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cheque").reduce((s, p) => s + p.amount, 0).toLocaleString()}</p></div>
+        <div className="metric-card"><p className="text-sm text-muted-foreground">Total Received</p><p className="text-2xl font-bold text-success mt-1">₹{totalReceived.toLocaleString("en-IN")}</p><p className="text-xs text-muted-foreground mt-1">{payments.length} payments</p></div>
+        <div className="metric-card"><p className="text-sm text-muted-foreground">Cash</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cash").reduce((s, p) => s + Number(p.amount || 0), 0).toLocaleString("en-IN")}</p></div>
+        <div className="metric-card"><p className="text-sm text-muted-foreground">Bank/UPI</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "bank" || p.payment_mode === "upi").reduce((s, p) => s + Number(p.amount || 0), 0).toLocaleString("en-IN")}</p></div>
+        <div className="metric-card"><p className="text-sm text-muted-foreground">Cheque</p><p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cheque").reduce((s, p) => s + Number(p.amount || 0), 0).toLocaleString("en-IN")}</p></div>
       </div>
 
       <div className="relative max-w-md">
@@ -185,7 +185,7 @@ export default function PaymentInList() {
                       <span className="text-muted-foreground">-</span>
                     )}
                   </td>
-                  <td className="text-right font-medium text-success">+₹{pay.amount.toLocaleString()}</td>
+                  <td className="text-right font-medium text-success">+₹{Number(pay.amount || 0).toLocaleString("en-IN")}</td>
                   <td><span className={cn("px-2 py-1 text-xs font-medium rounded-full capitalize", getModeColor(pay.payment_mode))}>{pay.payment_mode || "Cash"}</span></td>
                   <td>
                     <DropdownMenu>

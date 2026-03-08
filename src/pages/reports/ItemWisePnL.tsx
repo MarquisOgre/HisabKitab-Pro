@@ -44,14 +44,14 @@ export default function ItemWisePnL() {
         .select('name, purchase_price')
         .eq('business_id', selectedBusiness.id);
       const itemPrices: { [key: string]: number } = {};
-      (items || []).forEach(item => { itemPrices[item.name] = item.purchase_price || 0; });
+      (items || []).forEach(item => { itemPrices[item.name] = Number(item.purchase_price || 0); });
       const itemAggregates: { [key: string]: { sold: number; revenue: number; cost: number } } = {};
       salesItems.forEach((item: any) => {
         const name = item.item_name;
         if (!itemAggregates[name]) { itemAggregates[name] = { sold: 0, revenue: 0, cost: 0 }; }
-        itemAggregates[name].sold += item.quantity;
-        itemAggregates[name].revenue += item.total;
-        itemAggregates[name].cost += item.quantity * (itemPrices[name] || item.rate * 0.7);
+        itemAggregates[name].sold += Number(item.quantity || 0);
+        itemAggregates[name].revenue += Number(item.total || 0);
+        itemAggregates[name].cost += Number(item.quantity || 0) * (Number(itemPrices[name]) || Number(item.rate || 0) * 0.7);
       });
       const pnlData = Object.entries(itemAggregates).map(([name, data], idx) => {
         const profit = data.revenue - data.cost;
@@ -97,21 +97,21 @@ export default function ItemWisePnL() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Revenue</p>
             <TrendingUp className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalRevenue.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalRevenue.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Cost</p>
             <TrendingDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Profit</p>
             <TrendingUp className="w-4 h-4 text-success flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalProfit.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalProfit.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
@@ -164,9 +164,9 @@ export default function ItemWisePnL() {
                   <tr key={item.id}>
                     <td className="font-medium">{item.name}</td>
                     <td className="text-center">{item.sold}</td>
-                    <td className="text-right">₹{item.revenue.toLocaleString()}</td>
-                    <td className="text-right text-muted-foreground">₹{item.cost.toLocaleString()}</td>
-                    <td className="text-right text-success font-medium">₹{item.profit.toLocaleString()}</td>
+                    <td className="text-right">₹{item.revenue.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-muted-foreground">₹{item.cost.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-success font-medium">₹{item.profit.toLocaleString("en-IN")}</td>
                     <td className={cn("text-right", item.margin >= 20 ? "text-success" : item.margin >= 15 ? "text-warning" : "text-destructive")}>
                       {item.margin.toFixed(1)}%
                     </td>
@@ -179,9 +179,9 @@ export default function ItemWisePnL() {
                 <tr className="bg-muted/50 font-semibold">
                   <td>Total</td>
                   <td className="text-center">{filtered.reduce((sum, i) => sum + i.sold, 0)}</td>
-                  <td className="text-right">₹{totalRevenue.toLocaleString()}</td>
-                  <td className="text-right">₹{totalCost.toLocaleString()}</td>
-                  <td className="text-right text-success">₹{totalProfit.toLocaleString()}</td>
+                  <td className="text-right">₹{totalRevenue.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-success">₹{totalProfit.toLocaleString("en-IN")}</td>
                   <td className="text-right">{avgMargin.toFixed(1)}%</td>
                 </tr>
               </tfoot>

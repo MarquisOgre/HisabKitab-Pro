@@ -33,7 +33,7 @@ export default function ExpenseReport() {
         .select('*')
         .eq('business_id', selectedBusiness.id)
         .order('expense_date', { ascending: false });
-      const formattedData = (expenses || []).map(exp => ({ id: exp.id, date: exp.expense_date, category: exp.category, description: exp.notes || exp.expense_number, amount: exp.amount }));
+      const formattedData = (expenses || []).map(exp => ({ id: exp.id, date: exp.expense_date, category: exp.category, description: exp.notes || exp.expense_number, amount: Number(exp.amount || 0) }));
       setExpenseData(formattedData);
       setCategories([...new Set(formattedData.map(e => e.category))]);
     } catch (error) { console.error('Error fetching expenses:', error); } finally { setLoading(false); }
@@ -69,7 +69,7 @@ export default function ExpenseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Expenses</p>
             <Wallet className="w-4 h-4 text-destructive flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalExpenses.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalExpenses.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
@@ -105,7 +105,7 @@ export default function ExpenseReport() {
                 <div key={idx}>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="truncate">{cat.category}</span>
-                    <span className="font-medium flex-shrink-0">₹{cat.amount.toLocaleString()}</span>
+                    <span className="font-medium flex-shrink-0">₹{cat.amount.toLocaleString("en-IN")}</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
                     <div className="bg-primary h-2 rounded-full transition-all" style={{ width: `${cat.percent}%` }} />
@@ -151,7 +151,7 @@ export default function ExpenseReport() {
                         <td className="text-muted-foreground">{format(new Date(expense.date), 'dd MMM yyyy')}</td>
                         <td><span className="px-2 py-1 text-xs font-medium rounded-full bg-muted">{expense.category}</span></td>
                         <td className="font-medium">{expense.description}</td>
-                        <td className="text-right font-medium">₹{expense.amount.toLocaleString()}</td>
+                        <td className="text-right font-medium">₹{expense.amount.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
@@ -160,7 +160,7 @@ export default function ExpenseReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td colSpan={3}>Total</td>
-                      <td className="text-right">₹{totalExpenses.toLocaleString()}</td>
+                      <td className="text-right">₹{totalExpenses.toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}

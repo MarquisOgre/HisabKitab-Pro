@@ -76,14 +76,14 @@ export default function BillWisePnL() {
                 .single();
               
               if (itemData) {
-                totalCost += (itemData.purchase_price || 0) * item.quantity;
+                totalCost += Number(itemData.purchase_price || 0) * item.quantity;
               }
             }
           }
         }
 
-        const sale = inv.total_amount || 0;
-        const tcsTds = inv.tcs_amount || 0;
+        const sale = Number(inv.total_amount || 0);
+        const tcsTds = Number(inv.tcs_amount || 0);
         const profit = sale - totalCost - tcsTds;
         const margin = sale > 0 ? (profit / sale) * 100 : 0;
 
@@ -147,16 +147,16 @@ export default function BillWisePnL() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Sales</p>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalSale.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalSale.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Cost</p>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalCost.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Profit</p>
           <p className={cn("text-lg sm:text-2xl font-bold mt-2 truncate", totalProfit >= 0 ? "text-success" : "text-destructive")}>
-            ₹{Math.abs(totalProfit).toLocaleString()}
+            ₹{Math.abs(totalProfit).toLocaleString("en-IN")}
           </p>
         </div>
         <div className="metric-card">
@@ -211,12 +211,12 @@ export default function BillWisePnL() {
                       {format(new Date(bill.date), 'dd MMM yyyy')}
                     </td>
                     <td>{bill.party}</td>
-                    <td className="text-right">₹{bill.sale.toLocaleString()}</td>
-                    <td className="text-right">₹{bill.cost.toLocaleString()}</td>
+                    <td className="text-right">₹{bill.sale.toLocaleString("en-IN")}</td>
+                    <td className="text-right">₹{bill.cost.toLocaleString("en-IN")}</td>
                     <td className={cn("text-right font-medium", bill.profit >= 0 ? "text-success" : "text-destructive")}>
                       <div className="flex items-center justify-end gap-1">
                         {bill.profit >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                        ₹{Math.abs(bill.profit).toLocaleString()}
+                        ₹{Math.abs(bill.profit).toLocaleString("en-IN")}
                       </div>
                     </td>
                     <td className={cn("text-right", bill.margin >= 0 ? "text-success" : "text-destructive")}>
@@ -230,10 +230,10 @@ export default function BillWisePnL() {
               <tfoot>
                 <tr className="bg-muted/50 font-semibold">
                   <td colSpan={3}>Total</td>
-                  <td className="text-right">₹{totalSale.toLocaleString()}</td>
-                  <td className="text-right">₹{totalCost.toLocaleString()}</td>
+                  <td className="text-right">₹{totalSale.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
                   <td className={cn("text-right", totalProfit >= 0 ? "text-success" : "text-destructive")}>
-                    ₹{Math.abs(totalProfit).toLocaleString()}
+                    ₹{Math.abs(totalProfit).toLocaleString("en-IN")}
                   </td>
                   <td className={cn("text-right", avgMargin >= 0 ? "text-success" : "text-destructive")}>
                     {avgMargin.toFixed(1)}%

@@ -138,18 +138,18 @@ export default function ViewPurchaseInvoice() {
     );
   }
 
-  const subtotal = invoice.subtotal || 0;
-  const taxAmount = invoice.tax_amount || 0;
-  const discountAmount = invoice.discount_amount || 0;
-  const paidAmount = invoice.paid_amount || 0;
+  const subtotal = Number(invoice.subtotal || 0);
+  const taxAmount = Number(invoice.tax_amount || 0);
+  const discountAmount = Number(invoice.discount_amount || 0);
+  const paidAmount = Number(invoice.paid_amount || 0);
   
   // Get TCS and TDS from stored values or calculate from settings
   const tcsRate = settings?.tcs_payable ?? 0;
   const tdsRate = settings?.tds_payable ?? 0;
-  const tcsAmount = (invoice as any).tcs_amount ?? (tcsRate > 0 ? ((subtotal - discountAmount + taxAmount) * tcsRate) / 100 : 0);
-  const tdsAmount = (invoice as any).tds_amount ?? (tdsRate > 0 ? (subtotal * tdsRate) / 100 : 0);
+  const tcsAmount = Number((invoice as any).tcs_amount ?? (tcsRate > 0 ? ((subtotal - discountAmount + taxAmount) * tcsRate) / 100 : 0));
+  const tdsAmount = Number((invoice as any).tds_amount ?? (tdsRate > 0 ? (subtotal * tdsRate) / 100 : 0));
   
-  const totalAmount = (invoice.total_amount || 0);
+  const totalAmount = Number(invoice.total_amount || 0);
   const balanceDue = totalAmount - paidAmount;
 
   return (
@@ -258,12 +258,12 @@ export default function ViewPurchaseInvoice() {
                   {item.unit && <p className="text-xs text-muted-foreground">{item.unit}</p>}
                 </td>
                 <td className="py-3 px-2 text-right">{item.quantity}</td>
-                <td className="py-3 px-2 text-right">₹{item.rate.toLocaleString()}</td>
+                <td className="py-3 px-2 text-right">₹{Number(item.rate || 0).toLocaleString("en-IN")}</td>
                 <td className="py-3 px-2 text-right">
                   {item.tax_rate ? `${item.tax_rate}%` : "-"}
-                  {item.tax_amount ? <span className="block text-xs text-muted-foreground">₹{item.tax_amount.toLocaleString()}</span> : null}
+                  {item.tax_amount ? <span className="block text-xs text-muted-foreground">₹{Number(item.tax_amount || 0).toLocaleString("en-IN")}</span> : null}
                 </td>
-                <td className="py-3 px-2 text-right font-medium">₹{item.total.toLocaleString()}</td>
+                <td className="py-3 px-2 text-right font-medium">₹{Number(item.total || 0).toLocaleString("en-IN")}</td>
               </tr>
             ))}
           </tbody>
@@ -274,43 +274,43 @@ export default function ViewPurchaseInvoice() {
           <div className="w-72 space-y-2">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal:</span>
-              <span>₹{subtotal.toLocaleString()}</span>
+              <span>₹{subtotal.toLocaleString("en-IN")}</span>
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-success">
                 <span>Discount:</span>
-                <span>-₹{discountAmount.toLocaleString()}</span>
+                <span>-₹{discountAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {taxAmount > 0 && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">GST:</span>
-                <span>₹{taxAmount.toLocaleString()}</span>
+                <span>₹{taxAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {tcsAmount > 0 && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">TCS @ {tcsRate}%:</span>
-                <span>₹{tcsAmount.toLocaleString()}</span>
+                <span>₹{tcsAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {tdsAmount > 0 && (
               <div className="flex justify-between text-success">
                 <span className="text-muted-foreground">TDS @ {tdsRate}%:</span>
-                <span>-₹{tdsAmount.toLocaleString()}</span>
+                <span>-₹{tdsAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             <div className="flex justify-between font-bold text-lg border-t pt-2">
               <span>Total:</span>
-              <span>₹{totalAmount.toLocaleString()}</span>
+              <span>₹{totalAmount.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between text-success">
               <span>Paid:</span>
-              <span>₹{paidAmount.toLocaleString()}</span>
+              <span>₹{paidAmount.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between font-bold text-destructive border-t pt-2">
               <span>Balance Due:</span>
-              <span>₹{balanceDue.toLocaleString()}</span>
+              <span>₹{balanceDue.toLocaleString("en-IN")}</span>
             </div>
           </div>
         </div>

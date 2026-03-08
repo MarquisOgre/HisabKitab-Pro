@@ -70,10 +70,10 @@ export default function PurchaseReport() {
             invoice_date: inv.invoice_date,
             party_name: inv.parties?.name || 'Unknown Supplier',
             items_count: count || 0,
-            total_amount: inv.total_amount || 0,
-            paid_amount: inv.paid_amount || 0,
-            tcs_amount: inv.tcs_amount || 0,
-            tds_amount: inv.tds_amount || 0,
+            total_amount: Number(inv.total_amount || 0),
+            paid_amount: Number(inv.paid_amount || 0),
+            tcs_amount: Number(inv.tcs_amount || 0),
+            tds_amount: Number(inv.tds_amount || 0),
           };
         })
       );
@@ -105,16 +105,16 @@ export default function PurchaseReport() {
         format(new Date(p.invoice_date), 'dd MMM yyyy'),
         p.party_name,
         p.items_count,
-        `₹${p.total_amount.toLocaleString()}`,
-        `₹${p.tcs_amount.toLocaleString()}`,
-        `₹${p.paid_amount.toLocaleString()}`,
-        `₹${(p.total_amount - p.paid_amount).toLocaleString()}`
+        `₹${p.total_amount.toLocaleString("en-IN")}`,
+        `₹${p.tcs_amount.toLocaleString("en-IN")}`,
+        `₹${p.paid_amount.toLocaleString("en-IN")}`,
+        `₹${(p.total_amount - p.paid_amount).toLocaleString("en-IN")}`
       ]),
       summary: [
-        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString()}` },
-        { label: "Total TCS", value: `₹${totalTcs.toLocaleString()}` },
-        { label: "Total Paid", value: `₹${totalPaid.toLocaleString()}` },
-        { label: "Pending Payment", value: `₹${totalPending.toLocaleString()}` },
+        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString("en-IN")}` },
+        { label: "Total TCS", value: `₹${totalTcs.toLocaleString("en-IN")}` },
+        { label: "Total Paid", value: `₹${totalPaid.toLocaleString("en-IN")}` },
+        { label: "Pending Payment", value: `₹${totalPending.toLocaleString("en-IN")}` },
       ]
     });
   };
@@ -130,16 +130,16 @@ export default function PurchaseReport() {
         format(new Date(p.invoice_date), 'dd MMM yyyy'),
         p.party_name,
         p.items_count,
-        `₹${p.total_amount.toLocaleString()}`,
-        `₹${p.tcs_amount.toLocaleString()}`,
-        `₹${p.paid_amount.toLocaleString()}`,
-        `₹${(p.total_amount - p.paid_amount).toLocaleString()}`
+        `₹${p.total_amount.toLocaleString("en-IN")}`,
+        `₹${p.tcs_amount.toLocaleString("en-IN")}`,
+        `₹${p.paid_amount.toLocaleString("en-IN")}`,
+        `₹${(p.total_amount - p.paid_amount).toLocaleString("en-IN")}`
       ]),
       summary: [
-        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString()}` },
-        { label: "Total TCS", value: `₹${totalTcs.toLocaleString()}` },
-        { label: "Total Paid", value: `₹${totalPaid.toLocaleString()}` },
-        { label: "Pending Payment", value: `₹${totalPending.toLocaleString()}` },
+        { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString("en-IN")}` },
+        { label: "Total TCS", value: `₹${totalTcs.toLocaleString("en-IN")}` },
+        { label: "Total Paid", value: `₹${totalPaid.toLocaleString("en-IN")}` },
+        { label: "Pending Payment", value: `₹${totalPending.toLocaleString("en-IN")}` },
       ],
       logoUrl: businessSettings?.logo_url || undefined
     });
@@ -171,14 +171,14 @@ export default function PurchaseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Purchase</p>
             <IndianRupee className="w-4 h-4 text-primary flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalPurchase.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalPurchase.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Amount Paid</p>
             <TrendingDown className="w-4 h-4 text-success flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalPaid.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-success truncate">₹{totalPaid.toLocaleString("en-IN")}</p>
           <p className="text-xs text-muted-foreground mt-1 hidden sm:block">
             {totalPurchase > 0 ? ((totalPaid / totalPurchase) * 100).toFixed(1) : 0}% of total
           </p>
@@ -188,7 +188,7 @@ export default function PurchaseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Pending</p>
             <IndianRupee className="w-4 h-4 text-warning flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalPending.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalPending.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
@@ -236,11 +236,11 @@ export default function PurchaseReport() {
                     </td>
                     <td>{purchase.party_name}</td>
                     <td className="text-center">{purchase.items_count}</td>
-                    <td className="text-right font-medium">₹{purchase.total_amount.toLocaleString()}</td>
-                    <td className="text-right">₹{purchase.tcs_amount.toLocaleString()}</td>
-                    <td className="text-right text-success">₹{purchase.paid_amount.toLocaleString()}</td>
+                    <td className="text-right font-medium">₹{purchase.total_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right">₹{purchase.tcs_amount.toLocaleString("en-IN")}</td>
+                    <td className="text-right text-success">₹{purchase.paid_amount.toLocaleString("en-IN")}</td>
                     <td className="text-right text-warning">
-                      ₹{(purchase.total_amount - purchase.paid_amount).toLocaleString()}
+                      ₹{(purchase.total_amount - purchase.paid_amount).toLocaleString("en-IN")}
                     </td>
                   </tr>
                 ))
@@ -250,10 +250,10 @@ export default function PurchaseReport() {
               <tfoot>
                 <tr className="bg-muted/50 font-semibold">
                   <td colSpan={4}>Total</td>
-                  <td className="text-right">₹{totalPurchase.toLocaleString()}</td>
-                  <td className="text-right">₹{totalTcs.toLocaleString()}</td>
-                  <td className="text-right text-success">₹{totalPaid.toLocaleString()}</td>
-                  <td className="text-right text-warning">₹{totalPending.toLocaleString()}</td>
+                  <td className="text-right">₹{totalPurchase.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalTcs.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-success">₹{totalPaid.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-warning">₹{totalPending.toLocaleString("en-IN")}</td>
                 </tr>
               </tfoot>
             )}

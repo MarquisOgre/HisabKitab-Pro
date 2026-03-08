@@ -561,7 +561,7 @@ export default function BankAccounts() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm opacity-80">Total Bank Balance</p>
-            <p className="text-3xl font-bold mt-1">₹{totalBalance.toLocaleString()}</p>
+            <p className="text-3xl font-bold mt-1">₹{totalBalance.toLocaleString("en-IN")}</p>
             <p className="text-sm opacity-80 mt-2">{accounts.length} accounts</p>
           </div>
           <Building2 className="w-16 h-16 opacity-30" />
@@ -619,7 +619,7 @@ export default function BankAccounts() {
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-sm text-muted-foreground">Balance</p>
                 <p className="text-xl font-bold text-primary">
-                  ₹{(account.current_balance || 0).toLocaleString()}
+                  ₹{Number(account.current_balance || 0).toLocaleString("en-IN")}
                 </p>
               </div>
             </div>

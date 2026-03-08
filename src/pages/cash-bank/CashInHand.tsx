@@ -291,20 +291,20 @@ export default function CashInHand() {
   // Calculate balances
   const cashIn = transactions
     .filter(t => t.transaction_type === "in")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const cashOut = transactions
     .filter(t => t.transaction_type === "out")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const currentBalance = cashIn - cashOut;
 
   // Today's transactions
   const today = new Date().toISOString().split("T")[0];
   const todayIn = transactions
     .filter(t => t.transaction_date === today && t.transaction_type === "in")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const todayOut = transactions
     .filter(t => t.transaction_date === today && t.transaction_type === "out")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
 
   return (
     <div className="space-y-6">
@@ -395,7 +395,7 @@ export default function CashInHand() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm opacity-80">Cash in Hand</p>
-            <p className="text-4xl font-bold mt-2">₹{currentBalance.toLocaleString()}</p>
+            <p className="text-4xl font-bold mt-2">₹{currentBalance.toLocaleString("en-IN")}</p>
             <p className="text-sm opacity-80 mt-2">As of today</p>
           </div>
           <Banknote className="w-20 h-20 opacity-30" />
@@ -408,7 +408,7 @@ export default function CashInHand() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Today's Cash In</p>
-              <p className="text-2xl font-bold text-success mt-1">₹{todayIn.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-success mt-1">₹{todayIn.toLocaleString("en-IN")}</p>
             </div>
             <div className="p-3 rounded-xl bg-success/10">
               <ArrowUpRight className="w-6 h-6 text-success" />
@@ -419,7 +419,7 @@ export default function CashInHand() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Today's Cash Out</p>
-              <p className="text-2xl font-bold text-destructive mt-1">₹{todayOut.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-destructive mt-1">₹{todayOut.toLocaleString("en-IN")}</p>
             </div>
             <div className="p-3 rounded-xl bg-destructive/10">
               <ArrowDownRight className="w-6 h-6 text-destructive" />
@@ -481,7 +481,7 @@ export default function CashInHand() {
                       txn.transaction_type === "in" ? "text-success" : "text-destructive"
                     )}
                   >
-                    {txn.transaction_type === "in" ? "+" : "-"}₹{txn.amount.toLocaleString()}
+                    {txn.transaction_type === "in" ? "+" : "-"}₹{Number(txn.amount || 0).toLocaleString("en-IN")}
                   </p>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -524,7 +524,7 @@ export default function CashInHand() {
                 <div>
                   <p className="text-sm text-muted-foreground">Amount</p>
                   <p className={cn("font-bold text-lg", selectedTransaction.transaction_type === "in" ? "text-success" : "text-destructive")}>
-                    ₹{selectedTransaction.amount.toLocaleString()}
+                    ₹{Number(selectedTransaction.amount || 0).toLocaleString("en-IN")}
                   </p>
                 </div>
                 <div>
