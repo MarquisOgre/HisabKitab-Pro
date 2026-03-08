@@ -138,18 +138,18 @@ export default function ViewSaleInvoice() {
     );
   }
 
-  const subtotal = invoice.subtotal || 0;
-  const taxAmount = invoice.tax_amount || 0;
-  const discountAmount = invoice.discount_amount || 0;
-  const paidAmount = invoice.paid_amount || 0;
+  const subtotal = Number(invoice.subtotal || 0);
+  const taxAmount = Number(invoice.tax_amount || 0);
+  const discountAmount = Number(invoice.discount_amount || 0);
+  const paidAmount = Number(invoice.paid_amount || 0);
   
   // Get TCS and TDS from stored values or calculate from settings
   const tcsRate = settings?.tcs_receivable ?? 0;
   const tdsRate = settings?.tds_receivable ?? 0;
-  const tcsAmount = (invoice as any).tcs_amount ?? (tcsRate > 0 ? ((subtotal - discountAmount + taxAmount) * tcsRate) / 100 : 0);
-  const tdsAmount = (invoice as any).tds_amount ?? (tdsRate > 0 ? (subtotal * tdsRate) / 100 : 0);
+  const tcsAmount = Number((invoice as any).tcs_amount ?? (tcsRate > 0 ? ((subtotal - discountAmount + taxAmount) * tcsRate) / 100 : 0));
+  const tdsAmount = Number((invoice as any).tds_amount ?? (tdsRate > 0 ? (subtotal * tdsRate) / 100 : 0));
   
-  const totalAmount = (invoice.total_amount || 0);
+  const totalAmount = Number(invoice.total_amount || 0);
   const balanceDue = totalAmount - paidAmount;
 
   return (
