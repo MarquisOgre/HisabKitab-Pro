@@ -105,10 +105,10 @@ export default function PurchaseReport() {
         format(new Date(p.invoice_date), 'dd MMM yyyy'),
         p.party_name,
         p.items_count,
-        `₹${p.total_amount.toLocaleString()}`,
-        `₹${p.tcs_amount.toLocaleString()}`,
-        `₹${p.paid_amount.toLocaleString()}`,
-        `₹${(p.total_amount - p.paid_amount).toLocaleString()}`
+        `₹${p.total_amount.toLocaleString("en-IN")}`,
+        `₹${p.tcs_amount.toLocaleString("en-IN")}`,
+        `₹${p.paid_amount.toLocaleString("en-IN")}`,
+        `₹${(p.total_amount - p.paid_amount).toLocaleString("en-IN")}`
       ]),
       summary: [
         { label: "Total Purchase", value: `₹${totalPurchase.toLocaleString()}` },
