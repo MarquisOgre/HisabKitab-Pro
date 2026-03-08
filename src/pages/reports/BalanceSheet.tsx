@@ -66,7 +66,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id)
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'));
 
-      const totalReceivables = (salesInvoices || []).reduce((sum, inv) => sum + (inv.balance_due || 0), 0);
+      const totalReceivables = (salesInvoices || []).reduce((sum, inv) => sum + Number(inv.balance_due || 0), 0);
       setReceivables(totalReceivables);
 
       // Get payables (unpaid purchases) up to end date
@@ -77,7 +77,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id)
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'));
 
-      const totalPayables = (purchaseInvoices || []).reduce((sum, inv) => sum + (inv.balance_due || 0), 0);
+      const totalPayables = (purchaseInvoices || []).reduce((sum, inv) => sum + Number(inv.balance_due || 0), 0);
       setPayables(totalPayables);
 
       // Get inventory value

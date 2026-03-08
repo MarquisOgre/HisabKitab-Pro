@@ -149,8 +149,8 @@ export default function SaleInvoices() {
   };
 
   // Calculate summary based on filtered invoices
-  const totalAmount = monthFilteredInvoices.reduce((sum, inv) => sum + (inv.total_amount || 0), 0);
-  const paidAmount = monthFilteredInvoices.reduce((sum, inv) => sum + (inv.paid_amount || 0), 0);
+  const totalAmount = monthFilteredInvoices.reduce((sum, inv) => sum + Number(inv.total_amount || 0), 0);
+  const paidAmount = monthFilteredInvoices.reduce((sum, inv) => sum + Number(inv.paid_amount || 0), 0);
   const unpaidAmount = totalAmount - paidAmount;
 
   if (loading) {

@@ -83,19 +83,19 @@ export default function ProfitLoss() {
 
       // Sale total (total_amount includes TCS, so use it for matching Bill-wise P&L)
       const saleTotal = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.total_amount || 0),
+        (sum, inv) => sum + Number(inv.total_amount || 0),
         0
       );
 
       // GST Receivable (tax collected on sales)
       const gstReceivable = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tax_amount || 0),
+        (sum, inv) => sum + Number(inv.tax_amount || 0),
         0
       );
 
       // TCS Receivable (TCS collected on sales)
       const tcsReceivable = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tcs_amount || 0),
+        (sum, inv) => sum + Number(inv.tcs_amount || 0),
         0
       );
 
@@ -112,19 +112,19 @@ export default function ProfitLoss() {
 
       // Purchase total (use total_amount for consistency)
       const purchaseTotal = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.total_amount || 0),
+        (sum, inv) => sum + Number(inv.total_amount || 0),
         0
       );
 
       // GST Payable (tax paid on purchases)
       const gstPayable = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tax_amount || 0),
+        (sum, inv) => sum + Number(inv.tax_amount || 0),
         0
       );
 
       // TCS Payable
       const tcsPayable = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tcs_amount || 0),
+        (sum, inv) => sum + Number(inv.tcs_amount || 0),
         0
       );
 
