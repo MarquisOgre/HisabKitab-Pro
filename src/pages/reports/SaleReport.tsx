@@ -277,11 +277,11 @@ export default function SaleReport() {
             <tfoot>
               <tr className="bg-muted/50 font-semibold">
                 <td colSpan={4}>Total</td>
-                <td className="text-right">₹{totalSales.toLocaleString()}</td>
-                <td className="text-right">₹{totalTcs.toLocaleString()}</td>
-                <td className="text-right">₹{totalCost.toLocaleString()}</td>
+                <td className="text-right">₹{totalSales.toLocaleString("en-IN")}</td>
+                <td className="text-right">₹{totalTcs.toLocaleString("en-IN")}</td>
+                <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
                 <td className={`text-right ${totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
-                  ₹{totalProfit.toLocaleString()}
+                  ₹{totalProfit.toLocaleString("en-IN")}
                 </td>
               </tr>
             </tfoot>

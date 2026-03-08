@@ -250,10 +250,10 @@ export default function PurchaseReport() {
               <tfoot>
                 <tr className="bg-muted/50 font-semibold">
                   <td colSpan={4}>Total</td>
-                  <td className="text-right">₹{totalPurchase.toLocaleString()}</td>
-                  <td className="text-right">₹{totalTcs.toLocaleString()}</td>
-                  <td className="text-right text-success">₹{totalPaid.toLocaleString()}</td>
-                  <td className="text-right text-warning">₹{totalPending.toLocaleString()}</td>
+                  <td className="text-right">₹{totalPurchase.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalTcs.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-success">₹{totalPaid.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-warning">₹{totalPending.toLocaleString("en-IN")}</td>
                 </tr>
               </tfoot>
             )}

@@ -319,7 +319,7 @@ export default function TaxesReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td colSpan={5}>Total TCS/TDS</td>
-                      <td className="text-right text-warning">₹{tcsData.reduce((sum, t) => sum + t.tcsAmount, 0).toLocaleString()}</td>
+                      <td className="text-right text-warning">₹{tcsData.reduce((sum, t) => sum + t.tcsAmount, 0).toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}
