@@ -83,9 +83,9 @@ export default function TaxesReport() {
             total: 0 
           }; 
         }
-        const taxAmount = inv.tax_amount || 0;
-        const tcsAmount = inv.tcs_amount || 0;
-        monthlyTotals[monthKey].taxableValue += inv.subtotal || 0;
+        const taxAmount = Number(inv.tax_amount || 0);
+        const tcsAmount = Number(inv.tcs_amount || 0);
+        monthlyTotals[monthKey].taxableValue += Number(inv.subtotal || 0);
         monthlyTotals[monthKey].cgst += taxAmount / 2;
         monthlyTotals[monthKey].sgst += taxAmount / 2;
         monthlyTotals[monthKey].tcs += tcsAmount;
