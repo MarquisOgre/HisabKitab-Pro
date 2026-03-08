@@ -381,20 +381,27 @@ export function PlanPaymentsManagement() {
                   </TableCell>
                   <TableCell>{getStatusBadge(payment.status)}</TableCell>
                   <TableCell>
-                    {payment.status === "pending" && payment.payment_method === "qr_manual" ? (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setSelectedPayment(payment)}
-                      >
-                        <Eye className="w-4 h-4 mr-1" />
-                        Verify
-                      </Button>
-                    ) : payment.notes ? (
-                      <span className="text-xs text-muted-foreground truncate max-w-[100px] block">
-                        {payment.notes}
-                      </span>
-                    ) : null}
+                    <div className="flex items-center gap-1">
+                      {payment.status === "pending" && payment.payment_method === "qr_manual" ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setSelectedPayment(payment)}
+                        >
+                          <Eye className="w-4 h-4 mr-1" />
+                          Verify
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedPayment(payment)}
+                        >
+                          <Eye className="w-4 h-4 mr-1" />
+                          View
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
