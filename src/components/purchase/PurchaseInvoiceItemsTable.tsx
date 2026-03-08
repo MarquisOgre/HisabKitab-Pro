@@ -75,7 +75,7 @@ export function PurchaseInvoiceItemsTable({ items, onItemsChange }: PurchaseInvo
     const { data } = await supabase
       .from("items")
       .select("id, name, hsn_code, purchase_price, unit, category_id")
-      .eq("is_deleted", "false")
+      .or("is_deleted.is.null,is_deleted.eq.false")
       .eq("business_id", selectedBusiness.id)
       .order("name");
     if (data) {

@@ -34,7 +34,7 @@ export default function Items() {
     if (!user) return;
     const [catRes, prodRes] = await Promise.all([
       supabase.from("categories").select("*").eq("user_id", user.id).order("name"),
-      supabase.from("items").select("*, categories(name)").eq("user_id", user.id).eq("is_deleted", "false").order("name"),
+      supabase.from("items").select("*, categories(name)").eq("user_id", user.id).or("is_deleted.is.null,is_deleted.eq.false").order("name"),
     ]);
     if (catRes.data) setCategories(catRes.data);
     if (prodRes.data) setProducts(prodRes.data);
