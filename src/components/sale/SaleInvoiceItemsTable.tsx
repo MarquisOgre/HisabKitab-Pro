@@ -288,7 +288,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 />
               </div>
               <div>
-                <label className="text-xs text-muted-foreground mb-1 block">Qty</label>
+                <label className="text-xs text-muted-foreground mb-1 block leading-tight">Remaining Qty</label>
                 <div className={`h-9 flex items-center justify-center rounded text-xs font-medium ${item.quantity > 0 ? "bg-primary/10 text-primary" : "bg-muted/50 text-muted-foreground"}`}>
                   {item.quantity}
                 </div>
