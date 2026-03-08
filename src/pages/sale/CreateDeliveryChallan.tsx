@@ -30,6 +30,7 @@ export default function CreateDeliveryChallan() {
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [selectedParty, setSelectedParty] = useState("");
   const [notes, setNotes] = useState("");
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   
   const [items, setItems] = useState<InvoiceItem[]>([
@@ -43,7 +44,8 @@ export default function CreateDeliveryChallan() {
       invoiceDate: dcDate,
       partyId: selectedParty,
       items,
-      notes: `${notes}\nChallan Type: ${challanType}\nTransport: ${transportMode}\nVehicle: ${vehicleNumber}`,
+      notes: `${notes}\nChallan Type: ${challanType}\nTransport: ${transportMode}\nVehicle: ${vehicleNumber}\nDelivery Charge: ${deliveryCharge}`,
+      additionalCharges: deliveryCharge,
     });
 
     if (result) {
@@ -117,7 +119,7 @@ export default function CreateDeliveryChallan() {
               <Truck className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-semibold">Transport Details</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label>Transport Mode</Label>
                 <Select value={transportMode} onValueChange={setTransportMode}>
@@ -133,6 +135,10 @@ export default function CreateDeliveryChallan() {
               <div className="space-y-2">
                 <Label>Vehicle Number</Label>
                 <Input value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} placeholder="MH 12 AB 1234" />
+              </div>
+              <div className="space-y-2">
+                <Label>Delivery Charge (₹)</Label>
+                <Input type="number" min="0" value={deliveryCharge || ""} onChange={(e) => setDeliveryCharge(Number(e.target.value) || 0)} placeholder="0" />
               </div>
             </div>
           </div>
@@ -155,7 +161,7 @@ export default function CreateDeliveryChallan() {
 
         <div className="metric-card sticky top-6 h-fit">
           <h2 className="text-lg font-semibold mb-4">Summary</h2>
-          <TaxSummary items={items} />
+          <TaxSummary items={items} additionalCharges={deliveryCharge} />
         </div>
       </div>
 
