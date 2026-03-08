@@ -325,7 +325,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
                 <p className="font-bold">{items.reduce((sum, item) => sum + item.saleQty, 0)}</p>
               </div>
               <div className="text-center">
-                <p className="text-muted-foreground">Qty</p>
+                <p className="text-muted-foreground leading-tight">Rem. Qty</p>
                 <p className="font-bold text-primary">{items.reduce((sum, item) => sum + item.quantity, 0)}</p>
               </div>
               <div className="text-center">
