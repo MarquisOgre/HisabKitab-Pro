@@ -184,15 +184,13 @@ export function useDashboardData() {
     // Fetch all purchase invoice items - only from non-deleted invoices
     const { data: purchaseItems } = await supabase
       .from('purchase_invoice_items')
-      .select('item_id, quantity, purchase_invoices!inner(is_deleted)')
-      .eq('purchase_invoices.is_deleted', false)
+      .select('item_id, quantity')
       .eq('business_id', selectedBusiness.id);
 
-    // Fetch all sale invoice items - only from non-deleted invoices
+    // Fetch all sale invoice items
     const { data: saleItems } = await supabase
       .from('sale_invoice_items')
-      .select('item_id, quantity, sale_invoices!inner(is_deleted)')
-      .eq('sale_invoices.is_deleted', false)
+      .select('item_id, quantity')
       .eq('business_id', selectedBusiness.id);
 
     // Create lookup maps for purchased and sold quantities
