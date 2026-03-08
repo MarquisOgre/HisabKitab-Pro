@@ -316,7 +316,7 @@ export function useDashboardData() {
         party_id,
         parties(name)
       `)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id)
       .order('created_at', { ascending: false })
       .limit(5);
