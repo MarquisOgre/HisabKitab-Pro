@@ -160,7 +160,7 @@ export default function ExpenseReport() {
                   <tfoot>
                     <tr className="bg-muted/50 font-semibold">
                       <td colSpan={3}>Total</td>
-                      <td className="text-right">₹{totalExpenses.toLocaleString()}</td>
+                      <td className="text-right">₹{totalExpenses.toLocaleString("en-IN")}</td>
                     </tr>
                   </tfoot>
                 )}

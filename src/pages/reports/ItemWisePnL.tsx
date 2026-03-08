@@ -179,9 +179,9 @@ export default function ItemWisePnL() {
                 <tr className="bg-muted/50 font-semibold">
                   <td>Total</td>
                   <td className="text-center">{filtered.reduce((sum, i) => sum + i.sold, 0)}</td>
-                  <td className="text-right">₹{totalRevenue.toLocaleString()}</td>
-                  <td className="text-right">₹{totalCost.toLocaleString()}</td>
-                  <td className="text-right text-success">₹{totalProfit.toLocaleString()}</td>
+                  <td className="text-right">₹{totalRevenue.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
+                  <td className="text-right text-success">₹{totalProfit.toLocaleString("en-IN")}</td>
                   <td className="text-right">{avgMargin.toFixed(1)}%</td>
                 </tr>
               </tfoot>

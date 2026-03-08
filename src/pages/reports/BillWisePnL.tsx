@@ -230,10 +230,10 @@ export default function BillWisePnL() {
               <tfoot>
                 <tr className="bg-muted/50 font-semibold">
                   <td colSpan={3}>Total</td>
-                  <td className="text-right">₹{totalSale.toLocaleString()}</td>
-                  <td className="text-right">₹{totalCost.toLocaleString()}</td>
+                  <td className="text-right">₹{totalSale.toLocaleString("en-IN")}</td>
+                  <td className="text-right">₹{totalCost.toLocaleString("en-IN")}</td>
                   <td className={cn("text-right", totalProfit >= 0 ? "text-success" : "text-destructive")}>
-                    ₹{Math.abs(totalProfit).toLocaleString()}
+                    ₹{Math.abs(totalProfit).toLocaleString("en-IN")}
                   </td>
                   <td className={cn("text-right", avgMargin >= 0 ? "text-success" : "text-destructive")}>
                     {avgMargin.toFixed(1)}%
