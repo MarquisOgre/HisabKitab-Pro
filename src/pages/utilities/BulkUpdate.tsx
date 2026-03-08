@@ -13,6 +13,8 @@ import {
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdminUserId } from "@/hooks/useAdminUserId";
+import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { toast } from "sonner";
 
 interface ItemData {
@@ -34,6 +36,8 @@ interface Category {
 
 export default function BulkUpdate() {
   const { user } = useAuth();
+  const { adminUserId } = useAdminUserId();
+  const { selectedBusiness } = useBusinessSelection();
   const [items, setItems] = useState<ItemData[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,23 +49,27 @@ export default function BulkUpdate() {
   const [editingField, setEditingField] = useState<{ id: string; field: string } | null>(null);
 
   useEffect(() => {
-    if (user) {
+    if (user && selectedBusiness) {
       fetchData();
     }
-  }, [user]);
+  }, [user, selectedBusiness]);
 
   const fetchData = async () => {
+    if (!selectedBusiness) return;
     setLoading(true);
     try {
+      const effectiveUserId = adminUserId || user?.id;
       const [itemsRes, catsRes] = await Promise.all([
         supabase
           .from('items')
           .select('id, name, category_id, sale_price, purchase_price, current_stock, categories(name)')
           .eq('is_deleted', false)
+          .eq('business_id', selectedBusiness.id)
           .order('name'),
         supabase
           .from('categories')
           .select('id, name')
+          .eq('business_id', selectedBusiness.id)
           .order('name')
       ]);
 
