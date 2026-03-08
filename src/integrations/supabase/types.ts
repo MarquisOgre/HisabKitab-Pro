@@ -1047,7 +1047,15 @@ export type Database = {
           total?: number | null
           unit?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_purchase_invoice_items_invoice"
+            columns: ["purchase_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       purchase_invoices: {
         Row: {
@@ -1187,7 +1195,15 @@ export type Database = {
           total?: number | null
           unit?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_sale_invoice_items_invoice"
+            columns: ["sale_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "sale_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sale_invoices: {
         Row: {
