@@ -266,7 +266,7 @@ export function useDashboardData() {
       .select('balance_due')
       .lt('due_date', now.toISOString().split('T')[0])
       .gt('balance_due', 0)
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     const { data: overduePurchaseInvoices } = await supabase
