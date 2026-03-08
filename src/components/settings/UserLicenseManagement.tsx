@@ -8,12 +8,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Mail, Calendar, Users, Edit, Plus, Loader2, CheckCircle, XCircle, AlertTriangle, Trash2, Ban, RotateCcw } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Shield, Mail, Calendar as CalendarIcon, Users, Edit, Plus, Loader2, CheckCircle, XCircle, AlertTriangle, Trash2, Ban, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { addDays, format } from "date-fns";
+import { addDays, format, parse } from "date-fns";
 import { isSuperAdminEmail } from "@/lib/superadmin";
+import { cn } from "@/lib/utils";
 // @ts-nocheck
 interface UserLicense {
   id: string;
