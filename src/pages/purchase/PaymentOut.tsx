@@ -187,8 +187,8 @@ export default function PaymentOut() {
           .single();
 
         if (currentInvoice) {
-          const newPaidAmount = (currentInvoice.paid_amount || 0) + parseFloat(amount);
-          const newBalance = Math.max(0, (currentInvoice.total_amount || 0) - newPaidAmount);
+          const newPaidAmount = (Number(currentInvoice.paid_amount) || 0) + parseFloat(amount);
+          const newBalance = Math.max(0, (Number(currentInvoice.total_amount) || 0) - newPaidAmount);
           
           await supabase
             .from("purchase_invoices")
