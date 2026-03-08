@@ -66,6 +66,8 @@ export function useDashboardData() {
     purchaseChange: 0,
     salesThisMonth: 0,
     purchaseThisMonth: 0,
+    salesCountThisMonth: 0,
+    purchaseCountThisMonth: 0,
   });
   const [quickStats, setQuickStats] = useState<QuickStatsData>({
     totalReceivables: 0,
