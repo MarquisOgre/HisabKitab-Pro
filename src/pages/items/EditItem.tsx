@@ -82,7 +82,7 @@ export default function EditItem() {
         setFormData({
           categoryId: data.category_id || "",
           name: data.name || "",
-          unit: data.unit || "Bottles",
+          unit: data.unit || "",
           hsnCode: data.hsn_code || "",
           purchasePrice: data.purchase_price?.toString() || "",
           salePrice: data.sale_price?.toString() || "",
