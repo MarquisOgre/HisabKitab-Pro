@@ -44,7 +44,8 @@ export default function CreateDeliveryChallan() {
       invoiceDate: dcDate,
       partyId: selectedParty,
       items,
-      notes: `${notes}\nChallan Type: ${challanType}\nTransport: ${transportMode}\nVehicle: ${vehicleNumber}`,
+      notes: `${notes}\nChallan Type: ${challanType}\nTransport: ${transportMode}\nVehicle: ${vehicleNumber}\nDelivery Charge: ${deliveryCharge}`,
+      additionalCharges: deliveryCharge,
     });
 
     if (result) {
