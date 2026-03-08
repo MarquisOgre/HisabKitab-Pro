@@ -148,7 +148,7 @@ export default function ProfitLoss() {
         .gte('payment_date', startDate)
         .lte('payment_date', endDate);
 
-      const paymentOutTotal = (paymentsOut || []).reduce((sum, p) => sum + (p.amount || 0), 0);
+      const paymentOutTotal = (paymentsOut || []).reduce((sum, p) => sum + Number(p.amount || 0), 0);
 
       // Get other expenses
       const { data: expenses } = await supabase
