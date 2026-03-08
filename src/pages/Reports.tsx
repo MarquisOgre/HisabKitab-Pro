@@ -1,6 +1,7 @@
 import { BarChart3, Download, Printer, TrendingUp, Package, FileText, Users, Truck, Wallet, DollarSign, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const reportSections = [
   {
@@ -39,35 +40,35 @@ const reportSections = [
 ];
 
 export default function Reports() {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-foreground">Reports</h1>
-          <p className="text-sm text-muted-foreground">Generate and export business reports</p>
-        </div>
+    <div className="space-y-4 md:space-y-6">
+      <div>
+        <h1 className="text-lg md:text-xl font-bold text-foreground">Reports</h1>
+        {!isMobile && <p className="text-sm text-muted-foreground">Generate and export business reports</p>}
       </div>
 
-      <Tabs defaultValue="financial">
-        <TabsList className="grid w-full grid-cols-3 max-w-md">
-          <TabsTrigger value="financial">Financial</TabsTrigger>
-          <TabsTrigger value="stock">Stock</TabsTrigger>
-          <TabsTrigger value="tax">Taxes</TabsTrigger>
+      <Tabs defaultValue="financial" className="mobile-tabs">
+        <TabsList className={isMobile ? "w-full grid grid-cols-3" : "grid w-full grid-cols-3 max-w-md"}>
+          <TabsTrigger value="financial" className="text-xs md:text-sm">Financial</TabsTrigger>
+          <TabsTrigger value="stock" className="text-xs md:text-sm">Stock</TabsTrigger>
+          <TabsTrigger value="tax" className="text-xs md:text-sm">Taxes</TabsTrigger>
         </TabsList>
 
         {reportSections.map(section => (
-          <TabsContent key={section.tab} value={section.tab} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <TabsContent key={section.tab} value={section.tab} className="space-y-3 md:space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
               {section.reports.map(r => (
                 <div key={r.name} className="stat-card cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <r.icon className="w-5 h-5 text-primary" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <r.icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{r.name}</h3>
-                      <p className="text-xs text-muted-foreground mt-1">{r.description}</p>
-                      <div className="flex gap-2 mt-3">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-foreground text-sm md:text-base group-hover:text-primary transition-colors">{r.name}</h3>
+                      <p className="text-xs text-muted-foreground mt-0.5 md:mt-1">{r.description}</p>
+                      <div className="flex gap-2 mt-2 md:mt-3">
                         <Button variant="outline" size="sm" className="h-7 text-xs gap-1"><Download className="w-3 h-3" /> Excel</Button>
                         <Button variant="outline" size="sm" className="h-7 text-xs gap-1"><Printer className="w-3 h-3" /> Print</Button>
                       </div>
