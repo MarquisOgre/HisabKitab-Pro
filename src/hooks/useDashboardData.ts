@@ -15,6 +15,8 @@ interface DashboardMetrics {
   purchaseChange: number;
   salesThisMonth: number;
   purchaseThisMonth: number;
+  salesCountThisMonth: number;
+  purchaseCountThisMonth: number;
 }
 
 interface QuickStatsData {
@@ -64,6 +66,8 @@ export function useDashboardData() {
     purchaseChange: 0,
     salesThisMonth: 0,
     purchaseThisMonth: 0,
+    salesCountThisMonth: 0,
+    purchaseCountThisMonth: 0,
   });
   const [quickStats, setQuickStats] = useState<QuickStatsData>({
     totalReceivables: 0,
@@ -131,6 +135,8 @@ export function useDashboardData() {
     let salesLastMonth = 0;
     let purchaseThisMonth = 0;
     let purchaseLastMonth = 0;
+    let salesCountThisMonth = 0;
+    let purchaseCountThisMonth = 0;
 
     saleInvoicesData?.forEach(inv => {
       const amount = Number(inv.total_amount) || 0;
@@ -138,7 +144,10 @@ export function useDashboardData() {
       
       if (inv.invoice_type === 'sale' || inv.invoice_type === 'sale_invoice') {
         totalSales += amount;
-        if (createdAt >= thisMonthStart) salesThisMonth += amount;
+        if (createdAt >= thisMonthStart) {
+          salesThisMonth += amount;
+          salesCountThisMonth++;
+        }
         if (createdAt >= lastMonthStart && createdAt <= lastMonthEnd) salesLastMonth += amount;
       }
     });
@@ -149,7 +158,10 @@ export function useDashboardData() {
       
       if (inv.invoice_type === 'purchase' || inv.invoice_type === 'purchase_bill' || inv.invoice_type === 'purchase_invoice') {
         totalPurchase += amount;
-        if (createdAt >= thisMonthStart) purchaseThisMonth += amount;
+        if (createdAt >= thisMonthStart) {
+          purchaseThisMonth += amount;
+          purchaseCountThisMonth++;
+        }
         if (createdAt >= lastMonthStart && createdAt <= lastMonthEnd) purchaseLastMonth += amount;
       }
     });
@@ -229,6 +241,8 @@ export function useDashboardData() {
       purchaseChange,
       salesThisMonth,
       purchaseThisMonth,
+      salesCountThisMonth,
+      purchaseCountThisMonth,
     });
   };
 

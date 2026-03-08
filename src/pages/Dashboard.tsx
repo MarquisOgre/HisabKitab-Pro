@@ -88,10 +88,10 @@ export default function Dashboard() {
           value={formatCurrency(metrics.totalSales)}
           change={metrics.salesChange !== 0 
             ? `${metrics.salesChange > 0 ? '+' : ''}${metrics.salesChange.toFixed(1)}% from last month` 
-            : metrics.salesThisMonth > 0 
-              ? `${formatCurrency(metrics.salesThisMonth)} this month`
+            : metrics.salesCountThisMonth > 0 
+              ? `${metrics.salesCountThisMonth} invoice${metrics.salesCountThisMonth > 1 ? 's' : ''} this month`
               : 'No sales this month'}
-          changeType={metrics.salesChange > 0 ? "positive" : metrics.salesChange < 0 ? "negative" : metrics.salesThisMonth > 0 ? "positive" : "neutral"}
+          changeType={metrics.salesChange > 0 ? "positive" : metrics.salesChange < 0 ? "negative" : metrics.salesCountThisMonth > 0 ? "positive" : "neutral"}
           icon={TrendingUp}
           iconColor="text-success"
         />
@@ -100,10 +100,10 @@ export default function Dashboard() {
           value={formatCurrency(metrics.totalPurchase)}
           change={metrics.purchaseChange !== 0 
             ? `${metrics.purchaseChange > 0 ? '+' : ''}${metrics.purchaseChange.toFixed(1)}% from last month` 
-            : metrics.purchaseThisMonth > 0 
-              ? `${formatCurrency(metrics.purchaseThisMonth)} this month`
+            : metrics.purchaseCountThisMonth > 0 
+              ? `${metrics.purchaseCountThisMonth} invoice${metrics.purchaseCountThisMonth > 1 ? 's' : ''} this month`
               : 'No purchases this month'}
-          changeType={metrics.purchaseChange > 0 ? "negative" : metrics.purchaseChange < 0 ? "positive" : metrics.purchaseThisMonth > 0 ? "positive" : "neutral"}
+          changeType={metrics.purchaseChange > 0 ? "negative" : metrics.purchaseChange < 0 ? "positive" : metrics.purchaseCountThisMonth > 0 ? "positive" : "neutral"}
           icon={ShoppingCart}
           iconColor="text-warning"
         />
