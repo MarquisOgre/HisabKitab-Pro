@@ -1327,7 +1327,31 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_effective_license_settings: {
+        Args: { _user_id: string }
+        Returns: {
+          created_at: string | null
+          expiry_date: string | null
+          id: string | null
+          license_type: string | null
+          licensed_to: string | null
+          max_businesses: number | null
+          max_simultaneous_logins: number | null
+          max_users: number | null
+          support_email: string | null
+          support_phone: string | null
+          support_whatsapp: string | null
+          updated_at: string | null
+          user_email: string | null
+          user_id: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "license_settings"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
     }
     Enums: {
       [_ in never]: never
