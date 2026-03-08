@@ -69,9 +69,9 @@ export default function AddItem() {
       .order("name");
     if (data && data.length > 0) {
       setUnitOptions(data);
-      setFormData(prev => ({ ...prev, unit: data[0].name }));
-    } else {
-      setUnitOptions([{ id: 'default', name: 'Bottles' }]);
+      if (!formData.unit) {
+        setFormData(prev => ({ ...prev, unit: data[0].name }));
+      }
     }
   };
 
