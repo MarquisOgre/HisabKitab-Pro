@@ -121,7 +121,7 @@ export function useDashboardData() {
     const { data: purchaseInvoicesData } = await supabase
       .from('purchase_invoices')
       .select('invoice_type, total_amount, created_at')
-      .eq('is_deleted', false)
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     // Calculate totals
