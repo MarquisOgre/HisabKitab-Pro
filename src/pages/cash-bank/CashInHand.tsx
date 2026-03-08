@@ -291,10 +291,10 @@ export default function CashInHand() {
   // Calculate balances
   const cashIn = transactions
     .filter(t => t.transaction_type === "in")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const cashOut = transactions
     .filter(t => t.transaction_type === "out")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const currentBalance = cashIn - cashOut;
 
   // Today's transactions
