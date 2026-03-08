@@ -619,7 +619,7 @@ export default function BankAccounts() {
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-sm text-muted-foreground">Balance</p>
                 <p className="text-xl font-bold text-primary">
-                  ₹{(account.current_balance || 0).toLocaleString()}
+                  ₹{Number(account.current_balance || 0).toLocaleString("en-IN")}
                 </p>
               </div>
             </div>

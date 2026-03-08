@@ -274,43 +274,43 @@ export default function ViewPurchaseInvoice() {
           <div className="w-72 space-y-2">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal:</span>
-              <span>₹{subtotal.toLocaleString()}</span>
+              <span>₹{subtotal.toLocaleString("en-IN")}</span>
             </div>
             {discountAmount > 0 && (
               <div className="flex justify-between text-success">
                 <span>Discount:</span>
-                <span>-₹{discountAmount.toLocaleString()}</span>
+                <span>-₹{discountAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {taxAmount > 0 && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">GST:</span>
-                <span>₹{taxAmount.toLocaleString()}</span>
+                <span>₹{taxAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {tcsAmount > 0 && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">TCS @ {tcsRate}%:</span>
-                <span>₹{tcsAmount.toLocaleString()}</span>
+                <span>₹{tcsAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             {tdsAmount > 0 && (
               <div className="flex justify-between text-success">
                 <span className="text-muted-foreground">TDS @ {tdsRate}%:</span>
-                <span>-₹{tdsAmount.toLocaleString()}</span>
+                <span>-₹{tdsAmount.toLocaleString("en-IN")}</span>
               </div>
             )}
             <div className="flex justify-between font-bold text-lg border-t pt-2">
               <span>Total:</span>
-              <span>₹{totalAmount.toLocaleString()}</span>
+              <span>₹{totalAmount.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between text-success">
               <span>Paid:</span>
-              <span>₹{paidAmount.toLocaleString()}</span>
+              <span>₹{paidAmount.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between font-bold text-destructive border-t pt-2">
               <span>Balance Due:</span>
-              <span>₹{balanceDue.toLocaleString()}</span>
+              <span>₹{balanceDue.toLocaleString("en-IN")}</span>
             </div>
           </div>
         </div>

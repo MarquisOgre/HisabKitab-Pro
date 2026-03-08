@@ -189,8 +189,8 @@ export default function StockReport() {
           saleQty,
           saleAvgPrice,
           saleAmt,
-          purchaseRate: item.purchase_price || 0,
-          saleRate: item.sale_price || 0,
+          purchaseRate: Number(item.purchase_price || 0),
+          saleRate: Number(item.sale_price || 0),
           lowStockAlert,
           status,
         };
