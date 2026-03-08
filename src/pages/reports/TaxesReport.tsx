@@ -309,8 +309,8 @@ export default function TaxesReport() {
                         </td>
                         <td className="font-medium">{tcs.party}</td>
                         <td>{tcs.invoice}</td>
-                        <td className="text-right">₹{tcs.amount.toLocaleString()}</td>
-                        <td className="text-right font-medium text-warning">₹{tcs.tcsAmount.toLocaleString()}</td>
+                        <td className="text-right">₹{tcs.amount.toLocaleString("en-IN")}</td>
+                        <td className="text-right font-medium text-warning">₹{tcs.tcsAmount.toLocaleString("en-IN")}</td>
                       </tr>
                     ))
                   )}
