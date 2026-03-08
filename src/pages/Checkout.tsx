@@ -19,7 +19,10 @@ import {
   Eye,
   EyeOff,
   CheckCircle2,
-  User
+  User,
+  Upload,
+  ImageIcon,
+  X
 } from "lucide-react";
 import { z } from "zod";
 // @ts-nocheck
