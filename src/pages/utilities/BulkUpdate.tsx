@@ -368,7 +368,7 @@ export default function BulkUpdate() {
                         className="cursor-pointer hover:text-primary"
                         onClick={() => setEditingField({ id: item.id, field: "sale_price" })}
                       >
-                        ₹{item.sale_price.toLocaleString()}
+                        ₹{Number(item.sale_price || 0).toLocaleString("en-IN")}
                       </span>
                     )}
                   </td>
