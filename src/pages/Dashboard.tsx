@@ -86,16 +86,24 @@ export default function Dashboard() {
         <MetricCard
           title="Total Sales"
           value={formatCurrency(metrics.totalSales)}
-          change={metrics.salesChange !== 0 ? `${metrics.salesChange > 0 ? '+' : ''}${metrics.salesChange.toFixed(1)}% from last month` : 'No sales last month'}
-          changeType={metrics.salesChange > 0 ? "positive" : metrics.salesChange < 0 ? "negative" : "neutral"}
+          change={metrics.salesChange !== 0 
+            ? `${metrics.salesChange > 0 ? '+' : ''}${metrics.salesChange.toFixed(1)}% from last month` 
+            : metrics.salesThisMonth > 0 
+              ? `${formatCurrency(metrics.salesThisMonth)} this month`
+              : 'No sales this month'}
+          changeType={metrics.salesChange > 0 ? "positive" : metrics.salesChange < 0 ? "negative" : metrics.salesThisMonth > 0 ? "positive" : "neutral"}
           icon={TrendingUp}
           iconColor="text-success"
         />
         <MetricCard
           title="Total Purchase"
           value={formatCurrency(metrics.totalPurchase)}
-          change={metrics.purchaseChange !== 0 ? `${metrics.purchaseChange > 0 ? '+' : ''}${metrics.purchaseChange.toFixed(1)}% from last month` : 'No purchases last month'}
-          changeType={metrics.purchaseChange > 0 ? "negative" : metrics.purchaseChange < 0 ? "positive" : "neutral"}
+          change={metrics.purchaseChange !== 0 
+            ? `${metrics.purchaseChange > 0 ? '+' : ''}${metrics.purchaseChange.toFixed(1)}% from last month` 
+            : metrics.purchaseThisMonth > 0 
+              ? `${formatCurrency(metrics.purchaseThisMonth)} this month`
+              : 'No purchases this month'}
+          changeType={metrics.purchaseChange > 0 ? "negative" : metrics.purchaseChange < 0 ? "positive" : metrics.purchaseThisMonth > 0 ? "positive" : "neutral"}
           icon={ShoppingCart}
           iconColor="text-warning"
         />
