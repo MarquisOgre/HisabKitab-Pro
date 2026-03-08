@@ -55,7 +55,7 @@ export default function Categories() {
       const { data: items } = await supabase
         .from('items')
         .select('category_id')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id);
 
       const itemCounts = (items || []).reduce((acc: Record<string, number>, item) => {
@@ -81,7 +81,7 @@ export default function Categories() {
       if (!selectedBusiness) throw new Error('No business selected');
 
       // Get admin user ID for data isolation
-      const { data: adminId } = await supabase.rpc('get_admin_user_id', { _user_id: user.id });
+      const { data: adminId } = await supabase.rpc('get_effective_user_id', { _user_id: user.id });
 
       const { error } = await supabase
         .from('categories')

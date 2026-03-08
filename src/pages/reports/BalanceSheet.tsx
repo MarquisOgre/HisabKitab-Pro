@@ -84,7 +84,7 @@ export default function BalanceSheet() {
       const { data: items } = await supabase
         .from('items')
         .select('current_stock, purchase_price')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id);
 
       const inventoryValue = (items || []).reduce((sum, item) => 
