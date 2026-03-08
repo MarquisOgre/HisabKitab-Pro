@@ -47,7 +47,7 @@ export function TaxSummary({
   
   // Calculate subtotal (before discount)
   const grossSubtotal = items.reduce((acc, item) => {
-    return acc + (item.quantity * item.rate);
+    return acc + (item.amount != null ? item.amount : (item.quantity * item.rate));
   }, 0);
 
   // Taxable amount = subtotal
