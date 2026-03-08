@@ -481,7 +481,7 @@ export default function CashInHand() {
                       txn.transaction_type === "in" ? "text-success" : "text-destructive"
                     )}
                   >
-                    {txn.transaction_type === "in" ? "+" : "-"}₹{txn.amount.toLocaleString()}
+                    {txn.transaction_type === "in" ? "+" : "-"}₹{Number(txn.amount || 0).toLocaleString("en-IN")}
                   </p>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
