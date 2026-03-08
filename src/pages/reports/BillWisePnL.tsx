@@ -211,12 +211,12 @@ export default function BillWisePnL() {
                       {format(new Date(bill.date), 'dd MMM yyyy')}
                     </td>
                     <td>{bill.party}</td>
-                    <td className="text-right">₹{bill.sale.toLocaleString()}</td>
-                    <td className="text-right">₹{bill.cost.toLocaleString()}</td>
+                    <td className="text-right">₹{bill.sale.toLocaleString("en-IN")}</td>
+                    <td className="text-right">₹{bill.cost.toLocaleString("en-IN")}</td>
                     <td className={cn("text-right font-medium", bill.profit >= 0 ? "text-success" : "text-destructive")}>
                       <div className="flex items-center justify-end gap-1">
                         {bill.profit >= 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                        ₹{Math.abs(bill.profit).toLocaleString()}
+                        ₹{Math.abs(bill.profit).toLocaleString("en-IN")}
                       </div>
                     </td>
                     <td className={cn("text-right", bill.margin >= 0 ? "text-success" : "text-destructive")}>
