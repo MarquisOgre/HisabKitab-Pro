@@ -215,10 +215,10 @@ export default function PaymentOut() {
           for (const inv of unpaidInvoices) {
             if (remainingPayment <= 0) break;
             
-            const currentBalance = (inv.total_amount || 0) - (inv.paid_amount || 0);
+            const currentBalance = (Number(inv.total_amount) || 0) - (Number(inv.paid_amount) || 0);
             const paymentForThisInvoice = Math.min(remainingPayment, currentBalance);
-            const newPaidAmount = (inv.paid_amount || 0) + paymentForThisInvoice;
-            const newBalance = Math.max(0, (inv.total_amount || 0) - newPaidAmount);
+            const newPaidAmount = (Number(inv.paid_amount) || 0) + paymentForThisInvoice;
+            const newBalance = Math.max(0, (Number(inv.total_amount) || 0) - newPaidAmount);
             
             await supabase
               .from("purchase_invoices")
