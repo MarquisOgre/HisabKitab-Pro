@@ -76,7 +76,7 @@ export default function BillWisePnL() {
                 .single();
               
               if (itemData) {
-                totalCost += (itemData.purchase_price || 0) * item.quantity;
+                totalCost += Number(itemData.purchase_price || 0) * item.quantity;
               }
             }
           }
