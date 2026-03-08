@@ -142,7 +142,10 @@ export function useDashboardData() {
       
       if (inv.invoice_type === 'sale' || inv.invoice_type === 'sale_invoice') {
         totalSales += amount;
-        if (createdAt >= thisMonthStart) salesThisMonth += amount;
+        if (createdAt >= thisMonthStart) {
+          salesThisMonth += amount;
+          salesCountThisMonth++;
+        }
         if (createdAt >= lastMonthStart && createdAt <= lastMonthEnd) salesLastMonth += amount;
       }
     });
