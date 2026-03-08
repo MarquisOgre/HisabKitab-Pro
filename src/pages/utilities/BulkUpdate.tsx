@@ -36,6 +36,8 @@ interface Category {
 
 export default function BulkUpdate() {
   const { user } = useAuth();
+  const { adminUserId } = useAdminUserId();
+  const { selectedBusiness } = useBusinessSelection();
   const [items, setItems] = useState<ItemData[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,10 +49,10 @@ export default function BulkUpdate() {
   const [editingField, setEditingField] = useState<{ id: string; field: string } | null>(null);
 
   useEffect(() => {
-    if (user) {
+    if (user && selectedBusiness) {
       fetchData();
     }
-  }, [user]);
+  }, [user, selectedBusiness]);
 
   const fetchData = async () => {
     setLoading(true);
