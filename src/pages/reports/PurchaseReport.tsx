@@ -188,7 +188,7 @@ export default function PurchaseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Pending</p>
             <IndianRupee className="w-4 h-4 text-warning flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalPending.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 text-warning truncate">₹{totalPending.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">

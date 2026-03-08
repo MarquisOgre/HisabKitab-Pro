@@ -193,7 +193,7 @@ export default function SaleReport() {
             <p className="text-xs sm:text-sm text-muted-foreground">Total Sales</p>
             <IndianRupee className="w-4 h-4 text-primary hidden sm:block" />
           </div>
-          <p className="text-lg md:text-2xl font-bold mt-1">₹{totalSales.toLocaleString()}</p>
+          <p className="text-lg md:text-2xl font-bold mt-1">₹{totalSales.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card p-4">
           <div className="flex items-center justify-between">
