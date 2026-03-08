@@ -125,10 +125,10 @@ export default function SaleReport() {
           format(new Date(sale.invoice_date), 'dd MMM yyyy'),
           sale.party_name,
           sale.items_count,
-          `₹${sale.total_amount.toLocaleString()}`,
-          `₹${sale.tcs_amount.toLocaleString()}`,
-          `₹${sale.cost_price.toLocaleString()}`,
-          `₹${profit.toLocaleString()}`,
+          `₹${sale.total_amount.toLocaleString("en-IN")}`,
+          `₹${sale.tcs_amount.toLocaleString("en-IN")}`,
+          `₹${sale.cost_price.toLocaleString("en-IN")}`,
+          `₹${profit.toLocaleString("en-IN")}`,
         ];
       }),
       summary: [
