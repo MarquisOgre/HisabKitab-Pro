@@ -6,6 +6,8 @@ import { LicenseReminder } from "@/components/LicenseReminder";
 import { useLicenseSettings } from "@/hooks/useLicenseSettings";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -34,9 +36,11 @@ function AppLayoutContent({ children }: AppLayoutProps) {
 
 export function AppLayout({ children }: AppLayoutProps) {
   const { isLicenseValid, isLoading } = useLicenseSettings();
+  const { user } = useAuth();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
 
-  // Show loading or check license validity
-  if (!isLoading && !isLicenseValid()) {
+  // SuperAdmin bypasses license check
+  if (!isLoading && !isLicenseValid() && !isSuperAdmin) {
     return <LicenseExpired />;
   }
 
