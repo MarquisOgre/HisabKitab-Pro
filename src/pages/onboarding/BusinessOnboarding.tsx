@@ -106,6 +106,10 @@ export default function BusinessOnboarding() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) return;
+    if (!isAdmin) {
+      toast.error("Only admins can create businesses");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -288,14 +292,22 @@ export default function BusinessOnboarding() {
                 />
               </div>
 
-              <Button
-                type="submit"
-                className="w-full btn-gradient gap-2"
-                disabled={loading || !formData.name.trim()}
-              >
-                {loading ? "Creating..." : "Create Business & Continue"}
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button
+                  type="submit"
+                  className="flex-1 btn-gradient gap-2"
+                  disabled={loading || !formData.name.trim() || !isAdmin}
+                >
+                  {loading ? "Creating..." : "Create Business & Continue"}
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+                {!isAdmin && (
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <span className="inline-block w-4 h-4 rounded-full bg-muted flex items-center justify-center text-xs">ℹ</span>
+                    Only admins can create businesses
+                  </p>
+                )}
+              </div>
             </form>
           </CardContent>
         </Card>
