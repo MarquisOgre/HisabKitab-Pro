@@ -483,6 +483,22 @@ export function PlanPaymentsManagement() {
                 </div>
               </div>
 
+              {/* Screenshot Preview */}
+              {selectedPayment.screenshot_url && (
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <ImageIcon className="w-4 h-4" /> Payment Screenshot
+                  </p>
+                  <a href={selectedPayment.screenshot_url} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={selectedPayment.screenshot_url}
+                      alt="Payment screenshot"
+                      className="w-full max-h-64 object-contain rounded-lg border bg-white cursor-pointer hover:opacity-90 transition-opacity"
+                    />
+                  </a>
+                </div>
+              )}
+
               <div className="p-3 rounded-lg bg-primary/10 border border-primary/20 text-sm">
                 <p className="font-medium text-primary mb-1">Upon Verification:</p>
                 <ul className="text-muted-foreground space-y-1 text-xs">
