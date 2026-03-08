@@ -36,6 +36,13 @@ const utilities = [
 ];
 
 export default function Utilities() {
+  const { user, isAdmin } = useAuth();
+  const showResetDatabase = isSuperAdminEmail(user?.email) || isAdmin;
+
+  const filteredUtilities = utilities.filter(
+    (u) => u.title !== "Reset Database" || showResetDatabase
+  );
+
   return (
     <div className="space-y-6">
       <div>
