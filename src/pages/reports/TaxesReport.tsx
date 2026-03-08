@@ -125,8 +125,8 @@ export default function TaxesReport() {
           date: inv.invoice_date, 
           party: inv.parties?.name || 'Unknown', 
           invoice: inv.invoice_number, 
-          amount: inv.total_amount || 0, 
-          tcsAmount: inv.tcs_amount || 0, 
+          amount: Number(inv.total_amount || 0), 
+          tcsAmount: Number(inv.tcs_amount || 0), 
           type: 'sale'
         });
       });
