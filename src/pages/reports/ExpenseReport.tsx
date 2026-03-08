@@ -105,7 +105,7 @@ export default function ExpenseReport() {
                 <div key={idx}>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="truncate">{cat.category}</span>
-                    <span className="font-medium flex-shrink-0">₹{cat.amount.toLocaleString()}</span>
+                    <span className="font-medium flex-shrink-0">₹{cat.amount.toLocaleString("en-IN")}</span>
                   </div>
                   <div className="w-full bg-muted rounded-full h-2">
                     <div className="bg-primary h-2 rounded-full transition-all" style={{ width: `${cat.percent}%` }} />
