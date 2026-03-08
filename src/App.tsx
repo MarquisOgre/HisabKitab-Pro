@@ -10,6 +10,7 @@ import { BusinessProvider } from "@/contexts/BusinessContext";
 import { BusinessSelectionProvider } from "@/contexts/BusinessSelectionContext";
 import { supabase } from "@/integrations/supabase/client";
 import { MFAVerification } from "@/components/MFAVerification";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 import { ThemeProvider } from "next-themes";
 import { Loader2 } from "lucide-react";
@@ -225,8 +226,9 @@ function ProtectedRoute({ children, requireBusiness = true, skipLayout = false }
   }
 
   // Redirect to onboarding if no business exists and business is required
-  // BUT skip this for child accounts - they share parent's businesses via RLS
-  if (requireBusiness && businesses.length === 0 && !isChildAccount) {
+  // BUT skip this for child accounts and SuperAdmins
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  if (requireBusiness && businesses.length === 0 && !isChildAccount && !isSuperAdmin) {
     return <Navigate to="/onboarding/business" replace />;
   }
 

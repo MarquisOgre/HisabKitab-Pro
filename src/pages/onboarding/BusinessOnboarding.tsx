@@ -16,11 +16,14 @@ import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 export default function BusinessOnboarding() {
   const { createBusiness, businesses, loading: businessLoading } =
     useBusinessSelection();
   const { user, signOut, isAdmin } = useAuth();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const canCreateBusiness = isAdmin || isSuperAdmin;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -106,7 +109,7 @@ export default function BusinessOnboarding() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) return;
-    if (!isAdmin) {
+    if (!canCreateBusiness) {
       toast.error("Only admins can create businesses");
       return;
     }
@@ -292,20 +295,33 @@ export default function BusinessOnboarding() {
                 />
               </div>
 
-              <div className="flex items-center gap-3">
-                <Button
-                  type="submit"
-                  className="flex-1 btn-gradient gap-2"
-                  disabled={loading || !formData.name.trim() || !isAdmin}
-                >
-                  {loading ? "Creating..." : "Create Business & Continue"}
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-                {!isAdmin && (
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <span className="inline-block w-4 h-4 rounded-full bg-muted flex items-center justify-center text-xs">ℹ</span>
-                    Only admins can create businesses
-                  </p>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <Button
+                    type="submit"
+                    className="flex-1 btn-gradient gap-2"
+                    disabled={loading || !formData.name.trim() || !canCreateBusiness}
+                  >
+                    {loading ? "Creating..." : "Create Business & Continue"}
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                  {!canCreateBusiness && (
+                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                      <span className="inline-block w-4 h-4 rounded-full bg-muted flex items-center justify-center text-xs">ℹ</span>
+                      Only admins can create businesses
+                    </p>
+                  )}
+                </div>
+                {isSuperAdmin && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="gap-2"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Skip to Dashboard
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
                 )}
               </div>
             </form>
