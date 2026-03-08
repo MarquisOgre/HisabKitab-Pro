@@ -55,7 +55,7 @@ export default function Categories() {
       const { data: items } = await supabase
         .from('items')
         .select('category_id')
-        .eq('is_deleted', false)
+        .or('is_deleted.is.null,is_deleted.eq.false')
         .eq('business_id', selectedBusiness.id);
 
       const itemCounts = (items || []).reduce((acc: Record<string, number>, item) => {

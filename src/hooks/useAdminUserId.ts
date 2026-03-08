@@ -23,7 +23,7 @@ export function useAdminUserId() {
 
       try {
         // Call the database function to get the admin user ID
-        const { data, error } = await supabase.rpc('get_admin_user_id', {
+        const { data, error } = await supabase.rpc('get_effective_user_id', {
           _user_id: user.id
         });
 
