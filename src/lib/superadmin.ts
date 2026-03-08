@@ -1,5 +1,4 @@
 export const SUPER_ADMIN_EMAILS = [
-  'admin@gmail.com',
   'marquisogre@gmail.com',
   'prakashgroup555@gmail.com',
   'adarshbharadwaj1234@gmail.com',
