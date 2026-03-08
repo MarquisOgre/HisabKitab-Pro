@@ -1,6 +1,8 @@
 import { Upload, RefreshCw, Trash2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 const utilities = [
   {
