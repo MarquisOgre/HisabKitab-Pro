@@ -407,8 +407,15 @@ export function PlanPaymentsManagement() {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="max-w-[150px] truncate text-sm">
-                    {payment.razorpay_payment_id || payment.manual_reference_id || "-"}
+                  <TableCell className="max-w-[150px] text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate">{payment.razorpay_payment_id || payment.manual_reference_id || "-"}</span>
+                      {payment.screenshot_url && (
+                        <a href={payment.screenshot_url} target="_blank" rel="noopener noreferrer" title="View screenshot">
+                          <ImageIcon className="w-4 h-4 text-primary shrink-0" />
+                        </a>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell>{getStatusBadge(payment.status)}</TableCell>
                   <TableCell>
