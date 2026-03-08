@@ -107,7 +107,7 @@ export default function ItemsList() {
       const { data, error } = await supabase
         .from("items")
         .select("id, name, unit, hsn_code, purchase_price, sale_price, opening_stock, current_stock, low_stock_alert, category_id, categories(name)")
-        .eq("is_deleted", false)
+        .or("is_deleted.is.null,is_deleted.eq.false")
         .eq("business_id", selectedBusiness.id)
         .order("name", { ascending: true });
 
