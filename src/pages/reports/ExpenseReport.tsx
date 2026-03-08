@@ -33,7 +33,7 @@ export default function ExpenseReport() {
         .select('*')
         .eq('business_id', selectedBusiness.id)
         .order('expense_date', { ascending: false });
-      const formattedData = (expenses || []).map(exp => ({ id: exp.id, date: exp.expense_date, category: exp.category, description: exp.notes || exp.expense_number, amount: exp.amount }));
+      const formattedData = (expenses || []).map(exp => ({ id: exp.id, date: exp.expense_date, category: exp.category, description: exp.notes || exp.expense_number, amount: Number(exp.amount || 0) }));
       setExpenseData(formattedData);
       setCategories([...new Set(formattedData.map(e => e.category))]);
     } catch (error) { console.error('Error fetching expenses:', error); } finally { setLoading(false); }
