@@ -15,6 +15,8 @@ interface DashboardMetrics {
   purchaseChange: number;
   salesThisMonth: number;
   purchaseThisMonth: number;
+  salesCountThisMonth: number;
+  purchaseCountThisMonth: number;
 }
 
 interface QuickStatsData {
