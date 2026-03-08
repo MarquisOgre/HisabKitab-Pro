@@ -55,7 +55,7 @@ export default function BalanceSheet() {
         .select('current_balance')
         .eq('business_id', selectedBusiness.id);
 
-      const bankTotal = (bankAccounts || []).reduce((sum, acc) => sum + (acc.current_balance || 0), 0);
+      const bankTotal = (bankAccounts || []).reduce((sum, acc) => sum + Number(acc.current_balance || 0), 0);
       setBankBalance(bankTotal);
 
       // Get receivables (unpaid sales) up to end date
