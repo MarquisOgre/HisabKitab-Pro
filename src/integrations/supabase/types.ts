@@ -18,7 +18,7 @@ export type Database = {
         Row: {
           created_at: string | null
           device_info: string | null
-          id: string | null
+          id: string
           ip_address: string | null
           last_activity: string | null
           session_id: string | null
@@ -27,7 +27,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           device_info?: string | null
-          id?: string | null
+          id?: string
           ip_address?: string | null
           last_activity?: string | null
           session_id?: string | null
@@ -36,7 +36,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           device_info?: string | null
-          id?: string | null
+          id?: string
           ip_address?: string | null
           last_activity?: string | null
           session_id?: string | null
@@ -50,7 +50,7 @@ export type Database = {
           backup_time: string | null
           created_at: string | null
           frequency: string | null
-          id: string | null
+          id: string
           retention_days: string | null
           updated_at: string | null
           user_id: string | null
@@ -60,7 +60,7 @@ export type Database = {
           backup_time?: string | null
           created_at?: string | null
           frequency?: string | null
-          id?: string | null
+          id?: string
           retention_days?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -70,7 +70,7 @@ export type Database = {
           backup_time?: string | null
           created_at?: string | null
           frequency?: string | null
-          id?: string | null
+          id?: string
           retention_days?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -84,7 +84,7 @@ export type Database = {
           backup_type: string | null
           created_at: string | null
           file_size: string | null
-          id: string | null
+          id: string
           status: string | null
           user_id: string | null
         }
@@ -94,7 +94,7 @@ export type Database = {
           backup_type?: string | null
           created_at?: string | null
           file_size?: string | null
-          id?: string | null
+          id?: string
           status?: string | null
           user_id?: string | null
         }
@@ -104,7 +104,7 @@ export type Database = {
           backup_type?: string | null
           created_at?: string | null
           file_size?: string | null
-          id?: string | null
+          id?: string
           status?: string | null
           user_id?: string | null
         }
@@ -118,7 +118,7 @@ export type Database = {
           business_id: string | null
           created_at: string | null
           current_balance: string | null
-          id: string | null
+          id: string
           ifsc_code: string | null
           is_primary: string | null
           opening_balance: string | null
@@ -132,7 +132,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           current_balance?: string | null
-          id?: string | null
+          id?: string
           ifsc_code?: string | null
           is_primary?: string | null
           opening_balance?: string | null
@@ -146,7 +146,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           current_balance?: string | null
-          id?: string | null
+          id?: string
           ifsc_code?: string | null
           is_primary?: string | null
           opening_balance?: string | null
@@ -162,7 +162,7 @@ export type Database = {
           business_id: string | null
           created_at: string | null
           description: string | null
-          id: string | null
+          id: string
           reference_id: string | null
           reference_type: string | null
           transaction_date: string | null
@@ -175,7 +175,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           reference_id?: string | null
           reference_type?: string | null
           transaction_date?: string | null
@@ -188,7 +188,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           reference_id?: string | null
           reference_type?: string | null
           transaction_date?: string | null
@@ -213,7 +213,7 @@ export type Database = {
           gst_receivable: string | null
           gst_registration_type: string | null
           gstin: string | null
-          id: string | null
+          id: string
           invoice_prefix: string | null
           invoice_template: string | null
           invoice_terms: string | null
@@ -250,7 +250,7 @@ export type Database = {
           gst_receivable?: string | null
           gst_registration_type?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           invoice_prefix?: string | null
           invoice_template?: string | null
           invoice_terms?: string | null
@@ -287,7 +287,7 @@ export type Database = {
           gst_receivable?: string | null
           gst_registration_type?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           invoice_prefix?: string | null
           invoice_template?: string | null
           invoice_terms?: string | null
@@ -317,7 +317,7 @@ export type Database = {
           created_at: string | null
           email: string | null
           gstin: string | null
-          id: string | null
+          id: string
           is_active: string | null
           is_default: string | null
           logo_url: string | null
@@ -332,7 +332,7 @@ export type Database = {
           created_at?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           is_active?: string | null
           is_default?: string | null
           logo_url?: string | null
@@ -347,7 +347,7 @@ export type Database = {
           created_at?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           is_active?: string | null
           is_default?: string | null
           logo_url?: string | null
@@ -365,7 +365,7 @@ export type Database = {
           business_id: string | null
           created_at: string | null
           description: string | null
-          id: string | null
+          id: string
           reference_id: string | null
           reference_type: string | null
           transaction_date: string | null
@@ -377,7 +377,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           reference_id?: string | null
           reference_type?: string | null
           transaction_date?: string | null
@@ -389,7 +389,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           reference_id?: string | null
           reference_type?: string | null
           transaction_date?: string | null
@@ -403,7 +403,7 @@ export type Database = {
           business_id: string | null
           created_at: string | null
           description: string | null
-          id: string | null
+          id: string
           name: string | null
           user_id: string | null
         }
@@ -411,7 +411,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           user_id?: string | null
         }
@@ -419,7 +419,7 @@ export type Database = {
           business_id?: string | null
           created_at?: string | null
           description?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           user_id?: string | null
         }
@@ -429,7 +429,7 @@ export type Database = {
         Row: {
           created_at: string | null
           email: string | null
-          id: string | null
+          id: string
           is_read: string | null
           message: string | null
           name: string | null
@@ -438,7 +438,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           email?: string | null
-          id?: string | null
+          id?: string
           is_read?: string | null
           message?: string | null
           name?: string | null
@@ -447,7 +447,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           email?: string | null
-          id?: string | null
+          id?: string
           is_read?: string | null
           message?: string | null
           name?: string | null
@@ -460,7 +460,7 @@ export type Database = {
           created_at: string | null
           from_email: string | null
           from_name: string | null
-          id: string | null
+          id: string
           is_active: boolean | null
           provider: string | null
           resend_api_key: string | null
@@ -475,7 +475,7 @@ export type Database = {
           created_at?: string | null
           from_email?: string | null
           from_name?: string | null
-          id?: string | null
+          id?: string
           is_active?: boolean | null
           provider?: string | null
           resend_api_key?: string | null
@@ -490,7 +490,7 @@ export type Database = {
           created_at?: string | null
           from_email?: string | null
           from_name?: string | null
-          id?: string | null
+          id?: string
           is_active?: boolean | null
           provider?: string | null
           resend_api_key?: string | null
@@ -511,7 +511,7 @@ export type Database = {
           created_at: string | null
           expense_date: string | null
           expense_number: string | null
-          id: string | null
+          id: string
           notes: string | null
           payment_mode: string | null
           reference_number: string | null
@@ -524,7 +524,7 @@ export type Database = {
           created_at?: string | null
           expense_date?: string | null
           expense_number?: string | null
-          id?: string | null
+          id?: string
           notes?: string | null
           payment_mode?: string | null
           reference_number?: string | null
@@ -537,7 +537,7 @@ export type Database = {
           created_at?: string | null
           expense_date?: string | null
           expense_number?: string | null
-          id?: string | null
+          id?: string
           notes?: string | null
           payment_mode?: string | null
           reference_number?: string | null
@@ -553,7 +553,7 @@ export type Database = {
           current_stock: string | null
           deleted_at: string | null
           hsn_code: string | null
-          id: string | null
+          id: string
           is_deleted: string | null
           low_stock_alert: string | null
           name: string | null
@@ -571,7 +571,7 @@ export type Database = {
           current_stock?: string | null
           deleted_at?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           is_deleted?: string | null
           low_stock_alert?: string | null
           name?: string | null
@@ -589,7 +589,7 @@ export type Database = {
           current_stock?: string | null
           deleted_at?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           is_deleted?: string | null
           low_stock_alert?: string | null
           name?: string | null
@@ -607,7 +607,7 @@ export type Database = {
           created_at: string | null
           description: string | null
           duration_days: number | null
-          id: string | null
+          id: string
           is_active: boolean | null
           plan_name: string | null
           price: number | null
@@ -618,7 +618,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           duration_days?: number | null
-          id?: string | null
+          id?: string
           is_active?: boolean | null
           plan_name?: string | null
           price?: number | null
@@ -629,7 +629,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           duration_days?: number | null
-          id?: string | null
+          id?: string
           is_active?: boolean | null
           plan_name?: string | null
           price?: number | null
@@ -642,7 +642,7 @@ export type Database = {
         Row: {
           created_at: string | null
           expiry_date: string | null
-          id: string | null
+          id: string
           license_type: string | null
           licensed_to: string | null
           max_businesses: number | null
@@ -658,7 +658,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           expiry_date?: string | null
-          id?: string | null
+          id?: string
           license_type?: string | null
           licensed_to?: string | null
           max_businesses?: number | null
@@ -674,7 +674,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           expiry_date?: string | null
-          id?: string | null
+          id?: string
           license_type?: string | null
           licensed_to?: string | null
           max_businesses?: number | null
@@ -692,7 +692,7 @@ export type Database = {
       notifications: {
         Row: {
           created_at: string | null
-          id: string | null
+          id: string
           is_read: string | null
           message: string | null
           title: string | null
@@ -701,7 +701,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           is_read?: string | null
           message?: string | null
           title?: string | null
@@ -710,7 +710,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           is_read?: string | null
           message?: string | null
           title?: string | null
@@ -727,7 +727,7 @@ export type Database = {
           credit_limit: string | null
           email: string | null
           gstin: string | null
-          id: string | null
+          id: string
           name: string | null
           opening_balance: string | null
           party_type: string | null
@@ -743,7 +743,7 @@ export type Database = {
           credit_limit?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           opening_balance?: string | null
           party_type?: string | null
@@ -759,7 +759,7 @@ export type Database = {
           credit_limit?: string | null
           email?: string | null
           gstin?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           opening_balance?: string | null
           party_type?: string | null
@@ -777,7 +777,7 @@ export type Database = {
           bank_ifsc: string | null
           bank_name: string | null
           created_at: string | null
-          id: string | null
+          id: string
           razorpay_enabled: string | null
           razorpay_key_id: string | null
           razorpay_key_secret: string | null
@@ -791,7 +791,7 @@ export type Database = {
           bank_ifsc?: string | null
           bank_name?: string | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           razorpay_enabled?: string | null
           razorpay_key_id?: string | null
           razorpay_key_secret?: string | null
@@ -805,7 +805,7 @@ export type Database = {
           bank_ifsc?: string | null
           bank_name?: string | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           razorpay_enabled?: string | null
           razorpay_key_id?: string | null
           razorpay_key_secret?: string | null
@@ -820,7 +820,7 @@ export type Database = {
           amount: string | null
           business_id: string | null
           created_at: string | null
-          id: string | null
+          id: string
           notes: string | null
           party_id: string | null
           payment_date: string | null
@@ -836,7 +836,7 @@ export type Database = {
           amount?: string | null
           business_id?: string | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           notes?: string | null
           party_id?: string | null
           payment_date?: string | null
@@ -852,7 +852,7 @@ export type Database = {
           amount?: string | null
           business_id?: string | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           notes?: string | null
           party_id?: string | null
           payment_date?: string | null
@@ -870,7 +870,7 @@ export type Database = {
         Row: {
           amount: number | null
           created_at: string | null
-          id: string | null
+          id: string
           manual_reference_id: string | null
           notes: string | null
           payment_method: string | null
@@ -889,7 +889,7 @@ export type Database = {
         Insert: {
           amount?: number | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           manual_reference_id?: string | null
           notes?: string | null
           payment_method?: string | null
@@ -908,7 +908,7 @@ export type Database = {
         Update: {
           amount?: number | null
           created_at?: string | null
-          id?: string | null
+          id?: string
           manual_reference_id?: string | null
           notes?: string | null
           payment_method?: string | null
@@ -932,7 +932,7 @@ export type Database = {
           created_at: string | null
           email: string | null
           full_name: string | null
-          id: string | null
+          id: string
           parent_user_id: string | null
           phone: string | null
           updated_at: string | null
@@ -943,7 +943,7 @@ export type Database = {
           created_at?: string | null
           email?: string | null
           full_name?: string | null
-          id?: string | null
+          id?: string
           parent_user_id?: string | null
           phone?: string | null
           updated_at?: string | null
@@ -954,7 +954,7 @@ export type Database = {
           created_at?: string | null
           email?: string | null
           full_name?: string | null
-          id?: string | null
+          id?: string
           parent_user_id?: string | null
           phone?: string | null
           updated_at?: string | null
@@ -969,7 +969,7 @@ export type Database = {
           discount_amount: string | null
           discount_percent: string | null
           hsn_code: string | null
-          id: string | null
+          id: string
           item_id: string | null
           item_name: string | null
           purchase_invoice_id: string | null
@@ -986,7 +986,7 @@ export type Database = {
           discount_amount?: string | null
           discount_percent?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           item_id?: string | null
           item_name?: string | null
           purchase_invoice_id?: string | null
@@ -1003,7 +1003,7 @@ export type Database = {
           discount_amount?: string | null
           discount_percent?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           item_id?: string | null
           item_name?: string | null
           purchase_invoice_id?: string | null
@@ -1024,7 +1024,7 @@ export type Database = {
           deleted_at: string | null
           discount_amount: string | null
           due_date: string | null
-          id: string | null
+          id: string
           invoice_date: string | null
           invoice_number: string | null
           invoice_type: string | null
@@ -1049,7 +1049,7 @@ export type Database = {
           deleted_at?: string | null
           discount_amount?: string | null
           due_date?: string | null
-          id?: string | null
+          id?: string
           invoice_date?: string | null
           invoice_number?: string | null
           invoice_type?: string | null
@@ -1074,7 +1074,7 @@ export type Database = {
           deleted_at?: string | null
           discount_amount?: string | null
           due_date?: string | null
-          id?: string | null
+          id?: string
           invoice_date?: string | null
           invoice_number?: string | null
           invoice_type?: string | null
@@ -1101,7 +1101,7 @@ export type Database = {
           discount_amount: string | null
           discount_percent: string | null
           hsn_code: string | null
-          id: string | null
+          id: string
           item_id: string | null
           item_name: string | null
           quantity: number | null
@@ -1118,7 +1118,7 @@ export type Database = {
           discount_amount?: string | null
           discount_percent?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           item_id?: string | null
           item_name?: string | null
           quantity?: number | null
@@ -1135,7 +1135,7 @@ export type Database = {
           discount_amount?: string | null
           discount_percent?: string | null
           hsn_code?: string | null
-          id?: string | null
+          id?: string
           item_id?: string | null
           item_name?: string | null
           quantity?: number | null
@@ -1156,7 +1156,7 @@ export type Database = {
           deleted_at: string | null
           discount_amount: string | null
           due_date: string | null
-          id: string | null
+          id: string
           invoice_date: string | null
           invoice_number: string | null
           invoice_type: string | null
@@ -1181,7 +1181,7 @@ export type Database = {
           deleted_at?: string | null
           discount_amount?: string | null
           due_date?: string | null
-          id?: string | null
+          id?: string
           invoice_date?: string | null
           invoice_number?: string | null
           invoice_type?: string | null
@@ -1206,7 +1206,7 @@ export type Database = {
           deleted_at?: string | null
           discount_amount?: string | null
           due_date?: string | null
-          id?: string | null
+          id?: string
           invoice_date?: string | null
           invoice_number?: string | null
           invoice_type?: string | null
@@ -1233,7 +1233,7 @@ export type Database = {
           business_name: string | null
           created_at: string | null
           email: string | null
-          id: string | null
+          id: string
           name: string | null
           notes: string | null
           phone: string | null
@@ -1247,7 +1247,7 @@ export type Database = {
           business_name?: string | null
           created_at?: string | null
           email?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           notes?: string | null
           phone?: string | null
@@ -1261,7 +1261,7 @@ export type Database = {
           business_name?: string | null
           created_at?: string | null
           email?: string | null
-          id?: string | null
+          id?: string
           name?: string | null
           notes?: string | null
           phone?: string | null
@@ -1274,7 +1274,7 @@ export type Database = {
       units: {
         Row: {
           created_at: string | null
-          id: string | null
+          id: string
           is_default: string | null
           name: string | null
           symbol: string | null
@@ -1282,7 +1282,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           is_default?: string | null
           name?: string | null
           symbol?: string | null
@@ -1290,7 +1290,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           is_default?: string | null
           name?: string | null
           symbol?: string | null
@@ -1301,21 +1301,21 @@ export type Database = {
       user_roles: {
         Row: {
           created_at: string | null
-          id: string | null
+          id: string
           parent_user_id: string | null
           role: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           parent_user_id?: string | null
           role?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string | null
-          id?: string | null
+          id?: string
           parent_user_id?: string | null
           role?: string | null
           user_id?: string | null
@@ -1332,7 +1332,7 @@ export type Database = {
         Returns: {
           created_at: string | null
           expiry_date: string | null
-          id: string | null
+          id: string
           license_type: string | null
           licensed_to: string | null
           max_businesses: number | null
