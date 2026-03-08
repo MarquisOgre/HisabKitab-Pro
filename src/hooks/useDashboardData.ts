@@ -133,6 +133,8 @@ export function useDashboardData() {
     let salesLastMonth = 0;
     let purchaseThisMonth = 0;
     let purchaseLastMonth = 0;
+    let salesCountThisMonth = 0;
+    let purchaseCountThisMonth = 0;
 
     saleInvoicesData?.forEach(inv => {
       const amount = Number(inv.total_amount) || 0;
