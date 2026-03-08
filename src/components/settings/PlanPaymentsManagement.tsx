@@ -389,7 +389,7 @@ export function PlanPaymentsManagement() {
               {filteredPayments.map((payment) => (
                 <TableRow key={payment.id}>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(payment.created_at), "dd MMM yyyy")}
+                    {payment.created_at ? format(new Date(payment.created_at), "dd MMM yyyy") : "-"}
                   </TableCell>
                   <TableCell>
                     <div>
