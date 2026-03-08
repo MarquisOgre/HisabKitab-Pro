@@ -83,19 +83,19 @@ export default function ProfitLoss() {
 
       // Sale total (total_amount includes TCS, so use it for matching Bill-wise P&L)
       const saleTotal = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.total_amount || 0),
+        (sum, inv) => sum + Number(inv.total_amount || 0),
         0
       );
 
       // GST Receivable (tax collected on sales)
       const gstReceivable = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tax_amount || 0),
+        (sum, inv) => sum + Number(inv.tax_amount || 0),
         0
       );
 
       // TCS Receivable (TCS collected on sales)
       const tcsReceivable = (salesInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tcs_amount || 0),
+        (sum, inv) => sum + Number(inv.tcs_amount || 0),
         0
       );
 
@@ -112,19 +112,19 @@ export default function ProfitLoss() {
 
       // Purchase total (use total_amount for consistency)
       const purchaseTotal = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.total_amount || 0),
+        (sum, inv) => sum + Number(inv.total_amount || 0),
         0
       );
 
       // GST Payable (tax paid on purchases)
       const gstPayable = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tax_amount || 0),
+        (sum, inv) => sum + Number(inv.tax_amount || 0),
         0
       );
 
       // TCS Payable
       const tcsPayable = (purchaseInvoices || []).reduce(
-        (sum, inv) => sum + (inv.tcs_amount || 0),
+        (sum, inv) => sum + Number(inv.tcs_amount || 0),
         0
       );
 
@@ -137,7 +137,7 @@ export default function ProfitLoss() {
         .gte('payment_date', startDate)
         .lte('payment_date', endDate);
 
-      const paymentInTotal = (paymentsIn || []).reduce((sum, p) => sum + (p.amount || 0), 0);
+      const paymentInTotal = (paymentsIn || []).reduce((sum, p) => sum + Number(p.amount || 0), 0);
 
       // Get payment out (paid to suppliers)
       const { data: paymentsOut } = await supabase
@@ -148,7 +148,7 @@ export default function ProfitLoss() {
         .gte('payment_date', startDate)
         .lte('payment_date', endDate);
 
-      const paymentOutTotal = (paymentsOut || []).reduce((sum, p) => sum + (p.amount || 0), 0);
+      const paymentOutTotal = (paymentsOut || []).reduce((sum, p) => sum + Number(p.amount || 0), 0);
 
       // Get other expenses
       const { data: expenses } = await supabase
@@ -158,7 +158,7 @@ export default function ProfitLoss() {
         .gte('expense_date', startDate)
         .lte('expense_date', endDate);
 
-      const expenseTotal = (expenses || []).reduce((sum, e) => sum + (e.amount || 0), 0);
+      const expenseTotal = (expenses || []).reduce((sum, e) => sum + Number(e.amount || 0), 0);
 
       // Get stock values - Opening stock is current_stock at start, Closing stock is current value
       const { data: items } = await supabase
@@ -168,11 +168,11 @@ export default function ProfitLoss() {
         .eq('business_id', selectedBusiness.id);
 
       const closingStockValue = (items || []).reduce((sum, item) => {
-        return sum + ((item.current_stock || 0) * (item.purchase_price || 0));
+        return sum + (Number(item.current_stock || 0) * Number(item.purchase_price || 0));
       }, 0);
 
       const openingStockValue = (items || []).reduce((sum, item) => {
-        return sum + ((item.opening_stock || 0) * (item.purchase_price || 0));
+        return sum + (Number(item.opening_stock || 0) * Number(item.purchase_price || 0));
       }, 0);
 
       setPlData({

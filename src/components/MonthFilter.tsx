@@ -63,7 +63,7 @@ export function getMonthTotal<T extends { total_amount: number | null }>(
   invoiceDateKey: keyof T = "invoice_date" as keyof T
 ): number {
   if (selectedMonth === "all") {
-    return items.reduce((sum, item) => sum + (item.total_amount || 0), 0);
+    return items.reduce((sum, item) => sum + Number(item.total_amount || 0), 0);
   }
   
   const [year, month] = selectedMonth.split("-").map(Number);
@@ -75,5 +75,5 @@ export function getMonthTotal<T extends { total_amount: number | null }>(
       const itemDate = new Date(item[invoiceDateKey] as unknown as string);
       return itemDate >= startDate && itemDate <= endDate;
     })
-    .reduce((sum, item) => sum + (item.total_amount || 0), 0);
+    .reduce((sum, item) => sum + Number(item.total_amount || 0), 0);
 }

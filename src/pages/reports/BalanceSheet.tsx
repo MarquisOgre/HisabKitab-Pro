@@ -55,7 +55,7 @@ export default function BalanceSheet() {
         .select('current_balance')
         .eq('business_id', selectedBusiness.id);
 
-      const bankTotal = (bankAccounts || []).reduce((sum, acc) => sum + (acc.current_balance || 0), 0);
+      const bankTotal = (bankAccounts || []).reduce((sum, acc) => sum + Number(acc.current_balance || 0), 0);
       setBankBalance(bankTotal);
 
       // Get receivables (unpaid sales) up to end date
@@ -66,7 +66,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id)
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'));
 
-      const totalReceivables = (salesInvoices || []).reduce((sum, inv) => sum + (inv.balance_due || 0), 0);
+      const totalReceivables = (salesInvoices || []).reduce((sum, inv) => sum + Number(inv.balance_due || 0), 0);
       setReceivables(totalReceivables);
 
       // Get payables (unpaid purchases) up to end date
@@ -77,7 +77,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id)
         .lte('invoice_date', format(dateRange.to, 'yyyy-MM-dd'));
 
-      const totalPayables = (purchaseInvoices || []).reduce((sum, inv) => sum + (inv.balance_due || 0), 0);
+      const totalPayables = (purchaseInvoices || []).reduce((sum, inv) => sum + Number(inv.balance_due || 0), 0);
       setPayables(totalPayables);
 
       // Get inventory value
@@ -88,7 +88,7 @@ export default function BalanceSheet() {
         .eq('business_id', selectedBusiness.id);
 
       const inventoryValue = (items || []).reduce((sum, item) => 
-        sum + ((item.current_stock || 0) * (item.purchase_price || 0)), 0);
+        sum + (Number(item.current_stock || 0) * Number(item.purchase_price || 0)), 0);
       setInventory(inventoryValue);
 
     } catch (error) {
