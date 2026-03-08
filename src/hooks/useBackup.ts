@@ -44,23 +44,26 @@ export function useBackupSettings() {
       if (error) throw error;
       
       if (!data) {
-        // Create default settings if none exist
+        // Create default settings - all columns are text type
+        const now = new Date().toISOString();
         const { data: newData, error: insertError } = await supabase
           .from("backup_settings")
           .insert({
             user_id: user.id,
-            auto_backup_enabled: true,
+            auto_backup_enabled: "true",
             frequency: "daily",
             backup_time: "23:30:00",
-            retention_days: 30,
+            retention_days: "30",
+            created_at: now,
+            updated_at: now,
           })
           .select()
           .single();
 
         if (insertError) throw insertError;
-        setSettings(newData);
+        setSettings(parseSettings(newData));
       } else {
-        setSettings(data);
+        setSettings(parseSettings(data));
       }
     } catch (error) {
       console.error("Error fetching backup settings:", error);
@@ -69,13 +72,31 @@ export function useBackupSettings() {
     }
   };
 
+  // Parse text columns to proper types for the UI
+  const parseSettings = (data: any): BackupSettings => ({
+    ...data,
+    auto_backup_enabled: data.auto_backup_enabled === "true" || data.auto_backup_enabled === true,
+    retention_days: parseInt(data.retention_days) || 30,
+  });
+
   const updateSettings = async (updates: Partial<BackupSettings>) => {
     if (!user || !settings) return;
 
     try {
+      // Convert back to text for DB storage
+      const dbUpdates: Record<string, any> = { updated_at: new Date().toISOString() };
+      if (updates.auto_backup_enabled !== undefined) {
+        dbUpdates.auto_backup_enabled = String(updates.auto_backup_enabled);
+      }
+      if (updates.frequency !== undefined) dbUpdates.frequency = updates.frequency;
+      if (updates.backup_time !== undefined) dbUpdates.backup_time = updates.backup_time;
+      if (updates.retention_days !== undefined) {
+        dbUpdates.retention_days = String(updates.retention_days);
+      }
+
       const { error } = await supabase
         .from("backup_settings")
-        .update(updates)
+        .update(dbUpdates)
         .eq("user_id", user.id);
 
       if (error) throw error;
@@ -135,6 +156,8 @@ export function useBackups() {
         { data: expenses },
         { data: categories },
         { data: bankAccounts },
+        { data: cashTransactions },
+        { data: bankTransactions },
       ] = await Promise.all([
         supabase.from("parties").select("*"),
         supabase.from("items").select("*"),
@@ -146,6 +169,8 @@ export function useBackups() {
         supabase.from("expenses").select("*"),
         supabase.from("categories").select("*"),
         supabase.from("bank_accounts").select("*"),
+        supabase.from("cash_transactions").select("*"),
+        supabase.from("bank_transactions").select("*"),
       ]);
 
       const backupData = {
@@ -159,8 +184,10 @@ export function useBackups() {
         expenses: expenses || [],
         categories: categories || [],
         bankAccounts: bankAccounts || [],
+        cashTransactions: cashTransactions || [],
+        bankTransactions: bankTransactions || [],
         exportedAt: new Date().toISOString(),
-        version: "3.0",
+        version: "3.1",
       };
 
       const jsonString = JSON.stringify(backupData, null, 2);
@@ -173,6 +200,8 @@ export function useBackups() {
         year: "numeric",
       })}`;
 
+      const now = new Date().toISOString();
+
       // Save backup record
       const { data: backupRecord, error } = await supabase
         .from("backups")
@@ -182,6 +211,8 @@ export function useBackups() {
           backup_type: type,
           file_size: `${sizeInMB} MB`,
           status: "success",
+          backup_date: now,
+          created_at: now,
         })
         .select()
         .single();
@@ -194,6 +225,7 @@ export function useBackups() {
         title: "Backup Created",
         message: `${backupName} completed successfully (${sizeInMB} MB)`,
         type: "success",
+        created_at: now,
       });
 
       await fetchBackups();
@@ -208,6 +240,7 @@ export function useBackups() {
         title: "Backup Failed",
         message: "There was an error creating your backup. Please try again.",
         type: "error",
+        created_at: new Date().toISOString(),
       });
       
       return null;
@@ -226,7 +259,7 @@ export function useBackups() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `hisahkitab-backup-${new Date().toISOString().split("T")[0]}.json`;
+    a.download = `hisabkitab-backup-${new Date().toISOString().split("T")[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -257,59 +290,110 @@ export function useRestoreBackup() {
       const content = await file.text();
       const backupData = JSON.parse(content);
 
-      setProgress(10);
+      setProgress(5);
 
       // Validate backup structure
       if (!backupData.version || !backupData.exportedAt) {
-        throw new Error("Invalid backup file format");
+        throw new Error("Invalid backup file format. Missing version or exportedAt field.");
       }
 
-      setProgress(20);
+      setProgress(10);
 
       // Restore categories first (dependencies)
       if (backupData.categories?.length > 0) {
         for (const category of backupData.categories) {
-          const { id, ...categoryData } = category;
-          await supabase.from("categories").upsert({
-            ...categoryData,
-            user_id: user.id,
-          });
+          await supabase.from("categories").upsert(
+            { ...category, user_id: user.id },
+            { onConflict: "id" }
+          );
         }
       }
-      setProgress(30);
+      setProgress(20);
 
       // Restore parties
       if (backupData.parties?.length > 0) {
         for (const party of backupData.parties) {
-          const { id, ...partyData } = party;
-          await supabase.from("parties").upsert({
-            ...partyData,
-            user_id: user.id,
-          });
+          await supabase.from("parties").upsert(
+            { ...party, user_id: user.id },
+            { onConflict: "id" }
+          );
         }
       }
-      setProgress(50);
+      setProgress(30);
 
       // Restore items
       if (backupData.items?.length > 0) {
         for (const item of backupData.items) {
-          const { id, ...itemData } = item;
-          await supabase.from("items").upsert({
-            ...itemData,
-            user_id: user.id,
-          });
+          await supabase.from("items").upsert(
+            { ...item, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(40);
+
+      // Restore sale invoices
+      if (backupData.saleInvoices?.length > 0) {
+        for (const invoice of backupData.saleInvoices) {
+          await supabase.from("sale_invoices").upsert(
+            { ...invoice, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(50);
+
+      // Restore sale invoice items
+      if (backupData.saleInvoiceItems?.length > 0) {
+        for (const item of backupData.saleInvoiceItems) {
+          await supabase.from("sale_invoice_items").upsert(
+            item,
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(55);
+
+      // Restore purchase invoices
+      if (backupData.purchaseInvoices?.length > 0) {
+        for (const invoice of backupData.purchaseInvoices) {
+          await supabase.from("purchase_invoices").upsert(
+            { ...invoice, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(65);
+
+      // Restore purchase invoice items
+      if (backupData.purchaseInvoiceItems?.length > 0) {
+        for (const item of backupData.purchaseInvoiceItems) {
+          await supabase.from("purchase_invoice_items").upsert(
+            item,
+            { onConflict: "id" }
+          );
         }
       }
       setProgress(70);
 
+      // Restore payments
+      if (backupData.payments?.length > 0) {
+        for (const payment of backupData.payments) {
+          await supabase.from("payments").upsert(
+            { ...payment, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(80);
+
       // Restore bank accounts
       if (backupData.bankAccounts?.length > 0) {
         for (const account of backupData.bankAccounts) {
-          const { id, ...accountData } = account;
-          await supabase.from("bank_accounts").upsert({
-            ...accountData,
-            user_id: user.id,
-          });
+          await supabase.from("bank_accounts").upsert(
+            { ...account, user_id: user.id },
+            { onConflict: "id" }
+          );
         }
       }
       setProgress(85);
@@ -317,11 +401,32 @@ export function useRestoreBackup() {
       // Restore expenses
       if (backupData.expenses?.length > 0) {
         for (const expense of backupData.expenses) {
-          const { id, ...expenseData } = expense;
-          await supabase.from("expenses").upsert({
-            ...expenseData,
-            user_id: user.id,
-          });
+          await supabase.from("expenses").upsert(
+            { ...expense, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(90);
+
+      // Restore cash transactions (v3.1+)
+      if (backupData.cashTransactions?.length > 0) {
+        for (const txn of backupData.cashTransactions) {
+          await supabase.from("cash_transactions").upsert(
+            { ...txn, user_id: user.id },
+            { onConflict: "id" }
+          );
+        }
+      }
+      setProgress(95);
+
+      // Restore bank transactions (v3.1+)
+      if (backupData.bankTransactions?.length > 0) {
+        for (const txn of backupData.bankTransactions) {
+          await supabase.from("bank_transactions").upsert(
+            { ...txn, user_id: user.id },
+            { onConflict: "id" }
+          );
         }
       }
       setProgress(100);
@@ -332,19 +437,21 @@ export function useRestoreBackup() {
         title: "Restore Complete",
         message: "Your data has been restored successfully from the backup file.",
         type: "success",
+        created_at: new Date().toISOString(),
       });
 
       toast.success("Backup restored successfully!");
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error restoring backup:", error);
-      toast.error("Failed to restore backup. Please check the file format.");
+      toast.error("Failed to restore backup: " + (error.message || "Please check the file format."));
 
       await supabase.from("notifications").insert({
         user_id: user.id,
         title: "Restore Failed",
         message: "There was an error restoring your backup. Please try again.",
         type: "error",
+        created_at: new Date().toISOString(),
       });
 
       return false;
