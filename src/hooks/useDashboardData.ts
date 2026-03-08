@@ -174,7 +174,7 @@ export function useDashboardData() {
     const { data: items } = await supabase
       .from('items')
       .select('id, opening_stock, purchase_price')
-      .eq('is_deleted', 'false')
+      .or('is_deleted.is.null,is_deleted.eq.false')
       .eq('business_id', selectedBusiness.id);
 
     // Fetch all purchase invoice items - only from non-deleted invoices
