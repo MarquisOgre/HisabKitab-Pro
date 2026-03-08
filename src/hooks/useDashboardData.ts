@@ -13,6 +13,8 @@ interface DashboardMetrics {
   partiesThisMonth: number;
   salesChange: number;
   purchaseChange: number;
+  salesThisMonth: number;
+  purchaseThisMonth: number;
 }
 
 interface QuickStatsData {
@@ -60,6 +62,8 @@ export function useDashboardData() {
     partiesThisMonth: 0,
     salesChange: 0,
     purchaseChange: 0,
+    salesThisMonth: 0,
+    purchaseThisMonth: 0,
   });
   const [quickStats, setQuickStats] = useState<QuickStatsData>({
     totalReceivables: 0,
@@ -225,6 +229,8 @@ export function useDashboardData() {
       partiesThisMonth: partiesThisMonth || 0,
       salesChange,
       purchaseChange,
+      salesThisMonth,
+      purchaseThisMonth,
     });
   };
 
