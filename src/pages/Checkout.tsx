@@ -121,8 +121,20 @@ export default function Checkout() {
     setProcessing(true);
     try {
       if (isSignUp) {
-        const { error } = await signUp(authForm.email, authForm.password, authForm.fullName);
-        if (error) throw error;
+        // Use edge function for auto-verified signup
+        const { data: fnData, error: fnError } = await supabase.functions.invoke("checkout-signup", {
+          body: {
+            email: authForm.email,
+            password: authForm.password,
+            fullName: authForm.fullName,
+          },
+        });
+        if (fnError) throw fnError;
+        if (fnData?.error) throw new Error(fnData.error);
+        
+        // Now sign in the newly created (auto-verified) user
+        const { error: signInErr } = await signIn(authForm.email, authForm.password);
+        if (signInErr) throw signInErr;
         toast.success("Account created! You can now proceed with payment.");
       } else {
         const { error } = await signIn(authForm.email, authForm.password);
