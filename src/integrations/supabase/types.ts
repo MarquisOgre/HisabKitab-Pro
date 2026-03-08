@@ -908,6 +908,7 @@ export type Database = {
           plan_name: string | null
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
+          screenshot_url: string | null
           status: string | null
           updated_at: string | null
           user_email: string | null
@@ -927,6 +928,7 @@ export type Database = {
           plan_name?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
+          screenshot_url?: string | null
           status?: string | null
           updated_at?: string | null
           user_email?: string | null
@@ -946,6 +948,7 @@ export type Database = {
           plan_name?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
+          screenshot_url?: string | null
           status?: string | null
           updated_at?: string | null
           user_email?: string | null
