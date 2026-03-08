@@ -1,6 +1,8 @@
 import { Upload, RefreshCw, Trash2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 const utilities = [
   {
@@ -34,6 +36,13 @@ const utilities = [
 ];
 
 export default function Utilities() {
+  const { user, isAdmin } = useAuth();
+  const showResetDatabase = isSuperAdminEmail(user?.email) || isAdmin;
+
+  const filteredUtilities = utilities.filter(
+    (u) => u.title !== "Reset Database" || showResetDatabase
+  );
+
   return (
     <div className="space-y-6">
       <div>
@@ -42,7 +51,7 @@ export default function Utilities() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-        {utilities.map(u => (
+        {filteredUtilities.map(u => (
           <div key={u.title} className="stat-card">
             <div className="flex items-start gap-4">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${u.variant === "destructive" ? "bg-destructive/10" : "bg-primary/10"}`}>

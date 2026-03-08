@@ -9,6 +9,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 const utilities = [
   {
@@ -55,6 +57,14 @@ const recycleBinStats = [
 ];
 
 export default function UtilitiesOverview() {
+  const { user, isAdmin } = useAuth();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const showResetDatabase = isSuperAdmin || isAdmin;
+
+  const filteredUtilities = utilities.filter(
+    (u) => u.title !== "Reset Database" || showResetDatabase
+  );
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -65,7 +75,7 @@ export default function UtilitiesOverview() {
 
       {/* Utilities Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {utilities.map((utility) => (
+        {filteredUtilities.map((utility) => (
           <Link
             key={utility.title}
             to={utility.href}
