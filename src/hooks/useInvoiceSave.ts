@@ -45,6 +45,7 @@ export function useInvoiceSave() {
     notes,
     paymentMode,
     paymentAmount,
+    additionalCharges = 0,
   }: SaveInvoiceParams) => {
     if (!user || !adminUserId) {
       toast.error("Please login to save");
