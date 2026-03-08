@@ -156,7 +156,7 @@ export default function BillWisePnL() {
         <div className="metric-card">
           <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Profit</p>
           <p className={cn("text-lg sm:text-2xl font-bold mt-2 truncate", totalProfit >= 0 ? "text-success" : "text-destructive")}>
-            ₹{Math.abs(totalProfit).toLocaleString()}
+            ₹{Math.abs(totalProfit).toLocaleString("en-IN")}
           </p>
         </div>
         <div className="metric-card">
