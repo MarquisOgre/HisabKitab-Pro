@@ -156,7 +156,10 @@ export function useDashboardData() {
       
       if (inv.invoice_type === 'purchase' || inv.invoice_type === 'purchase_bill' || inv.invoice_type === 'purchase_invoice') {
         totalPurchase += amount;
-        if (createdAt >= thisMonthStart) purchaseThisMonth += amount;
+        if (createdAt >= thisMonthStart) {
+          purchaseThisMonth += amount;
+          purchaseCountThisMonth++;
+        }
         if (createdAt >= lastMonthStart && createdAt <= lastMonthEnd) purchaseLastMonth += amount;
       }
     });
