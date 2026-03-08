@@ -13,6 +13,8 @@ interface DashboardMetrics {
   partiesThisMonth: number;
   salesChange: number;
   purchaseChange: number;
+  salesThisMonth: number;
+  purchaseThisMonth: number;
 }
 
 interface QuickStatsData {
