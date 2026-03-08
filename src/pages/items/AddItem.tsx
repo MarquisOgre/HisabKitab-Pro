@@ -35,7 +35,7 @@ export default function AddItem() {
   const [formData, setFormData] = useState({
     categoryId: "",
     name: "",
-    unit: "Bottles",
+    unit: "",
     hsnCode: "",
     purchasePrice: "",
     salePrice: "",
