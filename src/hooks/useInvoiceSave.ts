@@ -66,7 +66,10 @@ export function useInvoiceSave() {
       return null;
     }
 
-    // Validate that all items have sale quantity > 0
+    // Determine if it's a sale or purchase type (needed for validations below)
+    const isSaleType = ["sale", "sale_invoice", "sale_return", "sale_order", "estimation", "proforma", "delivery_challan"].includes(invoiceType);
+
+    // Validate that all items have quantity > 0
     for (const item of validItems) {
       const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
       if (qty <= 0) {
@@ -101,8 +104,7 @@ export function useInvoiceSave() {
         .eq("business_id", selectedBusiness.id)
         .maybeSingle();
 
-      // Determine if it's a sale or purchase type
-      const isSaleType = ["sale", "sale_invoice", "sale_return", "sale_order", "estimation", "proforma", "delivery_challan"].includes(invoiceType);
+      // isSaleType already determined above
 
       // Get tax rates based on invoice type
       const gstRate = isSaleType 
