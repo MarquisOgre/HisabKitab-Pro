@@ -115,16 +115,16 @@ export default function PaymentOutList() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="metric-card">
           <p className="text-sm text-muted-foreground">Total Payments</p>
-          <p className="text-2xl font-bold mt-1">₹{totalPayments.toLocaleString()}</p>
+          <p className="text-2xl font-bold mt-1">₹{totalPayments.toLocaleString("en-IN")}</p>
           <p className="text-xs text-muted-foreground mt-1">{payments.length} payments</p>
         </div>
         <div className="metric-card">
           <p className="text-sm text-muted-foreground">Cash</p>
-          <p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cash").reduce((s, p) => s + p.amount, 0).toLocaleString()}</p>
+          <p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "cash").reduce((s, p) => s + Number(p.amount || 0), 0).toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <p className="text-sm text-muted-foreground">Bank/UPI</p>
-          <p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "bank" || p.payment_mode === "upi").reduce((s, p) => s + p.amount, 0).toLocaleString()}</p>
+          <p className="text-2xl font-bold mt-1">₹{payments.filter(p => p.payment_mode === "bank" || p.payment_mode === "upi").reduce((s, p) => s + Number(p.amount || 0), 0).toLocaleString("en-IN")}</p>
         </div>
       </div>
 
