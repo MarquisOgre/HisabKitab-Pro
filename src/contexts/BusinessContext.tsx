@@ -48,12 +48,35 @@ export function BusinessProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      // First try to get the user's own settings
-      let { data, error } = await supabase
-        .from('business_settings')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      // Get the currently selected business ID from localStorage
+      const storedBusinessId = localStorage.getItem('selectedBusinessId');
+      
+      // First try to get settings for the selected business
+      let data = null;
+      let error = null;
+      
+      if (storedBusinessId) {
+        const result = await supabase
+          .from('business_settings')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('business_id', storedBusinessId)
+          .maybeSingle();
+        data = result.data;
+        error = result.error;
+      }
+      
+      // Fallback: get the first settings row for this user
+      if (!data) {
+        const result = await supabase
+          .from('business_settings')
+          .select('*')
+          .eq('user_id', user.id)
+          .limit(1)
+          .maybeSingle();
+        data = result.data;
+        error = result.error;
+      }
 
       // If no settings found for this user, get the first available settings (shared business)
       if (!data) {
