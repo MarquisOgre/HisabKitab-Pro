@@ -66,6 +66,8 @@ export default function Checkout() {
   // Manual payment states
   const [manualReferenceId, setManualReferenceId] = useState("");
   const [showManualPaymentForm, setShowManualPaymentForm] = useState(false);
+  const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
+  const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPlanAndSettings();
