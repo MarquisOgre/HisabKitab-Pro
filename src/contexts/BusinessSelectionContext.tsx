@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 
 export interface Business {
   id: string;
@@ -40,6 +41,8 @@ const SELECTED_BUSINESS_KEY = "hisabkitab_selected_business_id";
 
 export function BusinessSelectionProvider({ children }: { children: ReactNode }) {
   const { user, isAdmin } = useAuth();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const effectiveAdmin = isAdmin || isSuperAdmin;
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
   const [loading, setLoading] = useState(true);
@@ -146,7 +149,7 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
 
   const createBusiness = async (data: Partial<Business>): Promise<Business | null> => {
     if (!user) return null;
-    if (!isAdmin) {
+    if (!effectiveAdmin) {
       toast.error("Only admins can create businesses");
       return null;
     }
@@ -191,7 +194,7 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
   };
 
   const updateBusiness = async (id: string, data: Partial<Business>): Promise<boolean> => {
-    if (!isAdmin) {
+    if (!effectiveAdmin) {
       toast.error("Only admins can update businesses");
       return false;
     }
@@ -221,7 +224,7 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
   };
 
   const deleteBusiness = async (id: string): Promise<boolean> => {
-    if (!isAdmin) {
+    if (!effectiveAdmin) {
       toast.error("Only admins can delete businesses");
       return false;
     }
@@ -255,8 +258,8 @@ export function BusinessSelectionProvider({ children }: { children: ReactNode })
     }
   };
 
-  const canCreateBusiness = businesses.length < maxBusinesses && isAdmin;
-  const canManageBusinesses = isAdmin;
+  const canCreateBusiness = (businesses.length < maxBusinesses || isSuperAdmin) && effectiveAdmin;
+  const canManageBusinesses = effectiveAdmin;
 
   return (
     <BusinessSelectionContext.Provider 
