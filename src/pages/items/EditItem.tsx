@@ -66,8 +66,6 @@ export default function EditItem() {
       .order("name");
     if (data && data.length > 0) {
       setUnitOptions(data);
-    } else {
-      setUnitOptions([{ id: 'default', name: 'Bottles' }]);
     }
   };
 
