@@ -154,7 +154,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
             updatedItem.name = selectedItem.name;
             updatedItem.rate = Number(selectedItem.sale_price) || 0;
             updatedItem.availableStock = Number(selectedItem.current_stock) || 0;
-            updatedItem.closingStock = 0;
+            updatedItem.saleQty = 0;
             updatedItem.quantity = Number(selectedItem.current_stock) || 0;
             updatedItem.unit = selectedItem.unit || "Bottles";
             updatedItem.categoryId = selectedItem.category_id || "";
