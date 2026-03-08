@@ -49,7 +49,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { user, loading: authLoading, signUp, signIn } = useAuth();
   
-  const planId = searchParams.get("plan");
+  const planParam = searchParams.get("plan");
   
   const [loading, setLoading] = useState(true);
   const [plan, setPlan] = useState<LicensePlan | null>(null);
