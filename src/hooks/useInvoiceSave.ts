@@ -178,6 +178,7 @@ export function useInvoiceSave() {
           balance_due: balanceDue,
           notes: notes || null,
           status,
+          created_at: new Date().toISOString(),
         })
         .select()
         .single();
