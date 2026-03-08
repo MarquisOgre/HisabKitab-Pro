@@ -872,7 +872,29 @@ export type Database = {
           sale_invoice_id?: string | null
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_payments_party"
+            columns: ["party_id"]
+            isOneToOne: false
+            referencedRelation: "parties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_payments_purchase_invoice"
+            columns: ["purchase_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_payments_sale_invoice"
+            columns: ["sale_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "sale_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       plan_payments: {
         Row: {
