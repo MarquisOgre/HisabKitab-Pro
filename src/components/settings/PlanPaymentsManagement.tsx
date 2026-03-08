@@ -30,7 +30,8 @@ import {
   Search,
   CreditCard,
   QrCode,
-  Trash2
+  Trash2,
+  ImageIcon
 } from "lucide-react";
 import {
   AlertDialog,
