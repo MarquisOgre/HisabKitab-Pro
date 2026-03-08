@@ -187,7 +187,7 @@ export default function BusinessOnboarding() {
           </div>
 
           <h1 className="text-3xl font-bold mb-2">
-            Welcome to hisabkitab!
+            Welcome to Hisab Kitab Pro!
           </h1>
           <p className="text-muted-foreground">
             Let's set up your first business to get started
