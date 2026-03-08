@@ -112,9 +112,10 @@ export default function Checkout() {
         .maybeSingle();
       
       if (settingsData) {
-        setPaymentSettings(settingsData);
+        const isRazorpayEnabled = settingsData.razorpay_enabled === true || settingsData.razorpay_enabled === "true";
+        setPaymentSettings({ ...settingsData, razorpay_enabled: isRazorpayEnabled });
         // Default to QR if Razorpay is not enabled
-        if (!settingsData.razorpay_enabled) {
+        if (!isRazorpayEnabled) {
           setPaymentMethod("qr_manual");
         }
       }
