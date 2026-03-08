@@ -30,7 +30,8 @@ import {
   Search,
   CreditCard,
   QrCode,
-  Trash2
+  Trash2,
+  ImageIcon
 } from "lucide-react";
 import {
   AlertDialog,
@@ -55,6 +56,7 @@ interface PlanPayment {
   payment_method: string;
   razorpay_payment_id: string | null;
   manual_reference_id: string | null;
+  screenshot_url: string | null;
   status: string;
   verified_at: string | null;
   notes: string | null;
@@ -387,7 +389,7 @@ export function PlanPaymentsManagement() {
               {filteredPayments.map((payment) => (
                 <TableRow key={payment.id}>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(payment.created_at), "dd MMM yyyy")}
+                    {payment.created_at ? format(new Date(payment.created_at), "dd MMM yyyy") : "-"}
                   </TableCell>
                   <TableCell>
                     <div>
@@ -480,6 +482,22 @@ export function PlanPaymentsManagement() {
                   </p>
                 </div>
               </div>
+
+              {/* Screenshot Preview */}
+              {selectedPayment.screenshot_url && (
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <ImageIcon className="w-4 h-4" /> Payment Screenshot
+                  </p>
+                  <a href={selectedPayment.screenshot_url} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={selectedPayment.screenshot_url}
+                      alt="Payment screenshot"
+                      className="w-full max-h-64 object-contain rounded-lg border bg-white cursor-pointer hover:opacity-90 transition-opacity"
+                    />
+                  </a>
+                </div>
+              )}
 
               <div className="p-3 rounded-lg bg-primary/10 border border-primary/20 text-sm">
                 <p className="font-medium text-primary mb-1">Upon Verification:</p>

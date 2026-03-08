@@ -19,7 +19,10 @@ import {
   Eye,
   EyeOff,
   CheckCircle2,
-  User
+  User,
+  Upload,
+  ImageIcon,
+  X
 } from "lucide-react";
 import { z } from "zod";
 // @ts-nocheck
@@ -66,6 +69,8 @@ export default function Checkout() {
   // Manual payment states
   const [manualReferenceId, setManualReferenceId] = useState("");
   const [showManualPaymentForm, setShowManualPaymentForm] = useState(false);
+  const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
+  const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPlanAndSettings();
@@ -224,6 +229,35 @@ export default function Checkout() {
     }
   };
 
+  const handleScreenshotChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Screenshot must be less than 5MB");
+        return;
+      }
+      setScreenshotFile(file);
+      setScreenshotPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadScreenshot = async (): Promise<string | null> => {
+    if (!screenshotFile || !user) return null;
+    const ext = screenshotFile.name.split(".").pop();
+    const path = `${user.id}/${Date.now()}.${ext}`;
+    const { error } = await supabase.storage
+      .from("payment-screenshots")
+      .upload(path, screenshotFile);
+    if (error) {
+      console.error("Screenshot upload failed:", error);
+      return null;
+    }
+    const { data: urlData } = supabase.storage
+      .from("payment-screenshots")
+      .getPublicUrl(path);
+    return urlData.publicUrl;
+  };
+
   const handleManualPayment = async () => {
     if (!user || !plan) {
       toast.error("Please sign in first");
@@ -237,6 +271,9 @@ export default function Checkout() {
     
     setProcessing(true);
     try {
+      // Upload screenshot if provided
+      const screenshotUrl = await uploadScreenshot();
+
       const { error } = await supabase.from("plan_payments").insert({
         user_id: user.id,
         user_email: user.email || "",
@@ -246,6 +283,7 @@ export default function Checkout() {
         amount: plan.price,
         payment_method: "qr_manual",
         manual_reference_id: manualReferenceId.trim(),
+        screenshot_url: screenshotUrl,
         status: "pending"
       });
       
@@ -497,6 +535,30 @@ export default function Checkout() {
                           placeholder="Enter transaction reference"
                           className="text-sm"
                         />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">Payment Screenshot (optional)</Label>
+                        {screenshotPreview ? (
+                          <div className="relative w-full">
+                            <img src={screenshotPreview} alt="Screenshot" className="w-full rounded-lg border max-h-48 object-contain bg-white" />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-1 right-1 h-6 w-6 bg-background/80 hover:bg-background"
+                              onClick={() => { setScreenshotFile(null); setScreenshotPreview(null); }}
+                            >
+                              <X className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                            <Upload className="w-5 h-5 text-muted-foreground mb-1" />
+                            <span className="text-xs text-muted-foreground">Click to upload screenshot</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={handleScreenshotChange} />
+                          </label>
+                        )}
                       </div>
                       
                       <Button
