@@ -244,7 +244,8 @@ export function useInvoiceSave() {
           .single();
 
         if (currentItem) {
-          const stockChange = isSaleType ? -item.quantity : item.quantity;
+          const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+          const stockChange = isSaleType ? -qty : qty;
           const newStock = (currentItem.current_stock || 0) + stockChange;
 
           await supabase
