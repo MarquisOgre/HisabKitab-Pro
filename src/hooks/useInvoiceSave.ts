@@ -187,7 +187,8 @@ export function useInvoiceSave() {
 
       // Insert items into appropriate items table
       const invoiceItemsData = validItems.map((item) => {
-        const itemSubtotal = item.quantity * item.rate;
+        const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
+        const itemSubtotal = qty * item.rate;
         const itemTax = (itemSubtotal * item.taxRate) / 100;
         const total = itemSubtotal + itemTax;
 
@@ -195,7 +196,7 @@ export function useInvoiceSave() {
           item_id: item.itemId,
           item_name: item.name,
           hsn_code: null,
-          quantity: item.quantity,
+          quantity: qty,
           unit: item.unit,
           rate: item.rate,
           discount_percent: 0,
