@@ -58,24 +58,24 @@ export default function PaymentIn() {
     if (!selectedBusiness) return;
     
     try {
-      // Get the last receipt number for this business
+      // Get ALL payment numbers to find the max numeric suffix
       const { data } = await supabase
         .from("payments")
         .select("payment_number")
         .eq("business_id", selectedBusiness.id)
-        .eq("payment_type", "in")
-        .order("created_at", { ascending: false })
-        .limit(1);
+        .eq("payment_type", "in");
       
-      let nextNumber = 1;
+      let maxNumber = 0;
       if (data && data.length > 0) {
-        const lastNumber = data[0].payment_number;
-        const match = lastNumber.match(/(\d+)$/);
-        if (match) {
-          nextNumber = parseInt(match[1]) + 1;
+        for (const row of data) {
+          const match = row.payment_number?.match(/(\d+)$/);
+          if (match) {
+            const num = parseInt(match[1]);
+            if (num > maxNumber) maxNumber = num;
+          }
         }
       }
-      setReceiptNumber(`REC-${String(nextNumber).padStart(3, "0")}`);
+      setReceiptNumber(`REC-${String(maxNumber + 1).padStart(3, "0")}`);
     } catch {
       setReceiptNumber("REC-001");
     }

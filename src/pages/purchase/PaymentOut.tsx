@@ -98,24 +98,24 @@ export default function PaymentOut() {
     if (!selectedBusiness) return;
     
     try {
-      // Get the last payment number for this business
+      // Get ALL payment numbers to find the max numeric suffix
       const { data } = await supabase
         .from("payments")
         .select("payment_number")
         .eq("business_id", selectedBusiness.id)
-        .eq("payment_type", "out")
-        .order("created_at", { ascending: false })
-        .limit(1);
+        .eq("payment_type", "out");
       
-      let nextNumber = 1;
+      let maxNumber = 0;
       if (data && data.length > 0) {
-        const lastNumber = data[0].payment_number;
-        const match = lastNumber.match(/(\d+)$/);
-        if (match) {
-          nextNumber = parseInt(match[1]) + 1;
+        for (const row of data) {
+          const match = row.payment_number?.match(/(\d+)$/);
+          if (match) {
+            const num = parseInt(match[1]);
+            if (num > maxNumber) maxNumber = num;
+          }
         }
       }
-      setReceiptNumber(`PAY-OUT-${String(nextNumber).padStart(3, "0")}`);
+      setReceiptNumber(`PAY-OUT-${String(maxNumber + 1).padStart(3, "0")}`);
     } catch {
       setReceiptNumber("PAY-OUT-001");
     }
