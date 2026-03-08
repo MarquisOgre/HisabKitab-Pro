@@ -107,9 +107,9 @@ export default function TaxesReport() {
             total: 0 
           }; 
         }
-        const tcsAmount = inv.tcs_amount || 0;
+        const tcsAmount = Number(inv.tcs_amount || 0);
         // Add purchase invoice subtotal to taxable value
-        monthlyTotals[monthKey].taxableValue += inv.subtotal || 0;
+        monthlyTotals[monthKey].taxableValue += Number(inv.subtotal || 0);
         // For purchase invoices, TCS is TDS (tax deducted at source)
         monthlyTotals[monthKey].tds += tcsAmount;
       });
