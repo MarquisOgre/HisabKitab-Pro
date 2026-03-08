@@ -55,6 +55,7 @@ interface PlanPayment {
   payment_method: string;
   razorpay_payment_id: string | null;
   manual_reference_id: string | null;
+  screenshot_url: string | null;
   status: string;
   verified_at: string | null;
   notes: string | null;
