@@ -143,7 +143,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
           updatedItem.name = "";
           updatedItem.rate = 0;
           updatedItem.availableStock = 0;
-          updatedItem.closingStock = 0;
+          updatedItem.saleQty = 0;
           updatedItem.quantity = 0;
           updatedItem.amount = 0;
         }
