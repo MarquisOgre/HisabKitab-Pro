@@ -88,8 +88,8 @@ export function useInvoiceSave() {
           .single();
         
         const reqQty = item.saleQty ?? item.quantity;
-        if (itemData && reqQty > (itemData.current_stock || 0)) {
-          toast.error(`Insufficient stock for "${itemData.name}". Available: ${itemData.current_stock || 0}, Requested: ${reqQty}`);
+        if (itemData && reqQty > (Number(itemData.current_stock) || 0)) {
+          toast.error(`Insufficient stock for "${itemData.name}". Available: ${Number(itemData.current_stock) || 0}, Requested: ${reqQty}`);
         }
       }
     }
@@ -248,7 +248,7 @@ export function useInvoiceSave() {
         if (currentItem) {
           const qty = isSaleType ? (item.saleQty ?? item.quantity) : item.quantity;
           const stockChange = isSaleType ? -qty : qty;
-          const newStock = (currentItem.current_stock || 0) + stockChange;
+          const newStock = (Number(currentItem.current_stock) || 0) + stockChange;
 
           await supabase
             .from("items")
