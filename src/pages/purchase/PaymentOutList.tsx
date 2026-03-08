@@ -85,7 +85,7 @@ export default function PaymentOutList() {
       (payment.purchase_invoices?.invoice_number && payment.purchase_invoices.invoice_number.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const totalPayments = payments.reduce((sum, p) => sum + p.amount, 0);
+  const totalPayments = payments.reduce((sum, p) => sum + Number(p.amount || 0), 0);
 
   if (loading) {
     return (
