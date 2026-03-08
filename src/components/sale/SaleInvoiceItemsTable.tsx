@@ -355,7 +355,7 @@ export function SaleInvoiceItemsTable({ items, onItemsChange }: SaleInvoiceItems
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Category</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground min-w-[180px]">Item</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-14">Avl.</th>
-              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16">Cls.</th>
+              <th className="text-center py-2 px-1 font-medium text-muted-foreground w-16">Sale</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-12">Qty</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Unit</th>
               <th className="text-center py-2 px-1 font-medium text-muted-foreground w-20">Rate</th>
