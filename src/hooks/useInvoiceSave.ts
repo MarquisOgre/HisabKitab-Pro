@@ -88,8 +88,8 @@ export function useInvoiceSave() {
           .single();
         
         const reqQty = item.saleQty ?? item.quantity;
-        if (itemData && reqQty > (itemData.current_stock || 0)) {
-          toast.error(`Insufficient stock for "${itemData.name}". Available: ${itemData.current_stock || 0}, Requested: ${reqQty}`);
+        if (itemData && reqQty > (Number(itemData.current_stock) || 0)) {
+          toast.error(`Insufficient stock for "${itemData.name}". Available: ${Number(itemData.current_stock) || 0}, Requested: ${reqQty}`);
         }
       }
     }
