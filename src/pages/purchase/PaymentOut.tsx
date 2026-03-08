@@ -68,7 +68,7 @@ export default function PaymentOut() {
         .from("purchase_invoices")
         .select("total_amount, paid_amount")
         .eq("party_id", partyId)
-        .eq("is_deleted", false);
+        .or("is_deleted.is.null,is_deleted.eq.false");
 
       if (error) throw error;
       
