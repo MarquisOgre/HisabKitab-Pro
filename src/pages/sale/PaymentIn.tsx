@@ -123,8 +123,8 @@ export default function PaymentIn() {
         .from("sale_invoices")
         .select("total_amount, paid_amount")
         .eq("party_id", partyId)
-        .eq("is_deleted", false)
-        .in("invoice_type", ["sale", "sale_invoice"]);
+        .or("is_deleted.is.null,is_deleted.eq.false")
+        .in("invoice_type", ["sale", "sale_invoice", "invoice"]);
 
       if (error) throw error;
       
