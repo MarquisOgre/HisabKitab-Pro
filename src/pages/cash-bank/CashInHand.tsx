@@ -301,10 +301,10 @@ export default function CashInHand() {
   const today = new Date().toISOString().split("T")[0];
   const todayIn = transactions
     .filter(t => t.transaction_date === today && t.transaction_type === "in")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
   const todayOut = transactions
     .filter(t => t.transaction_date === today && t.transaction_type === "out")
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
 
   return (
     <div className="space-y-6">
