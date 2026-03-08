@@ -63,7 +63,7 @@ export default function BulkUpdate() {
         supabase
           .from('items')
           .select('id, name, category_id, sale_price, purchase_price, current_stock, categories(name)')
-          .eq('is_deleted', false)
+          .neq('is_deleted', 'true')
           .eq('business_id', selectedBusiness.id)
           .order('name'),
         supabase

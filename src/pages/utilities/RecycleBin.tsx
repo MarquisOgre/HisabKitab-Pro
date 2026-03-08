@@ -161,9 +161,11 @@ export default function RecycleBin() {
   const restoreItem = async (item: DeletedItem) => {
     setActionLoading(item.id);
     try {
+      // items table uses text type for is_deleted, invoices use boolean
+      const isDeletedValue = item.table === 'items' ? 'false' : false;
       const { error } = await supabase
         .from(item.table as 'items' | 'sale_invoices' | 'purchase_invoices')
-        .update({ is_deleted: false, deleted_at: null })
+        .update({ is_deleted: isDeletedValue, deleted_at: null })
         .eq('id', item.id);
 
       if (error) throw error;
