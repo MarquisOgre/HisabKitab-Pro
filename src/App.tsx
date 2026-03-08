@@ -31,6 +31,7 @@ import ItemsList from "./pages/items/ItemsList";
 import AddItem from "./pages/items/AddItem";
 import EditItem from "./pages/items/EditItem";
 import Categories from "./pages/items/Categories";
+import Units from "./pages/items/Units";
 
 import SaleInvoices from "./pages/sale/SaleInvoices";
 import CreateSaleInvoice from "./pages/sale/CreateSaleInvoice";
