@@ -64,23 +64,25 @@ export default function CreatePurchaseBill() {
     try {
       const prefix = businessSettings?.purchase_prefix || "PUR-";
       
-      // Get the highest invoice number from purchase_invoices for this business
+      // Get ALL invoice numbers to find the highest number
       const { data: existingInvoices } = await supabase
         .from("purchase_invoices")
         .select("invoice_number")
         .eq("business_id", selectedBusiness.id)
-        .ilike("invoice_number", `${prefix}%`)
-        .order("created_at", { ascending: false })
-        .limit(1);
+        .ilike("invoice_number", `${prefix}%`);
 
-      let nextNumber = 1;
+      let maxNum = 0;
       if (existingInvoices && existingInvoices.length > 0) {
-        const lastInvoice = existingInvoices[0].invoice_number;
-        const lastNumber = parseInt(lastInvoice.replace(prefix, "")) || 0;
-        nextNumber = lastNumber + 1;
+        for (const inv of existingInvoices) {
+          const match = inv.invoice_number?.match(/(\d+)$/);
+          if (match) {
+            const num = parseInt(match[1]);
+            if (num > maxNum) maxNum = num;
+          }
+        }
       }
 
-      setBillNumber(`${prefix}${nextNumber.toString().padStart(3, "0")}`);
+      setBillNumber(`${prefix}${String(maxNum + 1).padStart(3, "0")}`);
     } catch (error) {
       console.error("Error generating bill number:", error);
       setBillNumber("PUR-001");
