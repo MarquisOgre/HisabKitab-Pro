@@ -58,6 +58,7 @@ export default function PaymentInList() {
         .select("*, parties(name), sale_invoices(invoice_number), purchase_invoices(invoice_number)")
         .eq("payment_type", "in")
         .eq("business_id", selectedBusiness.id)
+        .order("payment_date", { ascending: false })
         .order("created_at", { ascending: false });
 
       if (error) throw error;

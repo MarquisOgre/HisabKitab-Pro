@@ -54,6 +54,7 @@ export default function PaymentOutList() {
         .select("*, parties(name), purchase_invoices(invoice_number), sale_invoices(invoice_number)")
         .eq("payment_type", "out")
         .eq("business_id", selectedBusiness.id)
+        .order("payment_date", { ascending: false })
         .order("created_at", { ascending: false });
 
       if (error) throw error;
