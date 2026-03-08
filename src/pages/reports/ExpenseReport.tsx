@@ -69,7 +69,7 @@ export default function ExpenseReport() {
             <p className="text-xs sm:text-sm text-muted-foreground truncate">Total Expenses</p>
             <Wallet className="w-4 h-4 text-destructive flex-shrink-0" />
           </div>
-          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalExpenses.toLocaleString()}</p>
+          <p className="text-lg sm:text-2xl font-bold mt-2 truncate">₹{totalExpenses.toLocaleString("en-IN")}</p>
         </div>
         <div className="metric-card">
           <div className="flex items-center justify-between">
