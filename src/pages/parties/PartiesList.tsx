@@ -207,7 +207,7 @@ export default function PartiesList() {
       .filter(p => p.party_type === "supplier")
       .reduce(
         (acc, party) => ({
-          openingBalance: acc.openingBalance + (party.opening_balance || 0),
+          openingBalance: acc.openingBalance + Number(party.opening_balance || 0),
           invoiceAmount: acc.invoiceAmount + (party.invoiceAmount || 0),
           paymentsAmount: acc.paymentsAmount + (party.paymentsAmount || 0),
           netDue: acc.netDue + (party.netDue || 0),
@@ -219,7 +219,7 @@ export default function PartiesList() {
       .filter(p => p.party_type === "customer" || !p.party_type)
       .reduce(
         (acc, party) => ({
-          openingBalance: acc.openingBalance + (party.opening_balance || 0),
+          openingBalance: acc.openingBalance + Number(party.opening_balance || 0),
           invoiceAmount: acc.invoiceAmount + (party.invoiceAmount || 0),
           paymentsAmount: acc.paymentsAmount + (party.paymentsAmount || 0),
           netDue: acc.netDue + (party.netDue || 0),
@@ -229,7 +229,7 @@ export default function PartiesList() {
 
     const allTotals = filteredParties.reduce(
       (acc, party) => ({
-        openingBalance: acc.openingBalance + (party.opening_balance || 0),
+        openingBalance: acc.openingBalance + Number(party.opening_balance || 0),
         invoiceAmount: acc.invoiceAmount + (party.invoiceAmount || 0),
         paymentsAmount: acc.paymentsAmount + (party.paymentsAmount || 0),
         netDue: acc.netDue + (party.netDue || 0),
@@ -395,7 +395,7 @@ export default function PartiesList() {
                     {party.phone || "-"}
                   </TableCell>
                   <TableCell className="text-right">
-                    ₹{(party.opening_balance || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                    ₹{Number(party.opening_balance || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                   </TableCell>
                   <TableCell className="text-right">
                     ₹{(party.invoiceAmount || 0).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
