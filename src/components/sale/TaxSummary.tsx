@@ -5,6 +5,7 @@ interface BaseInvoiceItem {
   quantity: number;
   rate: number;
   taxRate: number;
+  amount?: number;
 }
 
 interface TaxSummaryProps {
