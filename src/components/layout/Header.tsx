@@ -282,7 +282,7 @@ export function Header() {
             <DropdownMenuItem 
               onClick={async () => {
                 await signOut();
-                window.location.href = "/";
+                window.location.href = "/auth";
               }} 
               className="gap-2 text-destructive focus:text-destructive"
             >
