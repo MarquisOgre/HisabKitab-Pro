@@ -432,6 +432,24 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
           })}
         </ul>
       </nav>
+
+      {/* Logout button */}
+      <div className={cn("mt-auto border-t border-border p-2", isCollapsed && "flex justify-center")}>
+        <Button
+          variant="ghost"
+          className={cn(
+            "w-full gap-2 text-destructive hover:text-destructive hover:bg-destructive/10",
+            isCollapsed ? "justify-center px-2" : "justify-start"
+          )}
+          onClick={async () => {
+            await signOut();
+            window.location.href = "/auth";
+          }}
+        >
+          <LogOut className="h-4 w-4" />
+          {!isCollapsed && <span>Sign Out</span>}
+        </Button>
+      </div>
     </div>
   );
 }
