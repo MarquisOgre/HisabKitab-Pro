@@ -221,6 +221,7 @@ const navItems: NavItem[] = [
 ];
 
 function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void; isCollapsed?: boolean }) {
+  const { signOut } = useAuth();
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(["Sale"]);
   const { businessSettings, getCurrentFinancialYear } = useBusinessSettings();
