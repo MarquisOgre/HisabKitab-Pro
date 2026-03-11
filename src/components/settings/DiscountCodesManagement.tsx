@@ -88,6 +88,8 @@ export function DiscountCodesManagement() {
       max_uses: c.max_uses?.toString() || "",
       is_active: c.is_active,
       expiry_date: c.expiry_date ? c.expiry_date.split("T")[0] : "",
+      applicable_plans: c.applicable_plans || [],
+      banner_text: c.banner_text || "",
     });
     setDialogOpen(true);
   };
