@@ -71,6 +71,11 @@ export default function Checkout() {
   const [showManualPaymentForm, setShowManualPaymentForm] = useState(false);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
+  
+  // Discount code states
+  const [discountCode, setDiscountCode] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; type: string; value: number } | null>(null);
+  const [applyingDiscount, setApplyingDiscount] = useState(false);
 
   useEffect(() => {
     fetchPlanAndSettings();
