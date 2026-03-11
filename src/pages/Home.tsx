@@ -220,7 +220,6 @@ export default function Home() {
                 <h3 className="text-lg font-bold text-foreground">{p.name}</h3>
                 <div className="mt-3">
                   <span className="text-3xl font-extrabold text-foreground">{p.price}</span>
-                  <span className="text-sm text-muted-foreground">{p.period}</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">{p.duration}</p>
                 <ul className="mt-5 space-y-2.5">

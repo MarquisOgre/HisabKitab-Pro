@@ -586,7 +586,6 @@ export default function Landing() {
                     <CardTitle className="text-lg md:text-xl">{plan.name}</CardTitle>
                     <div className="mt-3 md:mt-4">
                       <span className="text-2xl md:text-4xl font-bold">{plan.price}</span>
-                      <span className="text-muted-foreground text-sm md:text-base">{plan.period}</span>
                     </div>
                     <CardDescription className="text-xs md:text-sm">{plan.description}</CardDescription>
                   </CardHeader>

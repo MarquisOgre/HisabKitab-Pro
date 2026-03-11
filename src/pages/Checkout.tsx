@@ -677,7 +677,6 @@ export default function Checkout() {
             <CardContent className="space-y-4">
               <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
                 <h3 className="font-semibold text-lg">{plan.plan_name}</h3>
-                <p className="text-sm text-muted-foreground">{formatDuration(plan.duration_days)} access</p>
                 {plan.description && (
                   <p className="text-xs text-muted-foreground mt-2">{plan.description}</p>
                 )}
