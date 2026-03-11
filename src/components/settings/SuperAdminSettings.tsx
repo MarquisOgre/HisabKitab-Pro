@@ -256,6 +256,10 @@ export function SuperAdminSettings() {
             <PlanPaymentsManagement />
           </TabsContent>
 
+          <TabsContent value="discounts" className="mt-4">
+            <DiscountCodesManagement />
+          </TabsContent>
+
           <TabsContent value="contacts" className="mt-4">
             {contacts.length === 0 ? (
               <p className="text-muted-foreground text-center py-8">No contact submissions yet</p>
