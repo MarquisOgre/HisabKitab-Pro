@@ -564,7 +564,7 @@ export default function Checkout() {
                     <div className="w-40 h-40 mx-auto bg-white rounded-lg border flex items-center justify-center">
                       {paymentSettings?.upi_id ? (
                         <img 
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${paymentSettings.upi_id}&pn=${encodeURIComponent(paymentSettings.upi_name || 'HisabKitab-Pro')}&am=${plan.price}&cu=INR`}
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${paymentSettings.upi_id}&pn=${encodeURIComponent(paymentSettings.upi_name || 'HisabKitab-Pro')}&am=${finalPrice}&cu=INR`}
                           alt="UPI QR Code"
                           className="w-36 h-36"
                         />
