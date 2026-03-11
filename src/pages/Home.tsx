@@ -43,13 +43,39 @@ const faqs = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [bannerText, setBannerText] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const { data } = await supabase
+        .from("discount_codes")
+        .select("code, discount_type, discount_value, banner_text, applicable_plans")
+        .eq("is_active", true)
+        .not("banner_text", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        if (data.banner_text) {
+          setBannerText(data.banner_text);
+        } else {
+          const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
+          const plansLabel = (data as any).applicable_plans?.length > 0 ? (data as any).applicable_plans.join(", ") + " plans" : "all plans";
+          setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off on ${plansLabel}!`);
+        }
+      }
+    };
+    fetchBanner();
+  }, []);
 
   return (
     <div className="min-h-screen bg-card text-foreground">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-[hsl(var(--banner-from))] to-[hsl(var(--banner-to))] text-primary-foreground text-center py-2.5 text-sm font-medium">
-        🎉 Special Offer: Use code <span className="font-bold">HISAB50</span> for 50% off on yearly plans!
-      </div>
+      {bannerText && (
+        <div className="bg-gradient-to-r from-[hsl(var(--banner-from))] to-[hsl(var(--banner-to))] text-primary-foreground text-center py-2.5 text-sm font-medium">
+          🎉 {bannerText}
+        </div>
+      )}
 
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
