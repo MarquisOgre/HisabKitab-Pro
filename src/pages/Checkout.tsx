@@ -214,7 +214,7 @@ export default function Checkout() {
             user_name: authForm.fullName || user.email,
             plan_id: plan.id,
             plan_name: plan.plan_name,
-            amount: plan.price,
+            amount: finalPrice,
             payment_method: "razorpay",
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id || null,
