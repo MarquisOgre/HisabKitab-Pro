@@ -223,10 +223,14 @@ export function SuperAdminSettings() {
         <h3 className="font-semibold mb-4 text-lg">Super Admin Dashboard</h3>
         
         <Tabs defaultValue="payments">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="payments" className="gap-1 text-xs sm:text-sm">
               <CreditCard className="w-4 h-4" />
               <span className="hidden sm:inline">Payments</span>
+            </TabsTrigger>
+            <TabsTrigger value="discounts" className="gap-1 text-xs sm:text-sm">
+              <Tag className="w-4 h-4" />
+              <span className="hidden sm:inline">Discounts</span>
             </TabsTrigger>
             <TabsTrigger value="contacts" className="gap-1 text-xs sm:text-sm">
               <MessageSquare className="w-4 h-4" />
