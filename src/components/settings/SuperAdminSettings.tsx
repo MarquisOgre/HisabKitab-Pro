@@ -42,6 +42,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { PlanPaymentsManagement } from "./PlanPaymentsManagement";
 import { EmailSettings } from "./EmailSettings";
+import { DiscountCodesManagement } from "./DiscountCodesManagement";
 // @ts-nocheck
 interface ContactSubmission {
   id: string;
