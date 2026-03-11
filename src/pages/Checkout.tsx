@@ -225,6 +225,10 @@ export default function Checkout() {
             console.error("Failed to record payment:", error);
             toast.error("Payment recorded but failed to save. Contact support.");
           } else {
+            // Increment discount code usage
+            if (appliedDiscount) {
+              await supabase.rpc('increment_discount_usage' as any, { _code: appliedDiscount.code }).catch(() => {});
+            }
             toast.success("Payment successful! Your license will be activated shortly.");
             navigate("/payment-pending");
           }
