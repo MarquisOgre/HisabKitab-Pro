@@ -163,13 +163,13 @@ const getDefaultFeatures = (planName: string): string[] => {
   }
 };
 
-// Helper function to format period based on duration days
-const formatPeriod = (durationDays: number): string => {
-  if (durationDays <= 15) return `/${durationDays} days`;
-  if (durationDays <= 30) return '/month';
-  if (durationDays <= 90) return '/3 months';
-  if (durationDays <= 180) return '/6 months';
-  return '/year';
+// Helper function to format description based on duration days
+const formatDescription = (durationDays: number): string => {
+  if (durationDays <= 15) return `${durationDays} Days access`;
+  if (durationDays <= 30) return '1 Month - 30 Days access';
+  if (durationDays <= 90) return '3 Months - 90 Days access';
+  if (durationDays <= 180) return '6 Months - 180 Days access';
+  return '12 Months - 365 Days access';
 };
 
 export default function Landing() {
