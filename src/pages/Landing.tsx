@@ -319,9 +319,11 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       {/* Announcement Bar */}
-      <div className="py-3 md:py-4 px-4 md:px-6 text-white bg-gradient-to-r from-[hsl(32,90%,52%)] via-[hsl(142,92%,26%)] to-[hsl(32,90%,52%)] flex items-center justify-center text-center text-sm md:text-base">
-        🎉 Special Offer: Use code <strong className="mx-1">HISABKITAB50</strong> for 50% off on yearly plans!
-      </div>
+      {bannerText && (
+        <div className="py-3 md:py-4 px-4 md:px-6 text-white bg-gradient-to-r from-[hsl(32,90%,52%)] via-[hsl(142,92%,26%)] to-[hsl(32,90%,52%)] flex items-center justify-center text-center text-sm md:text-base">
+          🎉 {bannerText}
+        </div>
+      )}
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
