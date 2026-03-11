@@ -6,7 +6,8 @@ import {
   ChevronDown, IndianRupee, Check, ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const features = [
   { icon: FileText, title: "GST Billing", desc: "Create professional GST-compliant invoices with automatic tax calculations" },
