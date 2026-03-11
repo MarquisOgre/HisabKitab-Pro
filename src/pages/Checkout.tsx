@@ -300,7 +300,7 @@ export default function Checkout() {
         user_name: authForm.fullName || user.email,
         plan_id: plan.id,
         plan_name: plan.plan_name,
-        amount: plan.price,
+        amount: finalPrice,
         payment_method: "qr_manual",
         manual_reference_id: manualReferenceId.trim(),
         screenshot_url: screenshotUrl,
