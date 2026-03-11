@@ -20,7 +20,7 @@ function getDeviceInfo(): string {
 }
 
 export function useSessionTracking(userId: string | undefined) {
-  const heartbeatRef = useRef<NodeJS.Timeout | null>(null);
+  const heartbeatRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sessionIdRef = useRef<string | null>(null);
   const registeredRef = useRef<boolean>(false);
 

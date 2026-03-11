@@ -457,6 +457,8 @@ export type Database = {
       }
       discount_codes: {
         Row: {
+          applicable_plans: string[] | null
+          banner_text: string | null
           code: string
           created_at: string
           discount_type: string
@@ -469,6 +471,8 @@ export type Database = {
           used_count: number
         }
         Insert: {
+          applicable_plans?: string[] | null
+          banner_text?: string | null
           code: string
           created_at?: string
           discount_type?: string
@@ -481,6 +485,8 @@ export type Database = {
           used_count?: number
         }
         Update: {
+          applicable_plans?: string[] | null
+          banner_text?: string | null
           code?: string
           created_at?: string
           discount_type?: string

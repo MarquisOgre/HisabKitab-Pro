@@ -366,6 +366,14 @@ export default function Checkout() {
       if (!data) { toast.error("Invalid discount code"); return; }
       if (data.expiry_date && new Date(data.expiry_date) < new Date()) { toast.error("Discount code has expired"); return; }
       if (data.max_uses && data.used_count >= data.max_uses) { toast.error("Discount code usage limit reached"); return; }
+      // Check applicable plans
+      const applicablePlans = (data as any).applicable_plans as string[] | undefined;
+      if (applicablePlans && applicablePlans.length > 0 && plan) {
+        if (!applicablePlans.some(p => p.toLowerCase() === plan.plan_name.toLowerCase())) {
+          toast.error(`This code is only valid for ${applicablePlans.join(", ")} plans`);
+          return;
+        }
+      }
       setAppliedDiscount({ code: data.code, type: data.discount_type, value: Number(data.discount_value) });
       toast.success(`Discount code "${data.code}" applied!`);
     } catch (err: any) {
@@ -677,7 +685,6 @@ export default function Checkout() {
             <CardContent className="space-y-4">
               <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
                 <h3 className="font-semibold text-lg">{plan.plan_name}</h3>
-                <p className="text-sm text-muted-foreground">{formatDuration(plan.duration_days)} access</p>
                 {plan.description && (
                   <p className="text-xs text-muted-foreground mt-2">{plan.description}</p>
                 )}

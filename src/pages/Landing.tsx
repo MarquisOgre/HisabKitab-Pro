@@ -163,13 +163,13 @@ const getDefaultFeatures = (planName: string): string[] => {
   }
 };
 
-// Helper function to format period based on duration days
-const formatPeriod = (durationDays: number): string => {
-  if (durationDays <= 15) return `/${durationDays} days`;
-  if (durationDays <= 30) return '/month';
-  if (durationDays <= 90) return '/3 months';
-  if (durationDays <= 180) return '/6 months';
-  return '/year';
+// Helper function to format description based on duration days
+const formatDescription = (durationDays: number): string => {
+  if (durationDays <= 15) return `${durationDays} Days access`;
+  if (durationDays <= 30) return '1 Month - 30 Days access';
+  if (durationDays <= 90) return '3 Months - 90 Days access';
+  if (durationDays <= 180) return '6 Months - 180 Days access';
+  return '12 Months - 365 Days access';
 };
 
 export default function Landing() {
@@ -184,6 +184,24 @@ export default function Landing() {
     message: ""
   });
   const [submittingContact, setSubmittingContact] = useState(false);
+  const [bannerText, setBannerText] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const { data } = await supabase
+        .from("discount_codes")
+        .select("code, discount_type, discount_value")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
+        setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
+      }
+    };
+    fetchBanner();
+  }, []);
 
   // Fetch pricing plans from database
   useEffect(() => {
@@ -207,10 +225,10 @@ export default function Landing() {
           name: plan.plan_name,
           price: `₹${plan.price.toLocaleString('en-IN')}`,
           priceValue: plan.price,
-          period: formatPeriod(plan.duration_days),
-          description: plan.description || '',
+          period: '',
+          description: formatDescription(plan.duration_days),
           features: getDefaultFeatures(plan.plan_name),
-          cta: plan.price === 0 ? 'Start Free' : index === data.length - 1 ? 'Contact Sales' : 'Get Started',
+          cta: plan.price === 0 ? 'Start Free' : 'Get Started',
           popular: index === 2 // Third plan (Platinum) is popular
         }));
 
@@ -295,9 +313,11 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       {/* Announcement Bar */}
-      <div className="py-3 md:py-4 px-4 md:px-6 text-white bg-gradient-to-r from-[hsl(32,90%,52%)] via-[hsl(142,92%,26%)] to-[hsl(32,90%,52%)] flex items-center justify-center text-center text-sm md:text-base">
-        🎉 Special Offer: Use code <strong className="mx-1">HISABKITAB50</strong> for 50% off on yearly plans!
-      </div>
+      {bannerText && (
+        <div className="py-3 md:py-4 px-4 md:px-6 text-white bg-gradient-to-r from-[hsl(32,90%,52%)] via-[hsl(142,92%,26%)] to-[hsl(32,90%,52%)] flex items-center justify-center text-center text-sm md:text-base">
+          🎉 {bannerText}
+        </div>
+      )}
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
@@ -560,7 +580,6 @@ export default function Landing() {
                     <CardTitle className="text-lg md:text-xl">{plan.name}</CardTitle>
                     <div className="mt-3 md:mt-4">
                       <span className="text-2xl md:text-4xl font-bold">{plan.price}</span>
-                      <span className="text-muted-foreground text-sm md:text-base">{plan.period}</span>
                     </div>
                     <CardDescription className="text-xs md:text-sm">{plan.description}</CardDescription>
                   </CardHeader>

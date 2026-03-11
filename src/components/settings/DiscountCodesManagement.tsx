@@ -28,6 +28,8 @@ interface DiscountCode {
   is_active: boolean;
   expiry_date: string | null;
   created_at: string;
+  applicable_plans: string[];
+  banner_text: string | null;
 }
 
 export function DiscountCodesManagement() {
@@ -36,6 +38,7 @@ export function DiscountCodesManagement() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<DiscountCode | null>(null);
   const [saving, setSaving] = useState(false);
+  const [availablePlans, setAvailablePlans] = useState<string[]>([]);
 
   const [form, setForm] = useState({
     code: "",
@@ -44,9 +47,20 @@ export function DiscountCodesManagement() {
     max_uses: "",
     is_active: true,
     expiry_date: "",
+    applicable_plans: [] as string[],
+    banner_text: "",
   });
 
-  useEffect(() => { fetchCodes(); }, []);
+  useEffect(() => { fetchCodes(); fetchPlans(); }, []);
+
+  const fetchPlans = async () => {
+    const { data } = await supabase
+      .from("license_plans")
+      .select("plan_name")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+    if (data) setAvailablePlans(data.map((p: any) => p.plan_name));
+  };
 
   const fetchCodes = async () => {
     setLoading(true);
@@ -61,7 +75,7 @@ export function DiscountCodesManagement() {
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ code: "", discount_type: "percentage", discount_value: 0, max_uses: "", is_active: true, expiry_date: "" });
+    setForm({ code: "", discount_type: "percentage", discount_value: 0, max_uses: "", is_active: true, expiry_date: "", applicable_plans: [], banner_text: "" });
     setDialogOpen(true);
   };
 
@@ -74,6 +88,8 @@ export function DiscountCodesManagement() {
       max_uses: c.max_uses?.toString() || "",
       is_active: c.is_active,
       expiry_date: c.expiry_date ? c.expiry_date.split("T")[0] : "",
+      applicable_plans: c.applicable_plans || [],
+      banner_text: c.banner_text || "",
     });
     setDialogOpen(true);
   };
@@ -84,13 +100,15 @@ export function DiscountCodesManagement() {
     if (form.discount_type === "percentage" && form.discount_value > 100) { toast.error("Percentage cannot exceed 100"); return; }
 
     setSaving(true);
-    const payload = {
+    const payload: any = {
       code: form.code.trim().toUpperCase(),
       discount_type: form.discount_type,
       discount_value: form.discount_value,
       max_uses: form.max_uses ? parseInt(form.max_uses) : null,
       is_active: form.is_active,
       expiry_date: form.expiry_date ? new Date(form.expiry_date).toISOString() : null,
+      applicable_plans: form.applicable_plans,
+      banner_text: form.banner_text.trim() || null,
     };
 
     let error;
@@ -233,6 +251,35 @@ export function DiscountCodesManagement() {
             <div className="flex items-center gap-2">
               <Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} />
               <Label>Active</Label>
+            </div>
+            <div className="space-y-2">
+              <Label>Applicable Plans (empty = all plans)</Label>
+              <div className="flex flex-wrap gap-2">
+                {availablePlans.map((planName) => (
+                  <label key={planName} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={form.applicable_plans.includes(planName)}
+                      onChange={(e) => {
+                        const updated = e.target.checked
+                          ? [...form.applicable_plans, planName]
+                          : form.applicable_plans.filter(p => p !== planName);
+                        setForm({ ...form, applicable_plans: updated });
+                      }}
+                      className="rounded"
+                    />
+                    {planName}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Banner Text (shown on homepage, leave empty to hide banner)</Label>
+              <Input
+                value={form.banner_text}
+                onChange={(e) => setForm({ ...form, banner_text: e.target.value })}
+                placeholder='e.g. Special Offer: Use code SAVE10 for 10% off on yearly plans!'
+              />
             </div>
           </div>
           <DialogFooter>

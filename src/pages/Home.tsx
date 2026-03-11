@@ -6,7 +6,8 @@ import {
   ChevronDown, IndianRupee, Check, ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const features = [
   { icon: FileText, title: "GST Billing", desc: "Create professional GST-compliant invoices with automatic tax calculations" },
@@ -26,10 +27,10 @@ const testimonials = [
 ];
 
 const plans = [
-  { name: "Silver", price: "₹1,999", period: "/month", duration: "1 Month - 30 Days access", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
-  { name: "Gold", price: "₹4,999", period: "/3 months", duration: "3 Months - 90 Days access", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
-  { name: "Platinum", price: "₹9,999", period: "/6 months", duration: "6 Months - 180 Days access", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
-  { name: "Diamond", price: "₹17,999", period: "/year", duration: "12 Months - 365 Days access", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
+  { name: "Silver", price: "₹1,999", duration: "1 Month - 30 Days access", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
+  { name: "Gold", price: "₹4,999", duration: "3 Months - 90 Days access", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
+  { name: "Platinum", price: "₹8,999", duration: "6 Months - 180 Days access", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
+  { name: "Diamond", price: "₹16,999", duration: "12 Months - 365 Days access", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
 ];
 
 const faqs = [
@@ -42,13 +43,33 @@ const faqs = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [bannerText, setBannerText] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const { data } = await supabase
+        .from("discount_codes")
+        .select("code, discount_type, discount_value")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
+        setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
+      }
+    };
+    fetchBanner();
+  }, []);
 
   return (
     <div className="min-h-screen bg-card text-foreground">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-[hsl(var(--banner-from))] to-[hsl(var(--banner-to))] text-primary-foreground text-center py-2.5 text-sm font-medium">
-        🎉 Special Offer: Use code <span className="font-bold">HISAB50</span> for 50% off on yearly plans!
-      </div>
+      {bannerText && (
+        <div className="bg-gradient-to-r from-[hsl(var(--banner-from))] to-[hsl(var(--banner-to))] text-primary-foreground text-center py-2.5 text-sm font-medium">
+          🎉 {bannerText}
+        </div>
+      )}
 
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
@@ -193,7 +214,6 @@ export default function Home() {
                 <h3 className="text-lg font-bold text-foreground">{p.name}</h3>
                 <div className="mt-3">
                   <span className="text-3xl font-extrabold text-foreground">{p.price}</span>
-                  <span className="text-sm text-muted-foreground">{p.period}</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">{p.duration}</p>
                 <ul className="mt-5 space-y-2.5">
