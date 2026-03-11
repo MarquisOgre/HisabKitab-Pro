@@ -184,6 +184,30 @@ export default function Landing() {
     message: ""
   });
   const [submittingContact, setSubmittingContact] = useState(false);
+  const [bannerText, setBannerText] = useState<string | null>(null);
+
+  // Fetch discount banner
+  useEffect(() => {
+    const fetchBanner = async () => {
+      const { data } = await supabase
+        .from("discount_codes")
+        .select("code, discount_type, discount_value, banner_text, applicable_plans")
+        .eq("is_active", true)
+        .not("banner_text", "is", null)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (data) {
+        if ((data as any).banner_text) {
+          setBannerText((data as any).banner_text);
+        } else {
+          const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
+          setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
+        }
+      }
+    };
+    fetchBanner();
+  }, []);
 
   // Fetch pricing plans from database
   useEffect(() => {
