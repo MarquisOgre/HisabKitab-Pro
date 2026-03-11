@@ -331,6 +331,10 @@ export default function Checkout() {
         console.error("Failed to notify admin:", notifyError);
       }
       
+      // Increment discount code usage
+      if (appliedDiscount) {
+        await supabase.rpc('increment_discount_usage' as any, { _code: appliedDiscount.code }).catch(() => {});
+      }
       toast.success("Payment submitted for verification. You'll receive confirmation once verified.");
       navigate("/payment-pending");
     } catch (error: any) {
