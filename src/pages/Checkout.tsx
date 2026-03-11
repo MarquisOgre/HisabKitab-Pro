@@ -344,6 +344,42 @@ export default function Checkout() {
     return `${years} Year${years > 1 ? 's' : ''}`;
   };
 
+  const applyDiscountCode = async () => {
+    if (!discountCode.trim()) { toast.error("Enter a discount code"); return; }
+    setApplyingDiscount(true);
+    try {
+      const { data, error } = await supabase
+        .from("discount_codes")
+        .select("*")
+        .eq("code", discountCode.trim().toUpperCase())
+        .eq("is_active", true)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) { toast.error("Invalid discount code"); return; }
+      if (data.expiry_date && new Date(data.expiry_date) < new Date()) { toast.error("Discount code has expired"); return; }
+      if (data.max_uses && data.used_count >= data.max_uses) { toast.error("Discount code usage limit reached"); return; }
+      setAppliedDiscount({ code: data.code, type: data.discount_type, value: Number(data.discount_value) });
+      toast.success(`Discount code "${data.code}" applied!`);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to apply code");
+    } finally {
+      setApplyingDiscount(false);
+    }
+  };
+
+  const removeDiscount = () => {
+    setAppliedDiscount(null);
+    setDiscountCode("");
+  };
+
+  const getDiscountAmount = () => {
+    if (!appliedDiscount || !plan) return 0;
+    if (appliedDiscount.type === "percentage") return Math.round(plan.price * appliedDiscount.value / 100);
+    return Math.min(appliedDiscount.value, plan.price);
+  };
+
+  const finalPrice = plan ? plan.price - getDiscountAmount() : 0;
+
   if (loading || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
