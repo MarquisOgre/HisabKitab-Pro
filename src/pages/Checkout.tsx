@@ -674,19 +674,55 @@ export default function Checkout() {
                   <p className="text-xs text-muted-foreground mt-2">{plan.description}</p>
                 )}
               </div>
+
+              {/* Discount Code Input */}
+              <div className="space-y-2">
+                <Label className="text-sm">Discount Code</Label>
+                {appliedDiscount ? (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-success/10 border border-success/20">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary" className="font-mono">{appliedDiscount.code}</Badge>
+                      <span className="text-xs text-success">
+                        {appliedDiscount.type === "percentage" ? `${appliedDiscount.value}% off` : `₹${appliedDiscount.value} off`}
+                      </span>
+                    </div>
+                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={removeDiscount}>
+                      <X className="w-3 h-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      value={discountCode}
+                      onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="text-sm font-mono"
+                    />
+                    <Button variant="outline" size="sm" onClick={applyDiscountCode} disabled={applyingDiscount}>
+                      {applyingDiscount ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                    </Button>
+                  </div>
+                )}
+              </div>
               
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span>₹{plan.price.toLocaleString("en-IN")}</span>
                 </div>
+                {appliedDiscount && (
+                  <div className="flex justify-between text-success">
+                    <span>Discount ({appliedDiscount.code})</span>
+                    <span>-₹{getDiscountAmount().toLocaleString("en-IN")}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Tax</span>
                   <span>₹0</span>
                 </div>
                 <div className="border-t pt-2 flex justify-between font-semibold text-lg">
                   <span>Total</span>
-                  <span className="text-primary">₹{plan.price.toLocaleString("en-IN")}</span>
+                  <span className="text-primary">₹{finalPrice.toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
