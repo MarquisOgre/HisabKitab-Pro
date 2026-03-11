@@ -38,6 +38,7 @@ export function DiscountCodesManagement() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<DiscountCode | null>(null);
   const [saving, setSaving] = useState(false);
+  const [availablePlans, setAvailablePlans] = useState<string[]>([]);
 
   const [form, setForm] = useState({
     code: "",
@@ -46,6 +47,8 @@ export function DiscountCodesManagement() {
     max_uses: "",
     is_active: true,
     expiry_date: "",
+    applicable_plans: [] as string[],
+    banner_text: "",
   });
 
   useEffect(() => { fetchCodes(); }, []);
