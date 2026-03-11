@@ -1457,6 +1457,7 @@ export type Database = {
         }
       }
       get_effective_user_id: { Args: { _user_id: string }; Returns: string }
+      increment_discount_usage: { Args: { _code: string }; Returns: undefined }
       is_superadmin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
