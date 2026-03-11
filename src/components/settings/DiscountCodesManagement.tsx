@@ -75,7 +75,7 @@ export function DiscountCodesManagement() {
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ code: "", discount_type: "percentage", discount_value: 0, max_uses: "", is_active: true, expiry_date: "" });
+    setForm({ code: "", discount_type: "percentage", discount_value: 0, max_uses: "", is_active: true, expiry_date: "", applicable_plans: [], banner_text: "" });
     setDialogOpen(true);
   };
 
