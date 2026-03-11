@@ -575,7 +575,7 @@ export default function Checkout() {
                     {paymentSettings?.upi_id && (
                       <div className="mt-3 space-y-1">
                         <p className="text-xs font-medium">UPI: {paymentSettings.upi_id}</p>
-                        <p className="text-xs text-muted-foreground">₹{plan.price.toLocaleString("en-IN")}</p>
+                        <p className="text-xs text-muted-foreground">₹{finalPrice.toLocaleString("en-IN")}</p>
                       </div>
                     )}
                   </div>
