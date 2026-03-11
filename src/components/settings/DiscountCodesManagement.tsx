@@ -51,7 +51,16 @@ export function DiscountCodesManagement() {
     banner_text: "",
   });
 
-  useEffect(() => { fetchCodes(); }, []);
+  useEffect(() => { fetchCodes(); fetchPlans(); }, []);
+
+  const fetchPlans = async () => {
+    const { data } = await supabase
+      .from("license_plans")
+      .select("plan_name")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+    if (data) setAvailablePlans(data.map((p: any) => p.plan_name));
+  };
 
   const fetchCodes = async () => {
     setLoading(true);
