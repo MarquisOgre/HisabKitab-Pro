@@ -207,10 +207,10 @@ export default function Landing() {
           name: plan.plan_name,
           price: `₹${plan.price.toLocaleString('en-IN')}`,
           priceValue: plan.price,
-          period: formatPeriod(plan.duration_days),
-          description: plan.description || '',
+          period: '',
+          description: formatDescription(plan.duration_days),
           features: getDefaultFeatures(plan.plan_name),
-          cta: plan.price === 0 ? 'Start Free' : index === data.length - 1 ? 'Contact Sales' : 'Get Started',
+          cta: plan.price === 0 ? 'Start Free' : 'Get Started',
           popular: index === 2 // Third plan (Platinum) is popular
         }));
 
