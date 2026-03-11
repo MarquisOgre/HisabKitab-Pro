@@ -652,7 +652,7 @@ export default function Checkout() {
                   ) : (
                     <CreditCard className="w-4 h-4 mr-2" />
                   )}
-                  {!user ? "Sign in to Pay" : `Pay ₹${plan.price.toLocaleString("en-IN")}`}
+                  {!user ? "Sign in to Pay" : `Pay ₹${finalPrice.toLocaleString("en-IN")}`}
                 </Button>
               )}
             </CardContent>
