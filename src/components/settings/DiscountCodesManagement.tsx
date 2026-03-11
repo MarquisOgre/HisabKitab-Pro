@@ -252,6 +252,35 @@ export function DiscountCodesManagement() {
               <Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} />
               <Label>Active</Label>
             </div>
+            <div className="space-y-2">
+              <Label>Applicable Plans (empty = all plans)</Label>
+              <div className="flex flex-wrap gap-2">
+                {availablePlans.map((planName) => (
+                  <label key={planName} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={form.applicable_plans.includes(planName)}
+                      onChange={(e) => {
+                        const updated = e.target.checked
+                          ? [...form.applicable_plans, planName]
+                          : form.applicable_plans.filter(p => p !== planName);
+                        setForm({ ...form, applicable_plans: updated });
+                      }}
+                      className="rounded"
+                    />
+                    {planName}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Banner Text (shown on homepage, leave empty to hide banner)</Label>
+              <Input
+                value={form.banner_text}
+                onChange={(e) => setForm({ ...form, banner_text: e.target.value })}
+                placeholder='e.g. Special Offer: Use code SAVE10 for 10% off on yearly plans!'
+              />
+            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
