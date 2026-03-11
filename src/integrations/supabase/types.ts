@@ -455,6 +455,45 @@ export type Database = {
         }
         Relationships: []
       }
+      discount_codes: {
+        Row: {
+          code: string
+          created_at: string
+          discount_type: string
+          discount_value: number
+          expiry_date: string | null
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          updated_at: string
+          used_count: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          updated_at?: string
+          used_count?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_type?: string
+          discount_value?: number
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          updated_at?: string
+          used_count?: number
+        }
+        Relationships: []
+      }
       email_settings: {
         Row: {
           created_at: string | null
@@ -1418,6 +1457,7 @@ export type Database = {
         }
       }
       get_effective_user_id: { Args: { _user_id: string }; Returns: string }
+      increment_discount_usage: { Args: { _code: string }; Returns: undefined }
       is_superadmin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {

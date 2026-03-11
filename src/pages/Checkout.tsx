@@ -71,6 +71,11 @@ export default function Checkout() {
   const [showManualPaymentForm, setShowManualPaymentForm] = useState(false);
   const [screenshotFile, setScreenshotFile] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
+  
+  // Discount code states
+  const [discountCode, setDiscountCode] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; type: string; value: number } | null>(null);
+  const [applyingDiscount, setApplyingDiscount] = useState(false);
 
   useEffect(() => {
     fetchPlanAndSettings();
@@ -197,10 +202,10 @@ export default function Checkout() {
       
       const options = {
         key: paymentSettings.razorpay_key_id,
-        amount: plan.price * 100, // Convert to paise
+        amount: finalPrice * 100, // Convert to paise
         currency: "INR",
         name: "HisabKitab-Pro",
-        description: `${plan.plan_name} - ${plan.duration_days} Days`,
+        description: `${plan.plan_name} - ${plan.duration_days} Days${appliedDiscount ? ` (Code: ${appliedDiscount.code})` : ''}`,
         handler: async function (response: any) {
           // Record the payment
           const { error } = await supabase.from("plan_payments").insert({
@@ -209,7 +214,7 @@ export default function Checkout() {
             user_name: authForm.fullName || user.email,
             plan_id: plan.id,
             plan_name: plan.plan_name,
-            amount: plan.price,
+            amount: finalPrice,
             payment_method: "razorpay",
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id || null,
@@ -220,6 +225,10 @@ export default function Checkout() {
             console.error("Failed to record payment:", error);
             toast.error("Payment recorded but failed to save. Contact support.");
           } else {
+            // Increment discount code usage
+            if (appliedDiscount) {
+              await supabase.rpc('increment_discount_usage' as any, { _code: appliedDiscount.code }).catch(() => {});
+            }
             toast.success("Payment successful! Your license will be activated shortly.");
             navigate("/payment-pending");
           }
@@ -295,7 +304,7 @@ export default function Checkout() {
         user_name: authForm.fullName || user.email,
         plan_id: plan.id,
         plan_name: plan.plan_name,
-        amount: plan.price,
+        amount: finalPrice,
         payment_method: "qr_manual",
         manual_reference_id: manualReferenceId.trim(),
         screenshot_url: screenshotUrl,
@@ -322,6 +331,10 @@ export default function Checkout() {
         console.error("Failed to notify admin:", notifyError);
       }
       
+      // Increment discount code usage
+      if (appliedDiscount) {
+        await supabase.rpc('increment_discount_usage' as any, { _code: appliedDiscount.code }).catch(() => {});
+      }
       toast.success("Payment submitted for verification. You'll receive confirmation once verified.");
       navigate("/payment-pending");
     } catch (error: any) {
@@ -338,6 +351,42 @@ export default function Checkout() {
     const years = Math.round(days / 365);
     return `${years} Year${years > 1 ? 's' : ''}`;
   };
+
+  const applyDiscountCode = async () => {
+    if (!discountCode.trim()) { toast.error("Enter a discount code"); return; }
+    setApplyingDiscount(true);
+    try {
+      const { data, error } = await supabase
+        .from("discount_codes")
+        .select("*")
+        .eq("code", discountCode.trim().toUpperCase())
+        .eq("is_active", true)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) { toast.error("Invalid discount code"); return; }
+      if (data.expiry_date && new Date(data.expiry_date) < new Date()) { toast.error("Discount code has expired"); return; }
+      if (data.max_uses && data.used_count >= data.max_uses) { toast.error("Discount code usage limit reached"); return; }
+      setAppliedDiscount({ code: data.code, type: data.discount_type, value: Number(data.discount_value) });
+      toast.success(`Discount code "${data.code}" applied!`);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to apply code");
+    } finally {
+      setApplyingDiscount(false);
+    }
+  };
+
+  const removeDiscount = () => {
+    setAppliedDiscount(null);
+    setDiscountCode("");
+  };
+
+  const getDiscountAmount = () => {
+    if (!appliedDiscount || !plan) return 0;
+    if (appliedDiscount.type === "percentage") return Math.round(plan.price * appliedDiscount.value / 100);
+    return Math.min(appliedDiscount.value, plan.price);
+  };
+
+  const finalPrice = plan ? plan.price - getDiscountAmount() : 0;
 
   if (loading || authLoading) {
     return (
@@ -523,7 +572,7 @@ export default function Checkout() {
                     <div className="w-40 h-40 mx-auto bg-white rounded-lg border flex items-center justify-center">
                       {paymentSettings?.upi_id ? (
                         <img 
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${paymentSettings.upi_id}&pn=${encodeURIComponent(paymentSettings.upi_name || 'HisabKitab-Pro')}&am=${plan.price}&cu=INR`}
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=${paymentSettings.upi_id}&pn=${encodeURIComponent(paymentSettings.upi_name || 'HisabKitab-Pro')}&am=${finalPrice}&cu=INR`}
                           alt="UPI QR Code"
                           className="w-36 h-36"
                         />
@@ -534,7 +583,7 @@ export default function Checkout() {
                     {paymentSettings?.upi_id && (
                       <div className="mt-3 space-y-1">
                         <p className="text-xs font-medium">UPI: {paymentSettings.upi_id}</p>
-                        <p className="text-xs text-muted-foreground">₹{plan.price.toLocaleString("en-IN")}</p>
+                        <p className="text-xs text-muted-foreground">₹{finalPrice.toLocaleString("en-IN")}</p>
                       </div>
                     )}
                   </div>
@@ -611,7 +660,7 @@ export default function Checkout() {
                   ) : (
                     <CreditCard className="w-4 h-4 mr-2" />
                   )}
-                  {!user ? "Sign in to Pay" : `Pay ₹${plan.price.toLocaleString("en-IN")}`}
+                  {!user ? "Sign in to Pay" : `Pay ₹${finalPrice.toLocaleString("en-IN")}`}
                 </Button>
               )}
             </CardContent>
@@ -633,19 +682,55 @@ export default function Checkout() {
                   <p className="text-xs text-muted-foreground mt-2">{plan.description}</p>
                 )}
               </div>
+
+              {/* Discount Code Input */}
+              <div className="space-y-2">
+                <Label className="text-sm">Discount Code</Label>
+                {appliedDiscount ? (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-success/10 border border-success/20">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary" className="font-mono">{appliedDiscount.code}</Badge>
+                      <span className="text-xs text-success">
+                        {appliedDiscount.type === "percentage" ? `${appliedDiscount.value}% off` : `₹${appliedDiscount.value} off`}
+                      </span>
+                    </div>
+                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={removeDiscount}>
+                      <X className="w-3 h-3" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      value={discountCode}
+                      onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                      placeholder="Enter code"
+                      className="text-sm font-mono"
+                    />
+                    <Button variant="outline" size="sm" onClick={applyDiscountCode} disabled={applyingDiscount}>
+                      {applyingDiscount ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                    </Button>
+                  </div>
+                )}
+              </div>
               
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span>₹{plan.price.toLocaleString("en-IN")}</span>
                 </div>
+                {appliedDiscount && (
+                  <div className="flex justify-between text-success">
+                    <span>Discount ({appliedDiscount.code})</span>
+                    <span>-₹{getDiscountAmount().toLocaleString("en-IN")}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Tax</span>
                   <span>₹0</span>
                 </div>
                 <div className="border-t pt-2 flex justify-between font-semibold text-lg">
                   <span>Total</span>
-                  <span className="text-primary">₹{plan.price.toLocaleString("en-IN")}</span>
+                  <span className="text-primary">₹{finalPrice.toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
