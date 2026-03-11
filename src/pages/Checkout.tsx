@@ -202,10 +202,10 @@ export default function Checkout() {
       
       const options = {
         key: paymentSettings.razorpay_key_id,
-        amount: plan.price * 100, // Convert to paise
+        amount: finalPrice * 100, // Convert to paise
         currency: "INR",
         name: "HisabKitab-Pro",
-        description: `${plan.plan_name} - ${plan.duration_days} Days`,
+        description: `${plan.plan_name} - ${plan.duration_days} Days${appliedDiscount ? ` (Code: ${appliedDiscount.code})` : ''}`,
         handler: async function (response: any) {
           // Record the payment
           const { error } = await supabase.from("plan_payments").insert({
