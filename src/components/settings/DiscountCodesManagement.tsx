@@ -28,6 +28,8 @@ interface DiscountCode {
   is_active: boolean;
   expiry_date: string | null;
   created_at: string;
+  applicable_plans: string[];
+  banner_text: string | null;
 }
 
 export function DiscountCodesManagement() {
