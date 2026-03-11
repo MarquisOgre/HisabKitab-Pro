@@ -100,13 +100,15 @@ export function DiscountCodesManagement() {
     if (form.discount_type === "percentage" && form.discount_value > 100) { toast.error("Percentage cannot exceed 100"); return; }
 
     setSaving(true);
-    const payload = {
+    const payload: any = {
       code: form.code.trim().toUpperCase(),
       discount_type: form.discount_type,
       discount_value: form.discount_value,
       max_uses: form.max_uses ? parseInt(form.max_uses) : null,
       is_active: form.is_active,
       expiry_date: form.expiry_date ? new Date(form.expiry_date).toISOString() : null,
+      applicable_plans: form.applicable_plans,
+      banner_text: form.banner_text.trim() || null,
     };
 
     let error;
