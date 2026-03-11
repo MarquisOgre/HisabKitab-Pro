@@ -49,20 +49,14 @@ export default function Home() {
     const fetchBanner = async () => {
       const { data } = await supabase
         .from("discount_codes")
-        .select("code, discount_type, discount_value, banner_text, applicable_plans")
+        .select("code, discount_type, discount_value")
         .eq("is_active", true)
-        .not("banner_text", "is", null)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
       if (data) {
-        if (data.banner_text) {
-          setBannerText(data.banner_text);
-        } else {
-          const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
-          const plansLabel = (data as any).applicable_plans?.length > 0 ? (data as any).applicable_plans.join(", ") + " plans" : "all plans";
-          setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off on ${plansLabel}!`);
-        }
+        const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
+        setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
       }
     };
     fetchBanner();
