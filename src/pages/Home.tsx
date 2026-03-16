@@ -215,7 +215,7 @@ export default function Home() {
                 <div className="mt-3">
                   <span className="text-3xl font-extrabold text-foreground">{p.price}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">{p.duration}</p>
+                
                 <ul className="mt-5 space-y-2.5">
                   {p.features.map((f, j) => (
                     <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
