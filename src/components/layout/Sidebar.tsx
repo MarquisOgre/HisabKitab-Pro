@@ -228,13 +228,14 @@ const navItems: NavItem[] = [
 ];
 
 function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void; isCollapsed?: boolean }) {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(["Sale"]);
   const { businessSettings, getCurrentFinancialYear } = useBusinessSettings();
   const { canWrite, isAdmin } = useRoleAccess();
   const { selectedBusiness } = useBusinessSelection();
   const { licenseType, isInherited, isLoading: licenseLoading } = useLicenseDisplay();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
 
   // License badge color based on type
   const getLicenseBadgeClass = (type: string | null) => {
