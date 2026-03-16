@@ -190,14 +190,14 @@ export default function Landing() {
     const fetchBanner = async () => {
       const { data } = await supabase
         .from("discount_codes")
-        .select("code, discount_type, discount_value")
+        .select("code, discount_type, discount_value, banner_text")
         .eq("is_active", true)
+        .not("banner_text", "is", null)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (data) {
-        const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
-        setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
+      if (data && data.banner_text) {
+        setBannerText(data.banner_text);
       }
     };
     fetchBanner();

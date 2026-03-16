@@ -27,10 +27,10 @@ const testimonials = [
 ];
 
 const plans = [
-  { name: "Silver", price: "₹1,999", duration: "1 Month - 30 Days access", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
-  { name: "Gold", price: "₹4,999", duration: "3 Months - 90 Days access", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
-  { name: "Platinum", price: "₹8,999", duration: "6 Months - 180 Days access", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
-  { name: "Diamond", price: "₹16,999", duration: "12 Months - 365 Days access", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
+  { name: "Silver", price: "₹1,999", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
+  { name: "Gold", price: "₹4,999", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
+  { name: "Platinum", price: "₹8,999", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
+  { name: "Diamond", price: "₹16,999", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
 ];
 
 const faqs = [
@@ -49,14 +49,14 @@ export default function Home() {
     const fetchBanner = async () => {
       const { data } = await supabase
         .from("discount_codes")
-        .select("code, discount_type, discount_value")
+        .select("code, discount_type, discount_value, banner_text")
         .eq("is_active", true)
+        .not("banner_text", "is", null)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (data) {
-        const discountLabel = data.discount_type === "percentage" ? `${data.discount_value}%` : `₹${data.discount_value}`;
-        setBannerText(`Special Offer: Use code ${data.code} for ${discountLabel} off!`);
+      if (data && data.banner_text) {
+        setBannerText(data.banner_text);
       }
     };
     fetchBanner();
@@ -215,7 +215,7 @@ export default function Home() {
                 <div className="mt-3">
                   <span className="text-3xl font-extrabold text-foreground">{p.price}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">{p.duration}</p>
+                
                 <ul className="mt-5 space-y-2.5">
                   {p.features.map((f, j) => (
                     <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
