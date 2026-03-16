@@ -27,10 +27,10 @@ const testimonials = [
 ];
 
 const plans = [
-  { name: "Silver", price: "₹1,999", duration: "1 Month - 30 Days access", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
-  { name: "Gold", price: "₹4,999", duration: "3 Months - 90 Days access", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
-  { name: "Platinum", price: "₹8,999", duration: "6 Months - 180 Days access", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
-  { name: "Diamond", price: "₹16,999", duration: "12 Months - 365 Days access", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
+  { name: "Silver", price: "₹1,999", features: ["Unlimited invoices", "Full inventory management", "Up to 3 users", "Priority support"], popular: false },
+  { name: "Gold", price: "₹4,999", features: ["Everything in Silver", "Up to 5 users", "Advanced reports", "E-Way bill integration"], popular: false },
+  { name: "Platinum", price: "₹8,999", features: ["Everything in Gold", "Up to 10 users", "Up to 5 businesses", "API access"], popular: true },
+  { name: "Diamond", price: "₹16,999", features: ["Everything in Platinum", "Up to 20 users", "Up to 10 businesses", "Dedicated support", "24/7 priority support"], popular: false },
 ];
 
 const faqs = [
