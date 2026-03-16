@@ -220,6 +220,11 @@ const navItems: NavItem[] = [
       { title: "Reset Database", href: "/utilities/reset" },
     ],
   },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: <Settings className="w-5 h-5" />,
+  },
 ];
 
 function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void; isCollapsed?: boolean }) {
