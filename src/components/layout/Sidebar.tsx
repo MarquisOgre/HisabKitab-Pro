@@ -5,6 +5,7 @@ import { useBusinessSettings } from "@/contexts/BusinessContext";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { useRoleAccess } from "@/components/RoleGuard";
 import { useLicenseDisplay } from "@/hooks/useLicenseDisplay";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 import {
   LayoutDashboard,
   Users,
