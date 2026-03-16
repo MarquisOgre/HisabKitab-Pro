@@ -5,6 +5,7 @@ import { useBusinessSettings } from "@/contexts/BusinessContext";
 import { useBusinessSelection } from "@/contexts/BusinessSelectionContext";
 import { useRoleAccess } from "@/components/RoleGuard";
 import { useLicenseDisplay } from "@/hooks/useLicenseDisplay";
+import { isSuperAdminEmail } from "@/lib/superadmin";
 import {
   LayoutDashboard,
   Users,
@@ -219,16 +220,22 @@ const navItems: NavItem[] = [
       { title: "Reset Database", href: "/utilities/reset" },
     ],
   },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: <Settings className="w-5 h-5" />,
+  },
 ];
 
 function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void; isCollapsed?: boolean }) {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(["Sale"]);
   const { businessSettings, getCurrentFinancialYear } = useBusinessSettings();
   const { canWrite, isAdmin } = useRoleAccess();
   const { selectedBusiness } = useBusinessSelection();
   const { licenseType, isInherited, isLoading: licenseLoading } = useLicenseDisplay();
+  const isSuperAdmin = isSuperAdminEmail(user?.email);
 
   // License badge color based on type
   const getLicenseBadgeClass = (type: string | null) => {
@@ -304,8 +311,8 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
         </Link>
       </div>
 
-      {/* Business Name - uses selectedBusiness from context */}
-      {!isCollapsed && (
+      {/* Business Name - uses selectedBusiness from context (hidden for SuperAdmin) */}
+      {!isCollapsed && !isSuperAdmin && (
         <div className="px-4 py-3 border-b border-sidebar-border">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-sidebar-accent flex items-center justify-center">
