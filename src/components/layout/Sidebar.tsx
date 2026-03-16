@@ -311,8 +311,8 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
         </Link>
       </div>
 
-      {/* Business Name - uses selectedBusiness from context */}
-      {!isCollapsed && (
+      {/* Business Name - uses selectedBusiness from context (hidden for SuperAdmin) */}
+      {!isCollapsed && !isSuperAdmin && (
         <div className="px-4 py-3 border-b border-sidebar-border">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-sidebar-accent flex items-center justify-center">
