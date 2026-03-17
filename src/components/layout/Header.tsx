@@ -74,6 +74,7 @@ export function Header() {
   };
 
   return (
+    <TooltipProvider>
     <header className={cn(
       "h-14 md:h-16 bg-card border-b border-border flex items-center justify-between px-3 md:px-6 sticky top-0 z-40",
       isMobile && "pl-14" // Leave space for hamburger menu
