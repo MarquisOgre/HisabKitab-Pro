@@ -310,5 +310,6 @@ export function Header() {
         </DropdownMenu>
       </div>
     </header>
+    </TooltipProvider>
   );
 }
