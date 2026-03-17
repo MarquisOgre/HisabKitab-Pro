@@ -314,6 +314,10 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
 
   const isActive = (href?: string) => {
     if (!href) return false;
+    // Handle query param links like /settings?tab=business
+    if (href.includes('?')) {
+      return location.pathname + location.search === href;
+    }
     return location.pathname === href;
   };
 
