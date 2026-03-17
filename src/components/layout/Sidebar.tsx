@@ -326,6 +326,9 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
     if (onClose) onClose();
   };
 
+  // Use different nav items for SuperAdmin
+  const navItems = isSuperAdmin ? superAdminNavItems : businessNavItems;
+
   // Filter nav items based on role
   const filteredNavItems = navItems.filter((item) => {
     if (item.requireAdmin && !isAdmin) return false;
