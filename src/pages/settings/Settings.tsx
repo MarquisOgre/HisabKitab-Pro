@@ -224,7 +224,7 @@ export default function Settings() {
         <p className="text-muted-foreground">Manage your account and business preferences</p>
       </div>
 
-      <Tabs defaultValue="business" className="space-y-6">
+      <Tabs defaultValue={defaultTab} key={defaultTab} className="space-y-6">
         <TabsList className="flex flex-wrap w-full h-auto gap-2 bg-transparent p-0">
           <TabsTrigger value="business" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
             <Building2 className="w-4 h-4" />
