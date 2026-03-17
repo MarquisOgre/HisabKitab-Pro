@@ -213,22 +213,6 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* SuperAdmin Settings Icon */}
-        {!isMobile && isSuperAdmin && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" asChild className="h-8 w-8 md:h-10 md:w-10">
-                <Link to="/settings">
-                  <Shield className="w-4 h-4 md:w-5 md:h-5 text-destructive" />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Super Admin Settings</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-
         {!isMobile && !isSuperAdmin && (
           <Button variant="ghost" size="icon" asChild className="h-8 w-8 md:h-10 md:w-10">
             <Link to="/settings">

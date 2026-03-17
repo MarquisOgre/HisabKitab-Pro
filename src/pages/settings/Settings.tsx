@@ -224,161 +224,230 @@ export default function Settings() {
         <p className="text-muted-foreground">Manage your account and business preferences</p>
       </div>
 
-      <Tabs defaultValue={defaultTab} key={defaultTab} className="space-y-6">
-        <TabsList className="flex flex-wrap w-full h-auto gap-2 bg-transparent p-0">
-          <TabsTrigger value="business" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-            <Building2 className="w-4 h-4" />
-            <span className="hidden md:inline">Business Settings</span>
-          </TabsTrigger>
-          <TabsTrigger value="users" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-            <User className="w-4 h-4" />
-            <span className="hidden md:inline">Users</span>
-          </TabsTrigger>
-          <TabsTrigger value="security" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-            <Shield className="w-4 h-4" />
-            <span className="hidden md:inline">Security</span>
-          </TabsTrigger>
-          <TabsTrigger value="license" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-            <Shield className="w-4 h-4" />
-            <span className="hidden md:inline">License</span>
-          </TabsTrigger>
-          {isSuperAdmin && (
+      {isSuperAdmin ? (
+        <div className="space-y-6">
+          {defaultTab === 'business' && <BusinessSettingsSection />}
+          {defaultTab === 'users' && <UserManagement />}
+          {defaultTab === 'security' && (
             <>
-              <TabsTrigger value="payments" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-                <CreditCard className="w-4 h-4" />
-                <span className="hidden md:inline">Payments</span>
-              </TabsTrigger>
-              <TabsTrigger value="superadmin" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
-                <Crown className="w-4 h-4" />
-                <span className="hidden md:inline">Super Admin</span>
-              </TabsTrigger>
+              <div className="metric-card">
+                <h3 className="font-semibold mb-4">Change Password</h3>
+                <div className="space-y-4 max-w-md">
+                  <div className="space-y-2">
+                    <Label htmlFor="newPassword">New Password</Label>
+                    <div className="relative">
+                      <Input
+                        id="newPassword"
+                        type={showNewPassword ? "text" : "password"}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Enter new password"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                      >
+                        {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                    <div className="relative">
+                      <Input
+                        id="confirmPassword"
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Confirm new password"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
+                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                  {newPassword && newPassword.length < 8 && (
+                    <p className="text-sm text-destructive">Password must be at least 8 characters</p>
+                  )}
+                  {confirmPassword && newPassword !== confirmPassword && (
+                    <p className="text-sm text-destructive">Passwords do not match</p>
+                  )}
+                  <Button 
+                    variant="outline" 
+                    onClick={handlePasswordChange}
+                    disabled={changingPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword || newPassword.length < 8}
+                  >
+                    {changingPassword ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    ) : null}
+                    Update Password
+                  </Button>
+                </div>
+              </div>
+              <TwoFactorAuth />
+              <div className="metric-card">
+                <h3 className="font-semibold mb-4">Session Management</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Auto Logout</p>
+                      <p className="text-sm text-muted-foreground">Automatically logout after inactivity</p>
+                    </div>
+                    <Select value={autoLogoutTime} onValueChange={handleAutoLogoutChange}>
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="15">15 minutes</SelectItem>
+                        <SelectItem value="30">30 minutes</SelectItem>
+                        <SelectItem value="60">1 hour</SelectItem>
+                        <SelectItem value="never">Never</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
             </>
           )}
-        </TabsList>
+          {defaultTab === 'license' && (
+            <>
+              <LicenseSettings />
+              <LicensePlans />
+            </>
+          )}
+          {defaultTab === 'payments' && <PaymentSettings />}
+          {defaultTab === 'superadmin' && <SuperAdminSettings />}
+        </div>
+      ) : (
+        <Tabs defaultValue={defaultTab} key={defaultTab} className="space-y-6">
+          <TabsList className="flex flex-wrap w-full h-auto gap-2 bg-transparent p-0">
+            <TabsTrigger value="business" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
+              <Building2 className="w-4 h-4" />
+              <span className="hidden md:inline">Business Settings</span>
+            </TabsTrigger>
+            <TabsTrigger value="users" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
+              <User className="w-4 h-4" />
+              <span className="hidden md:inline">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="security" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
+              <Shield className="w-4 h-4" />
+              <span className="hidden md:inline">Security</span>
+            </TabsTrigger>
+            <TabsTrigger value="license" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground gap-2">
+              <Shield className="w-4 h-4" />
+              <span className="hidden md:inline">License</span>
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Business Settings - Consolidated */}
-        <TabsContent value="business" className="space-y-6">
-          <BusinessSettingsSection />
-        </TabsContent>
-
-        {/* User Management */}
-        <TabsContent value="users" className="space-y-6">
-          <UserManagement />
-        </TabsContent>
-
-        {/* Security */}
-        <TabsContent value="security" className="space-y-6">
-          <div className="metric-card">
-            <h3 className="font-semibold mb-4">Change Password</h3>
-            <div className="space-y-4 max-w-md">
-              <div className="space-y-2">
-                <Label htmlFor="newPassword">New Password</Label>
-                <div className="relative">
-                  <Input
-                    id="newPassword"
-                    type={showNewPassword ? "text" : "password"}
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter new password"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                  >
-                    {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </Button>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                <div className="relative">
-                  <Input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm new password"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </Button>
-                </div>
-              </div>
-              {newPassword && newPassword.length < 8 && (
-                <p className="text-sm text-destructive">Password must be at least 8 characters</p>
-              )}
-              {confirmPassword && newPassword !== confirmPassword && (
-                <p className="text-sm text-destructive">Passwords do not match</p>
-              )}
-              <Button 
-                variant="outline" 
-                onClick={handlePasswordChange}
-                disabled={changingPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword || newPassword.length < 8}
-              >
-                {changingPassword ? (
-                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                ) : null}
-                Update Password
-              </Button>
-            </div>
-          </div>
-
-          <TwoFactorAuth />
-
-          <div className="metric-card">
-            <h3 className="font-semibold mb-4">Session Management</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">Auto Logout</p>
-                  <p className="text-sm text-muted-foreground">Automatically logout after inactivity</p>
-                </div>
-                <Select value={autoLogoutTime} onValueChange={handleAutoLogoutChange}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="15">15 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
-                    <SelectItem value="60">1 hour</SelectItem>
-                    <SelectItem value="never">Never</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-
-
-        {/* License Settings */}
-        <TabsContent value="license" className="space-y-6">
-          <LicenseSettings />
-          <LicensePlans />
-        </TabsContent>
-
-        {/* Payment Settings - SuperAdmin Only */}
-        {isSuperAdmin && (
-          <TabsContent value="payments" className="space-y-6">
-            <PaymentSettings />
+          <TabsContent value="business" className="space-y-6">
+            <BusinessSettingsSection />
           </TabsContent>
-        )}
-
-        {/* Super Admin Settings */}
-        {isSuperAdmin && (
-          <TabsContent value="superadmin" className="space-y-6">
-            <SuperAdminSettings />
+          <TabsContent value="users" className="space-y-6">
+            <UserManagement />
           </TabsContent>
-        )}
-      </Tabs>
+          <TabsContent value="security" className="space-y-6">
+            <div className="metric-card">
+              <h3 className="font-semibold mb-4">Change Password</h3>
+              <div className="space-y-4 max-w-md">
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword">New Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="newPassword"
+                      type={showNewPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter new password"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                    >
+                      {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </Button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm new password"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </Button>
+                  </div>
+                </div>
+                {newPassword && newPassword.length < 8 && (
+                  <p className="text-sm text-destructive">Password must be at least 8 characters</p>
+                )}
+                {confirmPassword && newPassword !== confirmPassword && (
+                  <p className="text-sm text-destructive">Passwords do not match</p>
+                )}
+                <Button 
+                  variant="outline" 
+                  onClick={handlePasswordChange}
+                  disabled={changingPassword || !newPassword || !confirmPassword || newPassword !== confirmPassword || newPassword.length < 8}
+                >
+                  {changingPassword ? (
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  ) : null}
+                  Update Password
+                </Button>
+              </div>
+            </div>
+            <TwoFactorAuth />
+            <div className="metric-card">
+              <h3 className="font-semibold mb-4">Session Management</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Auto Logout</p>
+                    <p className="text-sm text-muted-foreground">Automatically logout after inactivity</p>
+                  </div>
+                  <Select value={autoLogoutTime} onValueChange={handleAutoLogoutChange}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="15">15 minutes</SelectItem>
+                      <SelectItem value="30">30 minutes</SelectItem>
+                      <SelectItem value="60">1 hour</SelectItem>
+                      <SelectItem value="never">Never</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          <TabsContent value="license" className="space-y-6">
+            <LicenseSettings />
+            <LicensePlans />
+          </TabsContent>
+        </Tabs>
+      )}
     </div>
   );
 }
