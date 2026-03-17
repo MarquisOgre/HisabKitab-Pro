@@ -9,6 +9,7 @@ import { isSuperAdminEmail } from "@/lib/superadmin";
 import {
   LayoutDashboard,
   Users,
+  User,
   Package,
   ShoppingCart,
   FileText,
@@ -24,6 +25,9 @@ import {
   PanelLeft,
   Crown,
   LogOut,
+  Shield,
+  Building2,
+  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
