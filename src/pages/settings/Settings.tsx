@@ -52,7 +52,9 @@ interface UnitOfMeasure {
 
 export default function Settings() {
   const { user, role, isAdmin } = useAuth();
+  const [searchParams] = useSearchParams();
   const isSuperAdmin = isSuperAdminEmail(user?.email);
+  const defaultTab = searchParams.get('tab') || 'business';
   const [loading, setLoading] = useState(true);
 
   // Password change
