@@ -9,6 +9,7 @@ import { isSuperAdminEmail } from "@/lib/superadmin";
 import {
   LayoutDashboard,
   Users,
+  User,
   Package,
   ShoppingCart,
   FileText,
@@ -24,6 +25,9 @@ import {
   PanelLeft,
   Crown,
   LogOut,
+  Shield,
+  Building2,
+  CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -133,7 +137,7 @@ interface NavItem {
   requireAdmin?: boolean;
 }
 
-const navItems: NavItem[] = [
+const businessNavItems: NavItem[] = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -201,7 +205,7 @@ const navItems: NavItem[] = [
   {
     title: "Sync & Backup",
     icon: <Cloud className="w-5 h-5" />,
-    requireAdmin: true, // Only admin can access backup options
+    requireAdmin: true,
     children: [
       { title: "Sync & Share", href: "/backup/sync" },
       { title: "Auto Backup", href: "/backup/auto" },
@@ -212,7 +216,7 @@ const navItems: NavItem[] = [
   {
     title: "Utilities",
     icon: <Settings className="w-5 h-5" />,
-    requireAdmin: true, // Only admin can access utilities
+    requireAdmin: true,
     children: [
       { title: "Import Items", href: "/utilities/import" },
       { title: "Update Items in Bulk", href: "/utilities/bulk-update" },
@@ -224,6 +228,55 @@ const navItems: NavItem[] = [
     title: "Settings",
     href: "/settings",
     icon: <Settings className="w-5 h-5" />,
+  },
+];
+
+// SuperAdmin sidebar: settings tabs individually + business as a group
+const superAdminNavItems: NavItem[] = [
+  {
+    title: "Business Settings",
+    href: "/settings?tab=business",
+    icon: <Building2 className="w-5 h-5" />,
+  },
+  {
+    title: "Users",
+    href: "/settings?tab=users",
+    icon: <User className="w-5 h-5" />,
+  },
+  {
+    title: "Security",
+    href: "/settings?tab=security",
+    icon: <Shield className="w-5 h-5" />,
+  },
+  {
+    title: "License",
+    href: "/settings?tab=license",
+    icon: <Crown className="w-5 h-5" />,
+  },
+  {
+    title: "Payments",
+    href: "/settings?tab=payments",
+    icon: <CreditCard className="w-5 h-5" />,
+  },
+  {
+    title: "Super Admin",
+    href: "/settings?tab=superadmin",
+    icon: <Crown className="w-5 h-5" />,
+  },
+  {
+    title: "Business",
+    icon: <LayoutDashboard className="w-5 h-5" />,
+    children: [
+      { title: "Dashboard", href: "/dashboard" },
+      { title: "Parties", href: "/parties" },
+      { title: "Items", href: "/items" },
+      { title: "Sales", href: "/sale/invoices" },
+      { title: "Purchases", href: "/purchase/bills" },
+      { title: "Cash & Bank", href: "/cash-bank/accounts" },
+      { title: "Reports", href: "/reports" },
+      { title: "Sync & Backup", href: "/backup/sync" },
+      { title: "Utilities", href: "/utilities" },
+    ],
   },
 ];
 
@@ -261,6 +314,10 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
 
   const isActive = (href?: string) => {
     if (!href) return false;
+    // Handle query param links like /settings?tab=business
+    if (href.includes('?')) {
+      return location.pathname + location.search === href;
+    }
     return location.pathname === href;
   };
 
@@ -272,6 +329,9 @@ function SidebarContent({ onClose, isCollapsed = false }: { onClose?: () => void
   const handleLinkClick = () => {
     if (onClose) onClose();
   };
+
+  // Use different nav items for SuperAdmin
+  const navItems = isSuperAdmin ? superAdminNavItems : businessNavItems;
 
   // Filter nav items based on role
   const filteredNavItems = navItems.filter((item) => {

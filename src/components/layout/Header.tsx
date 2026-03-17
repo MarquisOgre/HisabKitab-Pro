@@ -18,7 +18,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { BusinessSwitcher } from "@/components/business/BusinessSwitcher";
 import { useLicenseDisplay } from "@/hooks/useLicenseDisplay";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { isSuperAdminEmail } from "@/lib/superadmin";
 
 export function Header() {
@@ -74,6 +74,7 @@ export function Header() {
   };
 
   return (
+    <TooltipProvider>
     <header className={cn(
       "h-14 md:h-16 bg-card border-b border-border flex items-center justify-between px-3 md:px-6 sticky top-0 z-40",
       isMobile && "pl-14" // Leave space for hamburger menu
@@ -309,5 +310,6 @@ export function Header() {
         </DropdownMenu>
       </div>
     </header>
+    </TooltipProvider>
   );
 }
