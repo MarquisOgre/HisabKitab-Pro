@@ -18,7 +18,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { BusinessSwitcher } from "@/components/business/BusinessSwitcher";
 import { useLicenseDisplay } from "@/hooks/useLicenseDisplay";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { isSuperAdminEmail } from "@/lib/superadmin";
 
 export function Header() {
